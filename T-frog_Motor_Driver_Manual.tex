@@ -1,0 +1,868 @@
+\documentclass[11pt,a4j,openany]{jbook}
+
+\usepackage{times}
+\usepackage{multirow}
+\usepackage{nidanfloat}
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{here}
+\usepackage{graphicx}
+\usepackage{threeparttable}
+\usepackage{url}
+\usepackage{listings,makeidx}
+\usepackage{fancyhdr}
+\usepackage{ascmac}
+\usepackage{color}
+\usepackage[titles]{tocloft}
+
+\graphicspath{{./fig/}}
+
+\makeatletter
+\def\thanks#1{%
+  \footnotemark
+  \edef\@tempa{\noexpand\noexpand\noexpand\footnotetext[\the\c@footnote]}%
+  \toks@\expandafter{\@thanks}%
+  \toks\tw@{{#1}}
+  \xdef\@thanks{\the\toks@\@tempa\the\toks\tw@}} 
+\def\ps@mybothstyle{\let\ps@jpl@in\ps@plain
+\def\@evenhead{\leftmark\hfil}
+\def\@evenfoot{\hfil\hfil}
+\def\@oddhead{\hfil\thepage\rightmark}
+\def\@oddfoot{\hfil\hfil}
+\let\@mkboth\markboth
+\def\sectionmark##1{\markboth{\ifnum \c@secnumdepth >\z@ \thesection.\hskip1zw\fi##1}{}}
+\def\subsectionmark##1{\markright{\ifnum \c@secnumdepth >\@ne \thesubsection.\hskip1zw\fi##1}}}
+\def\@listI{
+  \parsep 3pt
+  \topsep 10pt
+  \itemsep 0pt
+  \parskip 0pt
+  \leftskip -10pt
+  \leftmargin\leftmargini \addtolength{\leftmargin}{\leftskip}
+}
+\renewcommand{\tableofcontents}{%
+  \if@twocolumn\@restonecoltrue\onecolumn
+  \else\@restonecolfalse\fi
+  \section*{\contentsname
+    \@mkboth{\contentsname}{\contentsname}%
+  }\@starttoc{toc}%
+  \if@restonecol\twocolumn\fi
+}
+\renewenvironment{thebibliography}[1]
+{\section*{\bibname\@mkboth{\bibname}{\bibname}}%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+
+\makeatother
+
+\newcommand{\percent}{\%}
+\renewcommand{\lstlistingname}{Spur_fail1.c}
+\lstset{%
+ language={C},
+ backgroundcolor={\color[gray]{0.90}},%
+ basicstyle={\small\ttfamily},%
+ identifierstyle={\small\ttfamily},%
+ commentstyle={\small\slshape},%
+ keywordstyle={\small\ttfamily},%
+ ndkeywordstyle={\small\ttfamily},%
+ stringstyle={\small\ttfamily},
+ frame={tb},
+ breaklines=true,
+ numbers=none,%
+ xrightmargin=1zw,%
+ xleftmargin=1zw,%
+ numberstyle={\scriptsize},%
+ stepnumber=1,
+ numbersep=1zw,%
+ lineskip=-0.5ex,%
+ tabsize=4
+}
+
+\renewcommand{\topfraction}{1.00}
+\renewcommand{\bottomfraction}{1.00}
+\renewcommand{\textfraction}{0.00}
+\renewcommand{\floatpagefraction}{1.00}
+\renewcommand{\dbltopfraction}{1.00}
+\renewcommand{\dblfloatpagefraction}{1.00}
+
+\renewcommand{\contentsname}{\Large 目次}
+\renewcommand{\bibname}{\Large 参考文献}
+
+\setlength\floatsep{6pt}
+\setlength\textfloatsep{6pt}
+\setlength\intextsep{6pt}
+\setlength\abovecaptionskip{0pt}
+
+\setlength{\topmargin}{0truemm}
+\setlength{\textheight}{241truemm}
+\setlength{\headheight}{2truemm}
+\setlength{\headsep}{8truemm}
+\setlength{\oddsidemargin}{0truemm}
+\setlength{\evensidemargin}{0truemm}
+\setlength{\textwidth}{160truemm}
+\setlength{\columnsep}{8truemm}
+\setlength{\skip\footins}{4truemm}
+
+\setlength{\baselineskip}{5truemm}
+\setlength{\parskip}{1truemm}
+
+\newcommand{\rev}{rev.1 - March 9th, 2013}
+
+
+% タイトル
+\title{T-frogモータドライバ User's Manual}
+\author{
+渡辺 敦志 (WATANABE Atsushi)
+\thanks{筑波大学 システム情報工学研究科 知能ロボット研究室\\\hspace{10mm}atusi\_w@roboken.esys.tsukuba.ac.jp}
+}
+\date{\rev}
+
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
+\newlength{\boxwidth}
+\newlength{\itemwidth}
+\newcommand \warnbox [2]{
+	\begin{itembox}[l]{
+		\hspace{-18pt}
+		\noindent
+		\colorbox{black}{
+			\setlength{\boxwidth}{\hsize}
+			\addtolength{\boxwidth}{-16pt}
+			\begin{minipage}{\boxwidth}{
+				\color{white}\bfseries\large {#1}}
+			\end{minipage}
+		}
+	}
+	{#2}
+	\end{itembox}
+}
+\newcommand \iconitem [2]{
+	\setlength{\itemwidth}{\hsize}
+	\addtolength{\itemwidth}{-13mm}
+	\begin{minipage}{13mm}
+		\includegraphics[width=12mm]{#1}
+	\end{minipage}
+	\begin{minipage}{\itemwidth}
+		\begin{itemize}
+			{#2}
+		\end{itemize}
+	\end{minipage}
+}
+
+\begin{document}
+\frontmatter
+\maketitle
+
+\newpage
+\thispagestyle{fancy}
+\fancyhead{}
+\fancyhead[LO,LE]{T-frogモータドライバ User's Manual \;\;(\rev)}
+\fancyhead[RO,RE]{改訂履歴}
+\cfoot{}
+
+\begin{center}
+\vspace{10mm}\hbox{}
+{\bf\large 改訂履歴}\\
+\vspace{3mm}
+\begin{tabular}{llp{20em}}
+{\small\bf 版} & {\small\bf 改訂日} & {\small\bf 改訂内容}\\
+\hline
+\hline
+rev.1 & March 9th, 2013 & 作成 \\
+\hline
+\end{tabular}
+\end{center}
+\newpage
+
+\tableofcontents
+\thispagestyle{fancy}
+\fancyhead{}
+\fancyhead[LO,LE]{T-frogモータドライバ User's Manual \;\;(\rev)}
+\fancyhead[RO,RE]{目次}
+\cfoot{}
+\mainmatter
+
+\pagestyle{fancy}
+\fancyhead[RO,RE]{\thepage}
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{概要}
+\label{sec:概要}
+
+T-frogモータドライバは、主に図\ref{fig:example_robot}に例を示すような独立二輪躁舵型(差動駆動型)の移動ロボット駆動・制御のために開発された、モータ駆動・制御モジュールです。移動ロボット走行制御ソフトウェアプラットフォーム``YP-Spur''と組み合わせて使用することで、容易に移動ロボットシステムを構築可能です。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=80mm]{lr1.eps}
+\caption{独立二輪躁舵型(差動駆動型)移動ロボットの例}
+\label{fig:example_robot}
+\end{center}
+\end{figure}
+
+\subsection{移動ロボット制御系とT-frogモータドライバ}
+ 移動ロボットを駆動・制御するためには、モータドライバ、モータの制御系、ロボットの走行制御系が必要です。
+T-frogモータドライバは主に、モータドライバ・モータコントローラ基板をロボットに備え付け、ロボットの走行制御系とユーザプログラムをラップトップPC上に置く構成の移動ロボットシステム向けに開発されたモータ駆動・制御モジュールです。\par
+
+ 本モータドライバモジュールは、近年、産業用ロボットなどで広く用いられている、ブラシレスDCモータ(ACサーボモータ)の駆動・制御に対応しています。
+また、モータの特性やロボットのダイナミクスを考慮した、フィードフォワード制御を活用することで、制御性を高めることができます。\par
+
+\subsection{T-frogプロジェクト}
+ 2010年に、筑波大学知能ロボット研究室の移動ロボット技術の移転と利用の促進のため、筑波大学と茨城県内の中小企業などをメンバーとして、T-frog ({\bf T}sukuba {\bf F}uture {\bf Ro}bot {\bf G}roup)プロジェクトが発足しました。
+本モータドライバは、T-frogプロジェクトの一環として開発されたモジュールです。\par
+
+T-frogモータドライバは、ツジ電子株式会社
+\footnote{\hbox to 0pt{ツジ電子株式会社}\hspace{10em} 〒300-0013 茨城県土浦市神立町3739、info2@tsuji-denshi.co.jp、029-832-3031}
+と渡辺敦志
+\footnote{\hbox to 0pt{渡辺敦志}\hspace{10em} 筑波大学知能ロボット研究室(2013年度現在)、atusi\_w@roboken.esys.tsukuba.ac.jp}
+を中心に開発しています。
+また、本モータドライバモジュールには、筑波大学知能ロボット研究室
+\footnote{\hbox to 0pt{知能ロボット研究室}\hspace{10em} 〒305-8573 茨城県つくば市天王台1-1-1 筑波大学 システム情報工学研究科、029-853-5155}
+の研究成果が用いられています。\par
+
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{主な仕様}
+\label{sec:主な仕様}
+
+T-frogモータドライバ(図\ref{fig:driver_board})の主な仕様を、図\ref{tb:tfrog_motor_driver}に示します。
+本モータドライバは1台につき、ブラシレスDCモータまたはDCモータを2台駆動・制御できます。
+通信インタフェースはUSBのCDC-ACMクラスに対応しており、Linux、Mac OS X、Windows環境で使用可能(Windows環境ではドライバが必要)です。
+通信プロトコルは筑波大学 知能ロボット研究室で開発している移動ロボット走行制御ソフトウェアプラットフォーム YP-Spur\footnote{Robot Platform Project \\ \hspace{2em}{\scriptsize \url{http://www.roboken.esys.tsukuba.ac.jp/platform/}}}に準拠しています。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=80mm]{driver_board.eps}
+\caption{T-frogモータドライバ(プレ製品化版)の外観}
+\label{fig:driver_board}
+\end{center}
+\end{figure}
+\begin{table}[H]
+\begin{center}
+\caption{T-frogモータドライバの主な仕様}
+\label{tb:tfrog_motor_driver}
+\begin{tabular}{rl}
+\hline
+\hline
+対応モータ			&	3相ブラシレスDCモータ{\small (ACサーボモータ)}\\*[-1mm]
+					&	ブラシ付きDCモータ				\\
+モータ数			&	2台								\\
+インタフェース		&	USB2.0 (CDC-ACM)				\\*[-1mm]
+					&	UART (CMOSレベル)				\\*[-1mm]
+					&	RS-485							\\
+最大電源電圧		&	12-60V							\\
+最大連続出力電流	&	15A(自然空冷)					\\
+PWM分解能			&	20kHzで1200						\\
+エンコーダ入力		&	2相インクリメンタルエンコーダ	\\*[-1mm]
+					&	3相ホール素子+原点信号			\\
+寸法				&	100 x 60 x 30 mm				\\
+重量				&	96 g							\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+T-frogモータドライバと、YP-Spurを用いた移動ロボット走行制御システムの構成を、図\ref{fig:yp-system}に示します。
+本モータドライバは、図\ref{fig:yp-system}中の点線で囲った部分に相当します。
+モータドライバ上のマイクロコンピュータでは、ラップトップコンピュータから送信された制御パラメータを用いて、速度制御の目標値に追従するように、モータの角速度をPI制御します。PI制御器には、車輪を駆動したときに、独立二輪躁舵(PWS)型移動ロボットの動特性によって他の車輪に及ぼす影響などを補償するためのフィードフォワード補償器\cite{the:pws_ff_cnt}\cite{the:vehicle_control}が内蔵されています。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=80mm]{system.eps}
+\caption{T-frogモータドライバとYP-Spurを用いた移動ロボット走行制御システムの構成}
+\label{fig:yp-system}
+\end{center}
+\end{figure}
+
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{取り扱い上の注意}
+\label{sec:注意}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{注意}
+\label{sec:注意}
+
+けがや、機器の故障を防ぐために、以下の事項にご注意下さい。\par
+\null
+
+
+\warnbox{電源ケーブル・コネクタは}{
+	\iconitem{warn.eps}{
+		\item ピン配置が正しいことを確認する
+		\item 正しく圧着できていることを確認する
+		\item 駆動するモータの合計容量に見合った定格容量を確保する
+	}
+}
+
+\warnbox{モータ・エンコーダのケーブル・コネクタは}{
+	\iconitem{warn.eps}{
+		\item ピン配置が正しいことを確認する
+		\item モータとエンコーダの組み合わせが正しいことを確認する
+	}
+}
+
+\warnbox{本製品への電源供給は}{
+	\iconitem{warn.eps}{
+		\item モータ駆動電源には、使用する動作範囲を考慮してヒューズまたはブレーカーを挿入する
+		\item 5V電源には、100mA$\sim$1A程度のヒューズまたはブレーカーを挿入する
+	}
+}
+
+\warnbox{異常を感じたときは}{
+	\iconitem{warn.eps}{
+		\item 正しく動作しなくなったら、事故防止のためすぐに電源を切る
+		\item 基板が発熱していないことを確認する
+		\item 電流制限機能付きの電源装置から電源を供給し、動作を確認する
+		\item 異常が続くときは、開発者へ問い合わせる
+	}
+}
+
+\warnbox{動作中の製品には}{
+	\iconitem{donot.eps}{
+		\item 基板に直接手を触れない(人体の寄生容量や静電気による誤動作を防ぐため)
+		\item コネクタを着脱しない
+	}
+}
+
+\warnbox{走行制御プログラムの起動時には}{
+	\iconitem{warn.eps}{
+		\item パラメータファイルが正しいことを確認する
+	}
+	\vspace{5pt}
+	\hrule
+	\vspace{5pt}
+	\iconitem{donot.eps}{
+		\item モータで駆動する部分に手を置かない
+	}
+}
+
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{推奨事項}
+\label{sec:推奨}
+
+製品の正常な動作のために、以下の事項を推奨致します。
+\par
+\null
+
+
+\warnbox{通信インタフェースには}{
+	\iconitem{recommend.eps}{
+		\item シールド付きのUSBケーブルを使用する
+	}
+}
+
+\warnbox{本製品への電源供給は}{
+	\iconitem{recommend.eps}{
+		\item モータ駆動電源の電圧変動が、5V電源に伝わりにくいように構成する
+	}
+}
+
+\warnbox{ソフトウェアについて}{
+	\iconitem{recommend.eps}{
+		\item T-frogモータドライバのファームウェア更新、YP-Spurのソフトウェア更新を確認し、バグ修正などがあった際は更新する
+	}
+}
+
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{T-frogモータドライバの接続と取り付け}
+\label{sec:モータドライバの接続}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{コネクタ}
+\label{sec:コネクタ}
+
+T-frogモータドライバ使用時には、モータドライブ用電源、コントローラ用電源、モータ、エンコーダ、USBコネクタを接続します。各コネクタの配置を図\ref{fig:connector}に、適合するコネクタシリーズを表\ref{tb:connector}に示します。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=90mm]{connector.eps}
+\caption{T-frogモータドライバのコネクタ配置(プレ製品化版)}
+\label{fig:connector}
+\end{center}
+\end{figure}
+
+\begin{table}[H]
+\begin{center}
+\caption{適合コネクタシリーズ一覧(プレ製品化版)}
+\label{tb:connector}
+\begin{tabular}{rcll}
+\hline
+\hline
+モータドライブ電源 & JST & VH & (2pin) \\
+モータ出力 & JST & VH & (3pin) \\
+\hline
+コントローラ基板電源 & JST & XH & (2pin) \\
+エンコーダ & JST & PHD & (8pin) \\
+USBインタフェース & - & mini-B & \\
+RS-485 & JST & ZH & (3pin) \\
+\hline
+FPGA書き込み & HRS & DF11 & (10pin) \\
+デバッグ用シリアル & JST & ZH & (3pin) \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{電気的特性}
+\label{sec:電気的特性}
+
+T-frogモータドライバの、各コネクタの絶対最大定格を表\ref{tb:abs_max}に、電気的特性を表\ref{tb:el_char}に示します。
+モータドライブ用電源およびモータのコネクタ(JST VHシリーズ)の定格連続電流は10Aですので、これ以上の電流が必要な場合は、ケーブルを直接半田付けするか、基板に端子台などを取り付けて配線して下さい。\par
+%端子台取り付けオプション基板(予定、図\ref{fig:large_cur})
+\begin{table}[H]
+\begin{center}
+\caption{絶対最大定格(プレ製品化版)}
+\label{tb:abs_max}
+\begin{tabular}{rl}
+\hline
+\hline
+コントローラ基板電源 & -0.5 $\sim$ +7V \\
+モータドライブ電源 & -0.5 $\sim$ +80V \\
+\hline
+エンコーダ入力 & -0.5 $\sim$ +7V \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+\begin{threeparttable}
+\begin{center}
+\caption{電気的特性(プレ製品化版)}
+\label{tb:el_char}
+\begin{tabular}{rl}
+\hline
+\hline
+コントローラ基板電源 & 4.5 $\sim$ 5.5V \\
+モータドライブ電源 & +10 $\sim$ 76V \\
+\hline
+エンコーダ入力プルアップ & 1k$\Omega$ \\
+エンコーダ入力LOレベル閾値 & 0.6V \\
+エンコーダ入力HIレベル閾値 & 2.2V \\
+\hline
+コントローラ基板電流 & typ 140mA\tnote{(1} \\
+ドライブ基板スタンバイ電流 & typ 20mA \\
+\hline
+\end{tabular}
+{\footnotesize
+\begin{tablenotes}
+\item[(1] エンコーダなどの電流を除く、USB通信時。
+\end{tablenotes}
+}
+\end{center}
+\end{threeparttable}
+\end{center}
+\end{table}
+
+%\begin{figure}[H]
+%\begin{center}
+%\includegraphics[width=80mm]{large_cur.eps}
+%\caption{大電流用 端子台取り付けオプション基板(予定)}
+%\label{fig:large_cur}
+%\end{center}
+%\end{figure}
+%
+コントローラ基板のエンコーダコネクタ ピン配置を図\ref{fig:encoder-if}に示します。+5Vピンからは、コントローラ基板電源電圧が供給されます。各入力ピンは1k$\Omega$でプルアップされています。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=60mm]{encoder-if.eps}
+\caption{エンコーダコネクタのピン配置}
+\label{fig:encoder-if}
+\end{center}
+\end{figure}
+
+オプションとして、エンコーダ・モータのコネクタ変換基板(図\ref{fig:connector_adapter})も提供しており、Maxon MRエンコーダ、Maxon ECシリーズブラシレスDCモータ、HEWLETT PACKARD HEDSシリーズのエンコーダコネクタが接続できます。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=80mm]{connector-adapter.eps}
+\caption{エンコーダ・モータコネクタ変換基板}
+\label{fig:connector_adapter}
+\end{center}
+\end{figure}
+
+
+\newpage
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{外形と取り付け穴}
+\label{sec:電気的特性}
+
+T-frogモータドライバの外形図と取り付け穴の配置を図\ref{fig:shape}に示します。
+ドライバの裏面に、基板スペーサ(10mm高)が取り付けられており、M3.0のネジで固定できます。
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=130mm]{shape.eps}
+\caption{T-frogモータドライバの外形図}
+\label{fig:shape}
+\end{center}
+\end{figure}
+
+
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{YP-Spurを用いたロボット制御}
+\label{sec:YP-Spur}
+
+T-frogモータドライバは、移動ロボット走行制御ソフトウェアプラットフォーム``YP-Spur''の通信仕様に対応しています。
+T-frogモータドライバとYP-Spurを組み合わせて用いることで、容易に移動ロボットの走行制御系を構築できます。
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{動作環境}
+
+YP-Spurは、Unix互換のシステム(Linux、Mac OS Xなど)、およびWindowsで動作します。
+以下の手順は、Linuxを想定したものです。
+Mac OS Xでは、アタッチされるデバイスのパスなどが異なります。
+バージョン管理ツールgit、およびgcc+glibcまたは、それらに相当する開発環境がインストールされている必要があります。\par
+
+Windows環境でのインストールは、MinGW環境で行います。基本的にWindows環境での動作確認は行われていません。\par
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{YP-Spurのインストール}
+
+YP-Spurおよび、リポジトリに登録されているロボットのパラメータファイルは、以下の手順でインストールできます。\par
+\begin{lstlisting}{}
+$ git clone http://www.roboken.esys.tsukuba.ac.jp/platform/repos/yp-spur.git
+$ cd yp-spur
+$ ./configure
+$ make
+$ sudo make install
+$ sudo ldconfig
+$ cd ..
+$ git clone http://www.roboken.esys.tsukuba.ac.jp/platform/repos/yp-robot-params.git
+$ cd yp-robot-params
+$ ./configure
+$ sudo make install
+$ cd ..
+\end{lstlisting}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{YP-Spurの動作確認}
+
+動作確認には、ロボットのパラメータファイルが必要となります。
+新規に作成したロボットのパラメータは、\ref{sec:パラメータ作成}章に従って作成して下さい。\par
+
+YP-Spurを用いたロボットの走行制御は、ラップトップPC上で走行制御を行う``ypspur-coordinator''プロセスと、ユーザプログラムのプロセスを動作させることで行います。
+例えば、1.0x0.1メートルの四角形を描くように走行するサンプルプログラムを実行するには、ターミナルを2つ開き、それぞれで以下のコマンドを実行します。
+
+\warnbox{YP-Spurサンプルプログラムの起動時には}{
+	\iconitem{warn.eps}{
+		\item パラメータファイルが正しいことを確認する
+		\item ロボットの正面1.5メートル、左右1メートル程度の空間を確保して実行する
+	}
+}
+
+\begin{lstlisting}{}
+ $ ypspur-coordinator -p PARAMETER_FILE.param -d DEVICE_PATH
+\end{lstlisting}
+\begin{lstlisting}{}
+ $ cd yp-spur/samples/
+ $ ./run-test
+\end{lstlisting}
+PARAMETER\_FILE.paramは、ロボットのパラメータファイルのフルパス、もしくは/usr/local/share/yp-robot-params以下にインストールされたパラメータファイルのファイル名を指定します。DEVICE\_PATHは、/dev/ttyACM0のようにLinux上にアタッチされるデバイスのフルパスを指定します。\par
+
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{YP-Spurロボットパラメータ}
+\label{sec:パラメータ作成}
+
+T-frogモータドライバは、DCモータ・ブラシレスモータに対応しており、モータの種類などの情報をYP-Spurのロボットパラメータファイルで指定する必要があります。
+詳細なパラメータ決定方法・調整方法は移動ロボット走行制御プラットフォームWiki\footnote{Robot Platform Project Wiki \\ {\scriptsize\url{http://www.roboken.esys.tsukuba.ac.jp/platform/wiki/}}}を参照して下さい。\par
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{ブラシレスモータ用のロボットパラメータ作成}
+\label{sec:パラメータ作成}
+
+モータ種別の指定は MOTOR\_PHASE 項で行い、DCモータの場合は0を、3相ブラシレスモータの場合は3を指定します。
+ブラシレスモータを使用する場合は、内部抵抗・逆起電力係数・トルク係数は、DCモータに換算した値を指定します。
+\begin{itemize}
+\item {\bf MOTOR\_R: モータ内部抵抗[$\Omega$]} \par モータの端子間抵抗$R$から、$\frac{3}{4} \cdot R$で与える
+\item {\bf MOTOR\_VC: 逆起電力係数[rpm/V]} \par 定格電圧$V$でのモータ無負荷最大回転数$r_{max}$から、$r_{max}/V$で与える
+\item {\bf MOTOR\_TC: トルク係数[Nm/A]} \par 逆起電力係数$K_{E}=r_{max}/V$から単位を変換し、$\frac{60}{2\pi K_{E}}$で与える\footnote{モータのエネルギー損失が無視できる場合、モータに注入した電力$P = E \cdot I = K_{E} \cdot \omega \cdot I$と、モータが発する動力$P = \tau \cdot \omega = K_{\tau} \cdot I \cdot \omega$が釣り合うため、$K_{E} = K_{\tau}$が成り立つ(単位系に注意)}
+\end{itemize}\par
+
+また、ブラシレスモータが、n極(モータ軸を1回転すると逆起電力波形やホール素子波形がn周期現れる)場合は、ギア比(GEAR 項)をn倍し、エンコーダ分解能(COUNT\_REV 項)を1/nとする必要があります。モータ軸の慣性モーメントを指定する MOTOR\_M\_INERTIA 項 はギア比がn倍だった場合に換算して指定する必要があるので、モータ軸の慣性モーメント$M$に対して、$M/n^{2}$を与えます。\par
+
+T-frogモータドライバとYP-Spurを用いて、パラメータを適切に設定すれば、フィードフォワード制御によりロボット走行制御の特性を向上できます。\par
+
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{パラメータファイル作成例}
+\label{sec:パラメータ作成例}
+
+最小構成の移動ロボットは、T-frogモータドライバの他に、モータ・タイヤ・電源・ラップトップPCがあれば構築できます。
+図\ref{fig:simple_robot}に、T-frogモータドライバの動作テスト用に構築した簡易な移動ロボットを示します。オリエンタルモータのブラシレスDCモータ(BX230A-15FRにパルスエンコーダを取り付けたバージョン)を搭載し、ダイレクトドライブでタイヤを駆動する構成となっています。\par
+このときの、パラメータファイルの主要な部分を以下に示します。このモータは3相5極なので、ギア比は5倍となっています。\par
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=65mm]{simple_robot.eps}
+\caption{オリエンタルモータのブラシレスDCモータを用いた移動ロボットの例}
+\label{fig:simple_robot}
+\end{center}
+\end{figure}
+
+
+\begin{lstlisting}{}
+     MOTOR_PHASE    3.00000000 #
+         PWM_MAX 1200.00000000 #
+       COUNT_REV  400.00000000 #[cnt/rev]
+            VOLT   24.00000000 #[V]
+           CYCLE    0.00100000 #[s]
+            GEAR    5.00000000 #[in/out]
+         MOTOR_R    0.80000000 #[ohm]
+        MOTOR_TC    0.01527887 #[Nm/A]
+        MOTOR_VC  600.00000000 #[rpm/V]
+
+       RADIUS[0]   -0.05600000 #[m]
+       RADIUS[1]    0.05600000 #[m]
+           TREAD    0.39000000 #[m]
+   CONTROL_CYCLE    0.02000000 #[s]
+         GAIN_KP   35.00000000 #P gain
+         GAIN_KI   45.00000000 #I gain
+      TORQUE_MAX    0.40000000 #[Nm]
+    TORQUE_LIMIT    0.50000000 #[Nm]
+   TORQUE_NEWTON    0.00200000 #[Nm]
+   TORQUE_VISCOS    0.00000000 #[Nm/rad/s]
+
+         MAX_VEL    3.00000000 #[m/s]
+           MAX_W    6.28000000 #[rad/s]
+       MAX_ACC_V    2.00000000 #[m/ss]
+       MAX_ACC_W   12.50000000 #[rad/ss]
+  MAX_CENTRI_ACC    2.45000000 #0.25G
+
+    INTEGRAL_MAX    0.20000000 #[rev]
+            MASS    5.00000000 #[kg]
+  MOMENT_INERTIA    0.10000000 #[kgm^2]
+ MOTOR_M_INERTIA    0.00000093 #[kgm^2]
+  TIRE_M_INERTIA    0.00300000 #[kgm^2]
+\end{lstlisting}
+
+このハードウェアおよびパラメータを用いて、YP-Spurで走行制御を行い、動作を確認した結果、ジョイスティックで操作しながら、0.1m/sから5m/s程度の速度域で、安定に走行可能なことが確かめられました。また、ピークの電源電流20A程度の動作領域でも、問題なく駆動・制御が行えることを確認しています。\par
+
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{T-frogモータドライバのファームウェア更新方法}
+\label{sec:ファームウェア更新方法}
+
+T-frogモータドライバのファームウェア更新は、USBインタフェースで行います。
+はじめに、以下の手順に従って、FLASH ROMを消去します。
+
+\warnbox{ファームウェアの更新時}{
+	\iconitem{donot.eps}{
+		\item 作業中は、モータ駆動電源を供給しない
+		\item 作業を中断しない
+	}
+}
+
+\begin{enumerate}
+	\leftskip=10pt
+	\item T-frogモータドライバ基板上のスライドスイッチ``SW1''を、1ピン表示側にスライド
+	\setlength\intextsep{-10pt}
+	\setlength\textfloatsep{-10pt}
+	\begin{figure}[H]
+		\begin{center}
+		\includegraphics[width=140mm]{firmware.erace.eps}
+		\caption{T-frogモータドライバFLASH ROMの消去}
+		\label{fig:firmware.erace}
+		\end{center}
+	\end{figure}
+	\item コントローラ基板電源(5V)を投入(1秒以内に消去が完了)
+	\item コントローラ基板電源を切断
+	\item スライドスイッチ``SW1''を、初期状態(3ピン表示側)にスライド
+\end{enumerate}
+
+基板のバージョンと一致するコンパイル済みのファームウェアを以下のURLからダウンロードします。
+ソースコードをダウンロードしてコンパイルすることでも生成できます。
+\begin{itemize}
+\item [] \url{http://www.roboken.esys.tsukuba.ac.jp/platform/}
+\end{itemize}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{Linux環境の場合}
+\label{sec:Linuxファームウェア}
+
+以下のURLから、``BSD SAM-BA''をダウンロードし、インストールします。
+
+\begin{itemize}
+\item [] \url{http://sourceforge.net/projects/bsd-samba/}
+\end{itemize}
+
+T-frogモータドライバをUSBインタフェースでコンピュータに接続、コントローラ基板電源(5V)を投入し、
+以下のコマンドを実行します。
+\begin{lstlisting}{}
+$ samba -i DEVICE_PATH
+> flash 0x00100000 FIRMWARE.bin
+> nvm 4
+\end{lstlisting}
+DEVICE\_PATHは、/dev/ttyACM0のようにLinux上にアタッチされるデバイスのフルパスを指定し、
+FIRMWARE.binはコンパイル済みのファームウェアのパスを指定します。
+
+コマンドが完了したら、コントローラ基板電源を切断し、再度、投入します。
+
+\vspace{1em}
+\warnbox{ファームウェア更新成功の確認}{
+	\iconitem{warn.eps}{
+		\item 電源投入時に、緑のLEDが短時間点灯した後、消灯することを確認する
+	}
+}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{Windows環境の場合}
+\label{sec:Windowsファームウェア}
+
+ 以下のURLから、``SAM-BA for Windows''をダウンロードし、インストールします。
+
+\begin{itemize}
+\item [] \url{http://www.atmel.com/tools/ATMELSAM-BAIN-SYSTEMPROGRAMMER.aspx}
+\end{itemize}
+
+ T-frogモータドライバをUSBインタフェースでコンピュータに接続、コントローラ基板電源(5V)を投入し、以下の手順に従ってファームウェアを書き込みます。
+なお、初回接続時には、デバイスドライバのインストールウィザードが開きますので、画面の指示に従ってデバイスドライバをインストールして下さい。
+ 
+\begin{enumerate}
+	\leftskip=10pt
+	\item インストールした``SAM-BA for Windows''を実行
+	\item ``Select the connection''欄で、T-frogモータドライバのポートを選択
+	\item ``Select your board''欄で、基板のバージョンに対応する型番を選択
+		\begin{center}
+			\begin{tabular}{rl}
+				\hline
+				{\bf rev.4(プレ製品化版)} & at91sam7se512-ek \\
+				{\bf rev.5(製品版)} &  at91sam7se256-ek \\
+				\hline
+			\end{tabular}
+		\end{center}
+	\item ``Connect''を選択
+		\setlength\intextsep{-10pt}
+		\setlength\textfloatsep{-10pt}
+		\begin{figure}[H]
+			\begin{center}
+			\includegraphics[width=75mm]{sam-ba.connect.eps}
+			\caption{``SAM-BA for Windows''接続画面}
+			\label{fig:sam-ba.connect}
+			\end{center}
+		\end{figure}
+	\item ``External RAM initialization failed.''の警告が現れるので、``はい(Y)''を選択
+	\item ``Download / Upload File''の``Send File Name''欄で、コンパイル済みのファームウェアを開く
+	\item ``Send File''ボタンを選択
+		\setlength\intextsep{-10pt}
+		\setlength\textfloatsep{-10pt}
+		\begin{figure}[H]
+			\begin{center}
+			\includegraphics[width=120mm]{sam-ba.write.eps}
+			\caption{``SAM-BA for Windows''ファームウェア書き込み画面}
+			\label{fig:sam-ba.write}
+			\end{center}
+		\end{figure}
+	\item ``Lock region(s)''ウインドウが現れるので``いいえ(N)''を選択
+	\item ``Scripts''欄で``Boot from Flash (GPNVM2)''を選択して``Execute''
+\end{enumerate}
+
+作業が完了したら、コントローラ基板電源を切断し、再度、投入します。
+
+\vspace{1em}
+\warnbox{ファームウェア更新成功の確認}{
+	\iconitem{warn.eps}{
+		\item 電源投入時に、緑のLEDが短時間点灯した後、消灯することを確認する
+	}
+}
+
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{問い合わせ先}
+\label{sec:問い合わせ先}
+
+\begin{itembox}[l]
+	{ご購入方法などについて}
+	{
+		\hspace{2em}\parbox[H]{\textwidth}{\vspace{-0.5em}
+			{\bf\hspace{-1em} ツジ電子株式会社}\\
+			〒300-0013 茨城県土浦市神立町3739\\
+			info2@tsuji-denshi.co.jp\\
+			029-832-3031
+		}
+	}
+\end{itembox}
+
+\begin{itembox}[l]
+	{ハードウェア・ソフトウェアのトラブルについて}
+	{
+		\hspace{2em}\parbox[H]{\textwidth}{\vspace{-0.5em}
+			{\bf\hspace{-1em} 渡辺敦志}\\
+			〒305-8573 茨城県つくば市天王台1-1-1\\
+			筑波大学 システム情報工学研究科 知能ロボット研究室(2013年度現在)\\
+			atusi\_w@roboken.esys.tsukuba.ac.jp\\
+			029-853-5155
+		}
+	}
+\end{itembox}
+
+
+\newpage
+% ******************************************************************
+% ************************ thebibliography *************************
+\small
+\begin{thebibliography}{99}
+\thispagestyle{fancy}
+\fancyhead[RO,RE]{参考文献}
+
+\bibitem{the:dcm-ff-cur-cnt}
+飯田重喜, 油田信一,
+\newblock DCモータのソフトウェアサーボ系におけるフィードフォワード電流制御.
+\newblock 電学論D Vol.109-D, No.4, pp.289-296, 1989.
+
+\bibitem{the:pws_ff_cnt}
+S. Iida, S. Yuta,
+\newblock Control of Vehicle with Power Wheeled Steerings Using Feed-forward Dynamics Compensation, 
+\newblock in Proc. of Annual Conference on the IEEE Industrial Electronics Society, pp. 2264-2269, 1991
+
+\bibitem{the:vehicle_control}
+坪内孝司,
+\newblock 車輪移動体の制御, 
+\newblock in Proc. of 日本ロボット学会主催 第43回講習会 ロボット工学入門シリーズ＜移動技術編＞『移動ロボットのやさしい解説』, pp. 58-68, 1995
+
+\end{thebibliography}
+\normalsize
+
+\end{document}
