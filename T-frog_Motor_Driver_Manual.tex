@@ -2,20 +2,25 @@
 
 \usepackage{times}
 \usepackage{multirow}
-\usepackage{nidanfloat}
 \usepackage{amsmath}
 \usepackage{color}
 \usepackage{here}
 \usepackage{graphicx}
+\usepackage{array}
+\usepackage{booktabs}
 \usepackage{threeparttable}
 \usepackage{url}
 \usepackage{listings,makeidx}
 \usepackage{fancyhdr}
+\usepackage{fancybox}
 \usepackage{ascmac}
 \usepackage{color}
 \usepackage[titles]{tocloft}
 
 \graphicspath{{./fig/}}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
 
 \makeatletter
 \def\thanks#1{%
@@ -40,6 +45,7 @@
   \leftskip -10pt
   \leftmargin\leftmargini \addtolength{\leftmargin}{\leftskip}
 }
+\renewcommand{\thefootnote}{\,æ³¨\arabic{footnote}\,}
 \renewcommand{\tableofcontents}{%
   \if@twocolumn\@restonecoltrue\onecolumn
   \else\@restonecolfalse\fi
@@ -67,12 +73,46 @@
     {\@latex@warning{Empty `thebibliography' environment}}%
    \endlist}
 
+\renewcommand{\maketitle}{\begin{titlepage}%
+  \let\footnotesize\small
+  \let\footnoterule\relax
+  \let\footnote\thanks
+  \null\vfil
+  \vskip 60\p@
+  \begin{center}%
+    {\LARGE \@title \par}%
+    \vskip 3em%
+    {\Large
+     \lineskip .75em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+      \vskip 0.5em%
+    {\large \@date \par}%       % Set date in \large size.
+    \vskip 2em%
+    \titleadd
+  \end{center}\par
+  \@thanks\vfil\null
+  \end{titlepage}%
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\p@thanks\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+  \global\let\@title\@empty
+  \global\let\title\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+  }%
 \makeatother
 
 \newcommand{\percent}{\%}
 \renewcommand{\lstlistingname}{Spur_fail1.c}
 \lstset{%
- language={C},
+ language={bash},
  backgroundcolor={\color[gray]{0.90}},%
  basicstyle={\small\ttfamily},%
  identifierstyle={\small\ttfamily},%
@@ -82,15 +122,22 @@
  stringstyle={\small\ttfamily},
  frame={tb},
  breaklines=true,
- numbers=none,%
- xrightmargin=1zw,%
- xleftmargin=1zw,%
+ breakindent=2em,
+ numbers=left,%
+ xrightmargin=0.5zw,%
+ xleftmargin=1.5zw,%
  numberstyle={\scriptsize},%
  stepnumber=1,
  numbersep=1zw,%
  lineskip=-0.5ex,%
  tabsize=4
 }
+\DeclareFontShape{JY1}{mc}{m}{sl}{<5> <6> <7> <8> <9> <10> sgen*min
+    <10.95><12><14.4><17.28><20.74><24.88> min10
+    <-> min10}{}
+\DeclareFontShape{JT1}{mc}{m}{sl}{<5> <6> <7> <8> <9> <10> sgen*tmin
+    <10.95><12><14.4><17.28><20.74><24.88> tmin10
+    <-> tmin10}{}
 
 \renewcommand{\topfraction}{1.00}
 \renewcommand{\bottomfraction}{1.00}
@@ -99,8 +146,8 @@
 \renewcommand{\dbltopfraction}{1.00}
 \renewcommand{\dblfloatpagefraction}{1.00}
 
-\renewcommand{\contentsname}{\Large –ÚŸ}
-\renewcommand{\bibname}{\Large Ql•¶Œ£}
+\renewcommand{\contentsname}{\Large ç›®æ¬¡}
+\renewcommand{\bibname}{\Large å‚è€ƒæ–‡çŒ®}
 
 \setlength\floatsep{6pt}
 \setlength\textfloatsep{6pt}
@@ -109,7 +156,7 @@
 
 \setlength{\topmargin}{0truemm}
 \setlength{\textheight}{241truemm}
-\setlength{\headheight}{2truemm}
+\setlength{\headheight}{6truemm}
 \setlength{\headsep}{8truemm}
 \setlength{\oddsidemargin}{0truemm}
 \setlength{\evensidemargin}{0truemm}
@@ -120,49 +167,92 @@
 \setlength{\baselineskip}{5truemm}
 \setlength{\parskip}{1truemm}
 
-\newcommand{\rev}{rev.1 - March 9th, 2013}
+\hyphenpenalty=10000\relax
+\sloppy
+
+\newcommand{\rev}{rev.2 - July 20th, 2013}
+\newcommand{\authorname}{æ¸¡è¾º æ•¦å¿— (WATANABE Atsushi)}
+\newcommand{\papertitle}{äºŒè»¸ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ TF-2MD3-R6 User's Manual}
+
+\usepackage{atbegshi}
+\AtBeginShipoutFirst{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
+\usepackage[setpagesize=false,dvipdfm,
+		bookmarks=true,
+		bookmarksnumbered=true,
+		bookmarksopen=true,
+		pdftitle={\papertitle},
+		pdfauthor={\authorname},
+		colorlinks=false,
+		pdfborderstyle={},
+%		draft
+	]{hyperref}
+\setlength{\skip\footins}{12pt}
 
 
-% ƒ^ƒCƒgƒ‹
-\title{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo User's Manual}
+% ã‚¿ã‚¤ãƒˆãƒ«
+\title{\papertitle}
 \author{
-“n•Ó “Öu (WATANABE Atsushi)
-\thanks{’}”g‘åŠw ƒVƒXƒeƒ€î•ñHŠwŒ¤‹†‰È ’m”\ƒƒ{ƒbƒgŒ¤‹†º\\\hspace{10mm}atusi\_w@roboken.esys.tsukuba.ac.jp}
+\authorname
+\thanks{ç­‘æ³¢å¤§å­¦ ã‚·ã‚¹ãƒ†ãƒ æƒ…å ±å·¥å­¦ç ”ç©¶ç§‘ çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤\\\hspace{10mm}atsushi.w[at]ieee.org}
 }
 \date{\rev}
+\newcommand{\titleadd}{{\includegraphics[width=130mm]{driver_board_r6.eps}}}
 
 \renewcommand{\thesection}{\arabic{section}.}
 \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}}
 \newlength{\boxwidth}
 \newlength{\itemwidth}
+
+
+
 \newcommand \warnbox [2]{
-	\begin{itembox}[l]{
-		\hspace{-18pt}
-		\noindent
-		\colorbox{black}{
-			\setlength{\boxwidth}{\hsize}
-			\addtolength{\boxwidth}{-16pt}
-			\begin{minipage}{\boxwidth}{
-				\color{white}\bfseries\large {#1}}
-			\end{minipage}
+	\bigskip
+	\vbox{
+		\setlength{\boxwidth}{\textwidth}
+		\addtolength{\boxwidth}{1.05pt}
+		{
+			\bfseries\large
+			\hbox{\rule{\boxwidth}{1.5em}\vspace{-1.8em}}
+			\hbox{\hspace{1em}\color{white}{#1}\vspace{-1em}}
 		}
+		\vspace{-4pt}
+		\addtolength{\boxwidth}{-5em}
+		\begin{itembox}[l]{\hspace{\boxwidth}}
+			\null
+			\bigskip
+			{#2}
+			\null
+		\end{itembox}
 	}
-	{#2}
-	\end{itembox}
+	\bigskip
 }
 \newcommand \iconitem [2]{
-	\setlength{\itemwidth}{\hsize}
-	\addtolength{\itemwidth}{-13mm}
-	\begin{minipage}{13mm}
-		\includegraphics[width=12mm]{#1}
+	\begin{minipage}[m]{13mm}
+		\centering\includegraphics[width=12mm]{#1}
 	\end{minipage}
-	\begin{minipage}{\itemwidth}
+	\setlength{\itemwidth}{\textwidth}
+	\addtolength{\itemwidth}{-13mm}
+	\addtolength{\itemwidth}{-8.5pt}
+	\begin{minipage}[m]{\itemwidth}
 		\begin{itemize}
-			{#2}
+			#2
 		\end{itemize}
 	\end{minipage}
 }
+\newcommand \itemseprule {
+	\vspace{5pt}
+	\hrule
+	\vspace{5pt}
+}
+
+\newcommand \urllink [1]{
+	\ovalbox{
+		\small\url{#1}
+	}
+}
+
+
 
 \begin{document}
 \frontmatter
@@ -171,19 +261,23 @@
 \newpage
 \thispagestyle{fancy}
 \fancyhead{}
-\fancyhead[LO,LE]{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo User's Manual \;\;(\rev)}
-\fancyhead[RO,RE]{‰ü’ù—š—ğ}
+\fancyhead[LO,LE]{\papertitle \;\;(\rev)}
+\fancyhead[RO,RE]{æ”¹è¨‚å±¥æ­´}
 \cfoot{}
 
-\begin{center}
 \vspace{10mm}\hbox{}
-{\bf\large ‰ü’ù—š—ğ}\\
+\begin{center}
+{\bf\large æ”¹è¨‚å±¥æ­´}\\
 \vspace{3mm}
-\begin{tabular}{llp{20em}}
-{\small\bf ”Å} & {\small\bf ‰ü’ù“ú} & {\small\bf ‰ü’ù“à—e}\\
+\begin{tabular}{llp{28em}}
+{\small\bf ç‰ˆ} & {\small\bf æ”¹è¨‚æ—¥} & {\small\bf æ”¹è¨‚å†…å®¹}\\
 \hline
 \hline
-rev.1 & March 9th, 2013 & ì¬ \\
+rev.1 & March 9th, 2013 & ä½œæˆ \\
+rev.2 & July 20th, 2013 & é‡ç”£ç‰ˆãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ TF-2MD3-R6 ã®æƒ…å ±ã‚’è¿½åŠ  \\
+      &                 & å‹ç•ªã®æ±ºå®šã«ä¼´ã†æ–‡ç« ã‚¿ã‚¤ãƒˆãƒ«å¤‰æ›´ \\
+      &                 & ãƒ—ãƒ¬è£½å“åŒ–ç‰ˆã®ã‚¹ãƒšãƒƒã‚¯ä¿®æ­£ \\
+      &                 & ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›¸ãè¾¼ã¿æ–¹æ³•ä¿®æ­£ \\
 \hline
 \end{tabular}
 \end{center}
@@ -192,8 +286,8 @@ rev.1 & March 9th, 2013 & ì¬ \\
 \tableofcontents
 \thispagestyle{fancy}
 \fancyhead{}
-\fancyhead[LO,LE]{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo User's Manual \;\;(\rev)}
-\fancyhead[RO,RE]{–ÚŸ}
+\fancyhead[LO,LE]{\papertitle \;\;(\rev)}
+\fancyhead[RO,RE]{ç›®æ¬¡}
 \cfoot{}
 \mainmatter
 
@@ -203,183 +297,182 @@ rev.1 & March 9th, 2013 & ì¬ \\
 \newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{ŠT—v}
-\label{sec:ŠT—v}
+\section{æ¦‚è¦}
+\label{sec:æ¦‚è¦}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÍAå‚É}\ref{fig:example_robot}‚É—á‚ğ¦‚·‚æ‚¤‚È“Æ—§“ñ—ÖçN‘ÇŒ^(·“®‹ì“®Œ^)‚ÌˆÚ“®ƒƒ{ƒbƒg‹ì“®E§Œä‚Ì‚½‚ß‚ÉŠJ”­‚³‚ê‚½Aƒ‚[ƒ^‹ì“®E§Œäƒ‚ƒWƒ…[ƒ‹‚Å‚·BˆÚ“®ƒƒ{ƒbƒg‘–s§Œäƒ\ƒtƒgƒEƒFƒAƒvƒ‰ƒbƒgƒtƒH[ƒ€``YP-Spur''‚Æ‘g‚İ‡‚í‚¹‚Äg—p‚·‚é‚±‚Æ‚ÅA—eˆÕ‚ÉˆÚ“®ƒƒ{ƒbƒgƒVƒXƒeƒ€‚ğ\’z‰Â”\‚Å‚·B\par
+\subsection{{\bf TF-2MD3-R6}ã‚’ç”¨ã„ãŸç§»å‹•ãƒ­ãƒœãƒƒãƒˆåˆ¶å¾¡}
+äºŒè»¸ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ {\bf TF-2MD3-R6}ã¯ã€ãƒ©ãƒƒãƒ—ãƒˆãƒƒãƒ—PCã‚’ä½¿ã£ã¦èµ°è¡Œåˆ¶å¾¡ãªã©ã‚’è¡Œã†ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã‚·ã‚¹ãƒ†ãƒ ã®èµ°è¡Œåˆ¶å¾¡ã®ãŸã‚ã«é–‹ç™ºã•ã‚ŒãŸã€ãƒ¢ãƒ¼ã‚¿é§†å‹•ãƒ»åˆ¶å¾¡ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§ã™ã€‚
+\figurename~\ref{fig:example_robot} ã«ä¾‹ã‚’ç¤ºã™ã‚ˆã†ãªã€ç‹¬ç«‹äºŒè¼ªèºèˆµå‹(å·®å‹•é§†å‹•å‹)ç­‰ã®ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®åˆ¶å¾¡ãŒå¯èƒ½ã§ã™ã€‚
+ç§»å‹•ãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ  ``{\bf YP-Spur} '' ã¨çµ„ã¿åˆã‚ã›ã¦ä½¿ç”¨ã™ã‚‹ã“ã¨ã§ã€å®¹æ˜“ã«ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã‚·ã‚¹ãƒ†ãƒ ã‚’æ§‹ç¯‰ã§ãã¾ã™ã€‚\par
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=80mm]{lr1.eps}
-\caption{“Æ—§“ñ—ÖçN‘ÇŒ^(·“®‹ì“®Œ^)ˆÚ“®ƒƒ{ƒbƒg‚Ì—á}
+\centering\includegraphics[width=90mm]{icart-mini.eps}
+\caption{ç‹¬ç«‹äºŒè¼ªèºèˆµå‹(å·®å‹•é§†å‹•å‹)ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®ä¾‹}
 \label{fig:example_robot}
-\end{center}
 \end{figure}
 
-\subsection{ˆÚ“®ƒƒ{ƒbƒg§ŒäŒn‚ÆT-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo}
- ˆÚ“®ƒƒ{ƒbƒg‚ğ‹ì“®E§Œä‚·‚é‚½‚ß‚É‚ÍAƒ‚[ƒ^ƒhƒ‰ƒCƒoAƒ‚[ƒ^‚Ì§ŒäŒnAƒƒ{ƒbƒg‚Ì‘–s§ŒäŒn‚ª•K—v‚Å‚·B
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Íå‚ÉAƒ‚[ƒ^ƒhƒ‰ƒCƒoEƒ‚[ƒ^ƒRƒ“ƒgƒ[ƒ‰Šî”Â‚ğƒƒ{ƒbƒg‚É”õ‚¦•t‚¯Aƒƒ{ƒbƒg‚Ì‘–s§ŒäŒn‚Æƒ†[ƒUƒvƒƒOƒ‰ƒ€‚ğƒ‰ƒbƒvƒgƒbƒvPCã‚É’u‚­\¬‚ÌˆÚ“®ƒƒ{ƒbƒgƒVƒXƒeƒ€Œü‚¯‚ÉŠJ”­‚³‚ê‚½ƒ‚[ƒ^‹ì“®E§Œäƒ‚ƒWƒ…[ƒ‹‚Å‚·B\par
+ æœ¬ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒã¯ã€ç”£æ¥­ç”¨ãƒ­ãƒœãƒƒãƒˆãªã©ã§åºƒãç”¨ã„ã‚‰ã‚Œã¦ã„ã‚‹ã€ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿(ACã‚µãƒ¼ãƒœãƒ¢ãƒ¼ã‚¿)ã®é§†å‹•ãƒ»åˆ¶å¾¡ã«å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
+ã¾ãŸã€ãƒ¢ãƒ¼ã‚¿ã®ç‰¹æ€§ã‚„ãƒ­ãƒœãƒƒãƒˆã®ãƒ€ã‚¤ãƒŠãƒŸã‚¯ã‚¹ã‚’è€ƒæ…®ã—ãŸã€ãƒ•ã‚£ãƒ¼ãƒ‰ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰åˆ¶å¾¡ã‚’æ´»ç”¨ã§ãã‚‹ãŸã‚ã€é«˜ã„åˆ¶å¾¡æ€§ã‚’å®Ÿç¾ã§ãã¾ã™ã€‚\par
 
- –{ƒ‚[ƒ^ƒhƒ‰ƒCƒoƒ‚ƒWƒ…[ƒ‹‚ÍA‹ß”NAY‹Æ—pƒƒ{ƒbƒg‚È‚Ç‚ÅL‚­—p‚¢‚ç‚ê‚Ä‚¢‚éAƒuƒ‰ƒVƒŒƒXDCƒ‚[ƒ^(ACƒT[ƒ{ƒ‚[ƒ^)‚Ì‹ì“®E§Œä‚É‘Î‰‚µ‚Ä‚¢‚Ü‚·B
-‚Ü‚½Aƒ‚[ƒ^‚Ì“Á«‚âƒƒ{ƒbƒg‚Ìƒ_ƒCƒiƒ~ƒNƒX‚ğl—¶‚µ‚½AƒtƒB[ƒhƒtƒHƒ[ƒh§Œä‚ğŠˆ—p‚·‚é‚±‚Æ‚ÅA§Œä«‚ğ‚‚ß‚é‚±‚Æ‚ª‚Å‚«‚Ü‚·B\par
+\subsection{T-frogãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆ}
+ 2010å¹´ã«ã€ç­‘æ³¢å¤§å­¦çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤ã®ç§»å‹•ãƒ­ãƒœãƒƒãƒˆæŠ€è¡“ã®ç§»è»¢ã¨åˆ©ç”¨ã®ä¿ƒé€²ã®ãŸã‚ã€ç­‘æ³¢å¤§å­¦ã¨èŒ¨åŸçœŒå†…ã®ä¸­å°ä¼æ¥­ãªã©ã‚’ãƒ¡ãƒ³ãƒãƒ¼ã¨ã—ã¦ã€T-frog ({\bf{F}}uture~{\bf{Ro}}botics~{\bf{G}}roundworks~from~{\bf{T}}sukuba)ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆãŒç™ºè¶³ã—ã¾ã—ãŸã€‚
+æœ¬ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒã¯ã€T-frogãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã®ä¸€ç’°ã¨ã—ã¦é–‹ç™ºã•ã‚ŒãŸãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã§ã™ã€‚\par
 
-\subsection{T-frogƒvƒƒWƒFƒNƒg}
- 2010”N‚ÉA’}”g‘åŠw’m”\ƒƒ{ƒbƒgŒ¤‹†º‚ÌˆÚ“®ƒƒ{ƒbƒg‹Zp‚ÌˆÚ“]‚Æ—˜—p‚Ì‘£i‚Ì‚½‚ßA’}”g‘åŠw‚ÆˆïéŒ§“à‚Ì’†¬Šé‹Æ‚È‚Ç‚ğƒƒ“ƒo[‚Æ‚µ‚ÄAT-frog ({\bf T}sukuba {\bf F}uture {\bf Ro}bot {\bf G}roup)ƒvƒƒWƒFƒNƒg‚ª”­‘«‚µ‚Ü‚µ‚½B
-–{ƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÍAT-frogƒvƒƒWƒFƒNƒg‚ÌˆêŠÂ‚Æ‚µ‚ÄŠJ”­‚³‚ê‚½ƒ‚ƒWƒ…[ƒ‹‚Å‚·B\par
-
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÍAƒcƒW“dqŠ”®‰ïĞ
-\footnote{\hbox to 0pt{ƒcƒW“dqŠ”®‰ïĞ}\hspace{10em} §300-0013 ˆïéŒ§“y‰Ys_—§’¬3739Ainfo2@tsuji-denshi.co.jpA029-832-3031}
-‚Æ“n•Ó“Öu
-\footnote{\hbox to 0pt{“n•Ó“Öu}\hspace{10em} ’}”g‘åŠw’m”\ƒƒ{ƒbƒgŒ¤‹†º(2013”N“xŒ»İ)Aatusi\_w@roboken.esys.tsukuba.ac.jp}
-‚ğ’†S‚ÉŠJ”­‚µ‚Ä‚¢‚Ü‚·B
-‚Ü‚½A–{ƒ‚[ƒ^ƒhƒ‰ƒCƒoƒ‚ƒWƒ…[ƒ‹‚É‚ÍA’}”g‘åŠw’m”\ƒƒ{ƒbƒgŒ¤‹†º
-\footnote{\hbox to 0pt{’m”\ƒƒ{ƒbƒgŒ¤‹†º}\hspace{10em} §305-8573 ˆïéŒ§‚Â‚­‚Îs“V‰¤‘ä1-1-1 ’}”g‘åŠw ƒVƒXƒeƒ€î•ñHŠwŒ¤‹†‰ÈA029-853-5155}
-‚ÌŒ¤‹†¬‰Ê‚ª—p‚¢‚ç‚ê‚Ä‚¢‚Ü‚·B\par
+{\bf TF-2MD3-R6}ã¯ã€ãƒ„ã‚¸é›»å­æ ªå¼ä¼šç¤¾
+\footnote{\makebox[10em][l]{ãƒ„ã‚¸é›»å­æ ªå¼ä¼šç¤¾} ã€’300-0013 èŒ¨åŸçœŒåœŸæµ¦å¸‚ç¥ç«‹ç”º3739ã€info2[at]tsuji-denshi.co.jpã€029-832-3031}
+ã¨æ¸¡è¾ºæ•¦å¿—
+\footnote{\makebox[10em][l]{æ¸¡è¾ºæ•¦å¿—} ç­‘æ³¢å¤§å­¦çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤(2013å¹´åº¦ç¾åœ¨)ã€atsushi.w[at]ieee.org}
+ã‚’ä¸­å¿ƒã«é–‹ç™ºã—ã¦ã„ã¾ã™ã€‚
+ã¾ãŸã€æœ¬ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«ã¯ã€ç­‘æ³¢å¤§å­¦çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤
+\footnote{\makebox[10em][l]{çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤} ã€’305-8573 èŒ¨åŸçœŒã¤ãã°å¸‚å¤©ç‹å°1-1-1 ç­‘æ³¢å¤§å­¦ ã‚·ã‚¹ãƒ†ãƒ æƒ…å ±å·¥å­¦ç ”ç©¶ç§‘ã€029-853-5155}
+ã®ç ”ç©¶æˆæœãŒç”¨ã„ã‚‰ã‚Œã¦ã„ã¾ã™ã€‚\par
 
 
+\newpage
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{å‚Èd—l}
-\label{sec:å‚Èd—l}
+\subsection{ä¸»ãªä»•æ§˜}
+\label{sec:ä¸»ãªä»•æ§˜}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo(}\ref{fig:driver_board})‚Ìå‚Èd—l‚ğA}\ref{tb:tfrog_motor_driver}‚É¦‚µ‚Ü‚·B
-–{ƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Í1‘ä‚É‚Â‚«Aƒuƒ‰ƒVƒŒƒXDCƒ‚[ƒ^‚Ü‚½‚ÍDCƒ‚[ƒ^‚ğ2‘ä‹ì“®E§Œä‚Å‚«‚Ü‚·B
-’ÊMƒCƒ“ƒ^ƒtƒF[ƒX‚ÍUSB‚ÌCDC-ACMƒNƒ‰ƒX‚É‘Î‰‚µ‚Ä‚¨‚èALinuxAMac OS XAWindowsŠÂ‹«‚Åg—p‰Â”\(WindowsŠÂ‹«‚Å‚Íƒhƒ‰ƒCƒo‚ª•K—v)‚Å‚·B
-’ÊMƒvƒƒgƒRƒ‹‚Í’}”g‘åŠw ’m”\ƒƒ{ƒbƒgŒ¤‹†º‚ÅŠJ”­‚µ‚Ä‚¢‚éˆÚ“®ƒƒ{ƒbƒg‘–s§Œäƒ\ƒtƒgƒEƒFƒAƒvƒ‰ƒbƒgƒtƒH[ƒ€ YP-Spur\footnote{Robot Platform Project \\ \hspace{2em}{\scriptsize \url{http://www.roboken.esys.tsukuba.ac.jp/platform/}}}‚É€‹’‚µ‚Ä‚¢‚Ü‚·B\par
+{\bf TF-2MD3-R6}ã®å¤–è¦³ã‚’\figurename~\ref{fig:driver_board_r6} ã«ã€ä¸»ãªä»•æ§˜ã‚’\tablename~\ref{tb:tfrog_motor_driver} ã«ç¤ºã—ã¾ã™ã€‚
+æœ¬ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒã¯1å°ã«ã¤ãã€ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ã¾ãŸã¯DCãƒ¢ãƒ¼ã‚¿ã‚’2å°é§†å‹•ãƒ»åˆ¶å¾¡ã§ãã¾ã™ã€‚
+é€šä¿¡ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã¯USBã®CDC-ACMã‚¯ãƒ©ã‚¹ã«å¯¾å¿œã—ã¦ãŠã‚Šã€Linuxã€Mac OS Xã€Windowsç’°å¢ƒã§ä½¿ç”¨å¯èƒ½(Windowsç’°å¢ƒã§ã¯ãƒ‰ãƒ©ã‚¤ãƒãŒå¿…è¦)ã§ã™ã€‚
+é€šä¿¡ãƒ—ãƒ­ãƒˆã‚³ãƒ«ã¯ç­‘æ³¢å¤§å­¦ çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤ã§é–‹ç™ºã—ã¦ã„ã‚‹ç§»å‹•ãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ  {\bf YP-Spur} \footnote{Robot Platform Project \\ \hspace{2em}{\scriptsize\url{http://www.roboken.esys.tsukuba.ac.jp/platform/}}}ã«æº–æ‹ ã—ã¦ã„ã¾ã™ã€‚\par
+
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=80mm]{driver_board.eps}
-\caption{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo(ƒvƒŒ»•i‰»”Å)‚ÌŠOŠÏ}
-\label{fig:driver_board}
-\end{center}
+\centering\includegraphics[width=120mm]{driver_board_r6.eps}
+\caption{{\bf TF-2MD3-R6}ã®å¤–è¦³}
+\label{fig:driver_board_r6}
 \end{figure}
+
 \begin{table}[H]
-\begin{center}
-\caption{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ìå‚Èd—l}
+\caption{{\bf TF-2MD3-R6}ã®ä¸»ãªä»•æ§˜}
 \label{tb:tfrog_motor_driver}
-\begin{tabular}{rl}
-\hline
-\hline
-‘Î‰ƒ‚[ƒ^			&	3‘Šƒuƒ‰ƒVƒŒƒXDCƒ‚[ƒ^{\small (ACƒT[ƒ{ƒ‚[ƒ^)}\\*[-1mm]
-					&	ƒuƒ‰ƒV•t‚«DCƒ‚[ƒ^				\\
-ƒ‚[ƒ^”			&	2‘ä								\\
-ƒCƒ“ƒ^ƒtƒF[ƒX		&	USB2.0 (CDC-ACM)				\\*[-1mm]
-					&	UART (CMOSƒŒƒxƒ‹)				\\*[-1mm]
+\smallskip
+\centering\begin{tabular}{rl}
+\toprule
+å¯¾å¿œãƒ¢ãƒ¼ã‚¿			&	3ç›¸ ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿			\\*[-1mm]
+					&	DCãƒ¢ãƒ¼ã‚¿						\\
+ãƒ¢ãƒ¼ã‚¿æ•°			&	2å°								\\
+ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹		&	USB2.0 (CDC-ACM)				\\*[-1mm]
+					&	UART (3.3~V \ CMOS)				\\*[-1mm]
 					&	RS-485							\\
-Å‘å“dŒ¹“dˆ³		&	12-60V							\\
-Å‘å˜A‘±o—Í“d—¬	&	15A(©‘R‹ó—â)					\\
-PWM•ª‰ğ”\			&	20kHz‚Å1200						\\
-ƒGƒ“ƒR[ƒ_“ü—Í		&	2‘ŠƒCƒ“ƒNƒŠƒƒ“ƒ^ƒ‹ƒGƒ“ƒR[ƒ_	\\*[-1mm]
-					&	3‘Šƒz[ƒ‹‘fq+Œ´“_M†			\\
-¡–@				&	100 x 60 x 30 mm				\\
-d—Ê				&	96 g							\\
-\hline
+æœ€å¤§é›»æºé›»åœ§		&	12--50~V						\\
+æœ€å¤§é€£ç¶šé›»æµ		&	5~A/ch (è‡ªç„¶ç©ºå†·)				\\
+PWMåˆ†è§£èƒ½			&	1200 (20~kHzæ™‚)					\\
+ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€å…¥åŠ›		&	2ç›¸ ãƒ‘ãƒ«ã‚¹ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€			\\*[-1mm]
+					&	3ç›¸ ãƒ›ãƒ¼ãƒ«ç´ å­+åŸç‚¹ä¿¡å·			\\
+å¯¸æ³•				&	100~x~55~x~30~mm				\\
+é‡é‡				&	100~g							\\
+ãã®ä»–				&	ADå¤‰æ› 7~chã€ãƒ‡ã‚¸ã‚¿ãƒ«IO 8~ch	\\
+\bottomrule
 \end{tabular}
-\end{center}
 \end{table}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÆAYP-Spur‚ğ—p‚¢‚½ˆÚ“®ƒƒ{ƒbƒg‘–s§ŒäƒVƒXƒeƒ€‚Ì\¬‚ğA}\ref{fig:yp-system}‚É¦‚µ‚Ü‚·B
-–{ƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÍA}\ref{fig:yp-system}’†‚Ì“_ü‚ÅˆÍ‚Á‚½•”•ª‚É‘Š“–‚µ‚Ü‚·B
-ƒ‚[ƒ^ƒhƒ‰ƒCƒoã‚Ìƒ}ƒCƒNƒƒRƒ“ƒsƒ…[ƒ^‚Å‚ÍAƒ‰ƒbƒvƒgƒbƒvƒRƒ“ƒsƒ…[ƒ^‚©‚ç‘—M‚³‚ê‚½§Œäƒpƒ‰ƒ[ƒ^‚ğ—p‚¢‚ÄA‘¬“x§Œä‚Ì–Ú•W’l‚É’Ç]‚·‚é‚æ‚¤‚ÉAƒ‚[ƒ^‚ÌŠp‘¬“x‚ğPI§Œä‚µ‚Ü‚·BPI§ŒäŠí‚É‚ÍAÔ—Ö‚ğ‹ì“®‚µ‚½‚Æ‚«‚ÉA“Æ—§“ñ—ÖçN‘Ç(PWS)Œ^ˆÚ“®ƒƒ{ƒbƒg‚Ì“®“Á«‚É‚æ‚Á‚Ä‘¼‚ÌÔ—Ö‚É‹y‚Ú‚·‰e‹¿‚È‚Ç‚ğ•â‚·‚é‚½‚ß‚ÌƒtƒB[ƒhƒtƒHƒ[ƒh•âŠí\cite{the:pws_ff_cnt}\cite{the:vehicle_control}‚ª“à‘ ‚³‚ê‚Ä‚¢‚Ü‚·B\par
+
+\newpage
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{{\bf TF-2MD3-R6}ã‚’ç”¨ã„ãŸç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆ}
+\label{sec:ã‚·ã‚¹ãƒ†ãƒ æ§‹æˆ}
+
+{\bf TF-2MD3-R6}ã¨ã€{\bf YP-Spur} ã‚’ç”¨ã„ãŸç§»å‹•ãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ã‚·ã‚¹ãƒ†ãƒ ã®æ§‹æˆã‚’ã€\figurename~\ref{fig:yp-system} ã«ç¤ºã—ã¾ã™ã€‚
+æœ¬ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒã¯ã€\figurename~\ref{fig:yp-system} ä¸‹éƒ¨ã® ``ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒãƒ¦ãƒ‹ãƒƒãƒˆ'' éƒ¨åˆ†ã«ç›¸å½“ã—ã¾ã™ã€‚
+ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒä¸Šã®ãƒã‚¤ã‚¯ãƒ­ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã§ã¯ã€ãƒ©ãƒƒãƒ—ãƒˆãƒƒãƒ—ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã‹ã‚‰é€ä¿¡ã•ã‚ŒãŸåˆ¶å¾¡ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ç”¨ã„ã¦ã€é€Ÿåº¦åˆ¶å¾¡ã®ç›®æ¨™å€¤ã«è¿½å¾“ã™ã‚‹ã‚ˆã†ã«ã€ãƒ¢ãƒ¼ã‚¿ã®è§’é€Ÿåº¦ã‚’PIåˆ¶å¾¡ã—ã¾ã™ã€‚PIåˆ¶å¾¡å™¨ã«ã¯ã€è»Šè¼ªã‚’é§†å‹•ã—ãŸã¨ãã«ã€ç‹¬ç«‹äºŒè¼ªèºèˆµ(PWS)å‹ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®å‹•ç‰¹æ€§ã«ã‚ˆã£ã¦ä»–ã®è»Šè¼ªã«åŠã¼ã™å½±éŸ¿ãªã©ã‚’è£œå„Ÿã™ã‚‹ãŸã‚ã®ãƒ•ã‚£ãƒ¼ãƒ‰ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰è£œå„Ÿå™¨\cite{the:pws_ff_cnt}\cite{the:vehicle_control}ãŒå†…è”µã•ã‚Œã¦ã„ã¾ã™ã€‚\par
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=80mm]{system.eps}
-\caption{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÆYP-Spur‚ğ—p‚¢‚½ˆÚ“®ƒƒ{ƒbƒg‘–s§ŒäƒVƒXƒeƒ€‚Ì\¬}
+\centering\includegraphics[width=90mm]{system2.eps}
+\caption{{\bf TF-2MD3-R6}ã¨{\bf YP-Spur} ã‚’ç”¨ã„ãŸç§»å‹•ãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ã‚·ã‚¹ãƒ†ãƒ ã®æ§‹æˆ}
 \label{fig:yp-system}
-\end{center}
 \end{figure}
 
 
 \newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{æ‚èˆµ‚¢ã‚Ì’ˆÓ}
-\label{sec:’ˆÓ}
+\section{å–ã‚Šæ‰±ã„ä¸Šã®æ³¨æ„}
+\label{sec:å–ã‚Šæ‰±ã„ä¸Šã®æ³¨æ„}
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{’ˆÓ}
-\label{sec:’ˆÓ}
+\subsection{æ³¨æ„}
+\label{sec:æ³¨æ„}
 
-‚¯‚ª‚âA‹@Ší‚ÌŒÌá‚ğ–h‚®‚½‚ß‚ÉAˆÈ‰º‚Ì–€‚É‚²’ˆÓ‰º‚³‚¢B\par
-\null
+ã‘ãŒã‚„ã€æ©Ÿå™¨ã®æ•…éšœã‚’é˜²ããŸã‚ã«ã€ä»¥ä¸‹ã®äº‹é …ã«ã”æ³¨æ„ä¸‹ã•ã„ã€‚\par
 
-
-\warnbox{“dŒ¹ƒP[ƒuƒ‹EƒRƒlƒNƒ^‚Í}{
+\warnbox{é›»æºã‚±ãƒ¼ãƒ–ãƒ«ãƒ»ã‚³ãƒã‚¯ã‚¿ã¯}{
 	\iconitem{warn.eps}{
-		\item ƒsƒ“”z’u‚ª³‚µ‚¢‚±‚Æ‚ğŠm”F‚·‚é
-		\item ³‚µ‚­ˆ³’…‚Å‚«‚Ä‚¢‚é‚±‚Æ‚ğŠm”F‚·‚é
-		\item ‹ì“®‚·‚éƒ‚[ƒ^‚Ì‡Œv—e—Ê‚ÉŒ©‡‚Á‚½’èŠi—e—Ê‚ğŠm•Û‚·‚é
+		\item ãƒ”ãƒ³é…ç½®ãŒæ­£ã—ã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹
+		\item æ­£ã—ãåœ§ç€ã§ãã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèªã™ã‚‹
+		\item é§†å‹•ã™ã‚‹ãƒ¢ãƒ¼ã‚¿ã®åˆè¨ˆå®¹é‡ã«è¦‹åˆã£ãŸå®šæ ¼å®¹é‡ã‚’ç¢ºä¿ã™ã‚‹
 	}
 }
 
-\warnbox{ƒ‚[ƒ^EƒGƒ“ƒR[ƒ_‚ÌƒP[ƒuƒ‹EƒRƒlƒNƒ^‚Í}{
+\warnbox{ãƒ¢ãƒ¼ã‚¿ãƒ»ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã®ã‚±ãƒ¼ãƒ–ãƒ«ãƒ»ã‚³ãƒã‚¯ã‚¿ã¯}{
 	\iconitem{warn.eps}{
-		\item ƒsƒ“”z’u‚ª³‚µ‚¢‚±‚Æ‚ğŠm”F‚·‚é
-		\item ƒ‚[ƒ^‚ÆƒGƒ“ƒR[ƒ_‚Ì‘g‚İ‡‚í‚¹‚ª³‚µ‚¢‚±‚Æ‚ğŠm”F‚·‚é
+		\item ãƒ”ãƒ³é…ç½®ãŒæ­£ã—ã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹
+		\item ãƒ¢ãƒ¼ã‚¿ã¨ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã®çµ„ã¿åˆã‚ã›ãŒæ­£ã—ã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹
 	}
 }
 
-\warnbox{–{»•i‚Ö‚Ì“dŒ¹‹Ÿ‹‹‚Í}{
+\warnbox{æœ¬è£½å“ã¸ã®é›»æºä¾›çµ¦ã¯}{
 	\iconitem{warn.eps}{
-		\item ƒ‚[ƒ^‹ì“®“dŒ¹‚É‚ÍAg—p‚·‚é“®ì”ÍˆÍ‚ğl—¶‚µ‚Äƒqƒ…[ƒY‚Ü‚½‚ÍƒuƒŒ[ƒJ[‚ğ‘}“ü‚·‚é
-		\item 5V“dŒ¹‚É‚ÍA100mA$\sim$1A’ö“x‚Ìƒqƒ…[ƒY‚Ü‚½‚ÍƒuƒŒ[ƒJ[‚ğ‘}“ü‚·‚é
+		\item ãƒ¢ãƒ¼ã‚¿é§†å‹•é›»æºã«ã¯ã€ä½¿ç”¨ã™ã‚‹å‹•ä½œç¯„å›²ã‚’è€ƒæ…®ã—ã¦ãƒ’ãƒ¥ãƒ¼ã‚ºã¾ãŸã¯ãƒ–ãƒ¬ãƒ¼ã‚«ãƒ¼ã‚’æŒ¿å…¥ã™ã‚‹
+		\item 5Vé›»æºã«ã¯ã€100mA$\sim$1Aç¨‹åº¦ã®ãƒ’ãƒ¥ãƒ¼ã‚ºã¾ãŸã¯ãƒ–ãƒ¬ãƒ¼ã‚«ãƒ¼ã‚’æŒ¿å…¥ã™ã‚‹
 	}
 }
 
-\warnbox{ˆÙí‚ğŠ´‚¶‚½‚Æ‚«‚Í}{
+\warnbox{ç•°å¸¸ã‚’æ„Ÿã˜ãŸã¨ãã¯}{
 	\iconitem{warn.eps}{
-		\item ³‚µ‚­“®ì‚µ‚È‚­‚È‚Á‚½‚çA–ŒÌ–h~‚Ì‚½‚ß‚·‚®‚É“dŒ¹‚ğØ‚é
-		\item Šî”Â‚ª”­”M‚µ‚Ä‚¢‚È‚¢‚±‚Æ‚ğŠm”F‚·‚é
-		\item “d—¬§ŒÀ‹@”\•t‚«‚Ì“dŒ¹‘•’u‚©‚ç“dŒ¹‚ğ‹Ÿ‹‹‚µA“®ì‚ğŠm”F‚·‚é
-		\item ˆÙí‚ª‘±‚­‚Æ‚«‚ÍAŠJ”­Ò‚Ö–â‚¢‡‚í‚¹‚é
+		\item æ­£ã—ãå‹•ä½œã—ãªããªã£ãŸã‚‰ã€äº‹æ•…é˜²æ­¢ã®ãŸã‚ã™ãã«é›»æºã‚’åˆ‡ã‚‹
+		\item åŸºæ¿ãŒç™ºç†±ã—ã¦ã„ãªã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹
+		\item é›»æµåˆ¶é™æ©Ÿèƒ½ä»˜ãã®é›»æºè£…ç½®ã‹ã‚‰é›»æºã‚’ä¾›çµ¦ã—ã€å‹•ä½œã‚’ç¢ºèªã™ã‚‹
+		\item ç•°å¸¸ãŒç¶šãã¨ãã¯ã€é–‹ç™ºè€…ã¸å•ã„åˆã‚ã›ã‚‹
 	}
 }
 
-\warnbox{“®ì’†‚Ì»•i‚É‚Í}{
+\warnbox{å‹•ä½œä¸­ã®è£½å“ã«ã¯}{
 	\iconitem{donot.eps}{
-		\item Šî”Â‚É’¼Úè‚ğG‚ê‚È‚¢(l‘Ì‚ÌŠñ¶—e—Ê‚âÃ“d‹C‚É‚æ‚éŒë“®ì‚ğ–h‚®‚½‚ß)
-		\item ƒRƒlƒNƒ^‚ğ’…’E‚µ‚È‚¢
+		\item åŸºæ¿ã«ç›´æ¥æ‰‹ã‚’è§¦ã‚Œãªã„(äººä½“ã®å¯„ç”Ÿå®¹é‡ã‚„é™é›»æ°—ã«ã‚ˆã‚‹èª¤å‹•ä½œã‚’é˜²ããŸã‚)
+		\item ã‚³ãƒã‚¯ã‚¿ã‚’ç€è„±ã—ãªã„
 	}
 }
 
-\warnbox{‘–s§ŒäƒvƒƒOƒ‰ƒ€‚Ì‹N“®‚É‚Í}{
+\warnbox{èµ°è¡Œåˆ¶å¾¡ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®èµ·å‹•æ™‚ã«ã¯}{
 	\iconitem{warn.eps}{
-		\item ƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚ª³‚µ‚¢‚±‚Æ‚ğŠm”F‚·‚é
+		\item ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ­£ã—ã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹
 	}
-	\vspace{5pt}
-	\hrule
-	\vspace{5pt}
+	\itemseprule
 	\iconitem{donot.eps}{
-		\item ƒ‚[ƒ^‚Å‹ì“®‚·‚é•”•ª‚Éè‚ğ’u‚©‚È‚¢
+		\item ãƒ¢ãƒ¼ã‚¿ã§é§†å‹•ã™ã‚‹éƒ¨åˆ†ã«æ‰‹ã‚’ç½®ã‹ãªã„
 	}
 }
 
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{„§–€}
-\label{sec:„§}
+\subsection{æ¨å¥¨äº‹é …}
+\label{sec:æ¨å¥¨}
 
-»•i‚Ì³í‚È“®ì‚Ì‚½‚ß‚ÉAˆÈ‰º‚Ì–€‚ğ„§’v‚µ‚Ü‚·B
+è£½å“ã®æ­£å¸¸ãªå‹•ä½œã®ãŸã‚ã«ã€ä»¥ä¸‹ã®äº‹é …ã‚’æ¨å¥¨è‡´ã—ã¾ã™ã€‚
 \par
 \null
 
 
-\warnbox{’ÊMƒCƒ“ƒ^ƒtƒF[ƒX‚É‚Í}{
+\warnbox{é€šä¿¡ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã«ã¯}{
 	\iconitem{recommend.eps}{
-		\item ƒV[ƒ‹ƒh•t‚«‚ÌUSBƒP[ƒuƒ‹‚ğg—p‚·‚é
+		\item ã‚·ãƒ¼ãƒ«ãƒ‰ä»˜ãã®USBã‚±ãƒ¼ãƒ–ãƒ«ã‚’ä½¿ç”¨ã™ã‚‹
+		\item ãƒã‚¤ã‚ºãŒå¤šã„ç’°å¢ƒãªã©ã§é€šä¿¡ãŒåˆ‡æ–­ã•ã‚Œã‚‹å ´åˆã¯ã€ãƒ•ã‚§ãƒ©ã‚¤ãƒˆã‚³ã‚¢ä»˜ãã®USBã‚±ãƒ¼ãƒ–ãƒ«ã‚’ä½¿ç”¨ã™ã‚‹
 	}
 }
 
-\warnbox{–{»•i‚Ö‚Ì“dŒ¹‹Ÿ‹‹‚Í}{
+\warnbox{æœ¬è£½å“ã¸ã®é›»æºä¾›çµ¦ã¯}{
 	\iconitem{recommend.eps}{
-		\item ƒ‚[ƒ^‹ì“®“dŒ¹‚Ì“dˆ³•Ï“®‚ªA5V“dŒ¹‚É“`‚í‚è‚É‚­‚¢‚æ‚¤‚É\¬‚·‚é
+		\item ãƒ¢ãƒ¼ã‚¿é§†å‹•é›»æºã®é›»åœ§å¤‰å‹•ãŒã€5Vé›»æºã«ä¼ã‚ã‚Šã«ãã„ã‚ˆã†ã«æ§‹æˆã™ã‚‹
 	}
 }
 
-\warnbox{ƒ\ƒtƒgƒEƒFƒA‚É‚Â‚¢‚Ä}{
+\warnbox{ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«ã¤ã„ã¦}{
 	\iconitem{recommend.eps}{
-		\item T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ìƒtƒ@[ƒ€ƒEƒFƒAXVAYP-Spur‚Ìƒ\ƒtƒgƒEƒFƒAXV‚ğŠm”F‚µAƒoƒOC³‚È‚Ç‚ª‚ ‚Á‚½Û‚ÍXV‚·‚é
+		\item {\bf TF-2MD3-R6}ã®ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›´æ–°ã€{\bf YP-Spur} ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢æ›´æ–°ã‚’ç¢ºèªã—ã€ãƒã‚°ä¿®æ­£ãªã©ãŒã‚ã£ãŸéš›ã¯æ›´æ–°ã™ã‚‹
 	}
 }
 
@@ -387,141 +480,82 @@ T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÆAYP-Spur‚ğ—p‚¢‚½ˆÚ“®ƒƒ{ƒbƒg‘–s§ŒäƒVƒXƒeƒ€‚Ì\¬‚ğA}\
 \newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌÚ‘±‚Ææ‚è•t‚¯}
-\label{sec:ƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌÚ‘±}
+\section{{\bf TF-2MD3-R6}ã®æ¥ç¶šã¨å–ã‚Šä»˜ã‘}
+\label{sec:ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒã®æ¥ç¶š}
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{ƒRƒlƒNƒ^}
-\label{sec:ƒRƒlƒNƒ^}
+\subsection{ã‚³ãƒã‚¯ã‚¿ãƒ»ãƒ”ãƒ³é…ç½®}
+\label{sec:ã‚³ãƒã‚¯ã‚¿}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒog—p‚É‚ÍAƒ‚[ƒ^ƒhƒ‰ƒCƒu—p“dŒ¹AƒRƒ“ƒgƒ[ƒ‰—p“dŒ¹Aƒ‚[ƒ^AƒGƒ“ƒR[ƒ_AUSBƒRƒlƒNƒ^‚ğÚ‘±‚µ‚Ü‚·BŠeƒRƒlƒNƒ^‚Ì”z’u‚ğ}\ref{fig:connector}‚ÉA“K‡‚·‚éƒRƒlƒNƒ^ƒVƒŠ[ƒY‚ğ•\\ref{tb:connector}‚É¦‚µ‚Ü‚·B\par
+{\bf TF-2MD3-R6}ä½¿ç”¨æ™‚ã«ã¯ã€ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ–ç”¨é›»æºã€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ç”¨é›»æºã€ãƒ¢ãƒ¼ã‚¿ã€ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã€USBã‚³ãƒã‚¯ã‚¿ã‚’æ¥ç¶šã—ã¾ã™ã€‚
+å„ã‚³ãƒã‚¯ã‚¿ã®é…ç½®ã¨ã€é©åˆã™ã‚‹ãƒã‚¦ã‚¸ãƒ³ã‚°ãƒ»ã‚³ãƒ³ã‚¿ã‚¯ãƒˆå“ç•ªã‚’\figurename~\ref{fig:connector6} ã«ç¤ºã—ã¾ã™ã€‚
+\par
+
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=90mm]{connector.eps}
-\caption{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌƒRƒlƒNƒ^”z’u(ƒvƒŒ»•i‰»”Å)}
-\label{fig:connector}
-\end{center}
+\centering\includegraphics[width=160mm]{pin-description-r6.eps}
+\caption{{\bf TF-2MD3-R6}ã®ã‚³ãƒã‚¯ã‚¿ãƒ»ãƒ”ãƒ³é…ç½®}
+\label{fig:connector6}
 \end{figure}
 
-\begin{table}[H]
-\begin{center}
-\caption{“K‡ƒRƒlƒNƒ^ƒVƒŠ[ƒYˆê——(ƒvƒŒ»•i‰»”Å)}
-\label{tb:connector}
-\begin{tabular}{rcll}
-\hline
-\hline
-ƒ‚[ƒ^ƒhƒ‰ƒCƒu“dŒ¹ & JST & VH & (2pin) \\
-ƒ‚[ƒ^o—Í & JST & VH & (3pin) \\
-\hline
-ƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹ & JST & XH & (2pin) \\
-ƒGƒ“ƒR[ƒ_ & JST & PHD & (8pin) \\
-USBƒCƒ“ƒ^ƒtƒF[ƒX & - & mini-B & \\
-RS-485 & JST & ZH & (3pin) \\
-\hline
-FPGA‘‚«‚İ & HRS & DF11 & (10pin) \\
-ƒfƒoƒbƒO—pƒVƒŠƒAƒ‹ & JST & ZH & (3pin) \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{“d‹C“I“Á«}
-\label{sec:“d‹C“I“Á«}
+\subsection{é›»æ°—çš„ç‰¹æ€§}
+\label{sec:é›»æ°—çš„ç‰¹æ€§}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌAŠeƒRƒlƒNƒ^‚Ìâ‘ÎÅ‘å’èŠi‚ğ•\\ref{tb:abs_max}‚ÉA“d‹C“I“Á«‚ğ•\\ref{tb:el_char}‚É¦‚µ‚Ü‚·B
-ƒ‚[ƒ^ƒhƒ‰ƒCƒu—p“dŒ¹‚¨‚æ‚Ñƒ‚[ƒ^‚ÌƒRƒlƒNƒ^(JST VHƒVƒŠ[ƒY)‚Ì’èŠi˜A‘±“d—¬‚Í10A‚Å‚·‚Ì‚ÅA‚±‚êˆÈã‚Ì“d—¬‚ª•K—v‚Èê‡‚ÍAƒP[ƒuƒ‹‚ğ’¼Ú”¼“c•t‚¯‚·‚é‚©AŠî”Â‚É’[q‘ä‚È‚Ç‚ğæ‚è•t‚¯‚Ä”zü‚µ‚Ä‰º‚³‚¢B\par
-%’[q‘äæ‚è•t‚¯ƒIƒvƒVƒ‡ƒ“Šî”Â(—\’èA}\ref{fig:large_cur})
-\begin{table}[H]
-\begin{center}
-\caption{â‘ÎÅ‘å’èŠi(ƒvƒŒ»•i‰»”Å)}
-\label{tb:abs_max}
-\begin{tabular}{rl}
-\hline
-\hline
-ƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹ & -0.5 $\sim$ +7V \\
-ƒ‚[ƒ^ƒhƒ‰ƒCƒu“dŒ¹ & -0.5 $\sim$ +80V \\
-\hline
-ƒGƒ“ƒR[ƒ_“ü—Í & -0.5 $\sim$ +7V \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+{\bf TF-2MD3-R6}ã®ã€å„ã‚³ãƒã‚¯ã‚¿ã®çµ¶å¯¾æœ€å¤§å®šæ ¼ã‚’\tablename~\ref{tb:abs_max6} ã«ã€é›»æ°—çš„ç‰¹æ€§ã‚’\tablename~\ref{tb:el_char6} ã«ç¤ºã—ã¾ã™ã€‚
+ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ–ç”¨é›»æºãŠã‚ˆã³ãƒ¢ãƒ¼ã‚¿ã®ã‚³ãƒã‚¯ã‚¿(JST VHã‚·ãƒªãƒ¼ã‚º)ã®å®šæ ¼é€£ç¶šé›»æµã¯10Aã§ã™ã®ã§ã€ã“ã‚Œä»¥ä¸Šã®é›»æµãŒå¿…è¦ãªå ´åˆã¯ã€ã‚±ãƒ¼ãƒ–ãƒ«ã‚’ç›´æ¥åŠç”°ä»˜ã‘ã™ã‚‹ã‹ã€åŸºæ¿ã«ç«¯å­å°ãªã©ã‚’å–ã‚Šä»˜ã‘ã¦é…ç·šã—ã¦ä¸‹ã•ã„ã€‚\par
 
 \begin{table}[H]
-\begin{center}
-\begin{threeparttable}
-\begin{center}
-\caption{“d‹C“I“Á«(ƒvƒŒ»•i‰»”Å)}
-\label{tb:el_char}
-\begin{tabular}{rl}
-\hline
-\hline
-ƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹ & 4.5 $\sim$ 5.5V \\
-ƒ‚[ƒ^ƒhƒ‰ƒCƒu“dŒ¹ & +10 $\sim$ 76V \\
-\hline
-ƒGƒ“ƒR[ƒ_“ü—Íƒvƒ‹ƒAƒbƒv & 1k$\Omega$ \\
-ƒGƒ“ƒR[ƒ_“ü—ÍLOƒŒƒxƒ‹è‡’l & 0.6V \\
-ƒGƒ“ƒR[ƒ_“ü—ÍHIƒŒƒxƒ‹è‡’l & 2.2V \\
-\hline
-ƒRƒ“ƒgƒ[ƒ‰Šî”Â“d—¬ & typ 140mA\tnote{(1} \\
-ƒhƒ‰ƒCƒuŠî”ÂƒXƒ^ƒ“ƒoƒC“d—¬ & typ 20mA \\
-\hline
+\begin{minipage}[t]{0.44\hsize}
+\caption{{\bf TF-2MD3-R6} çµ¶å¯¾æœ€å¤§å®šæ ¼}
+\label{tb:abs_max6}
+\centering\begin{tabular}{rl}
+\toprule
+ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æº & -0.5 $\sim$ +7~V \\
+ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ–é›»æº & -0.5 $\sim$ +60~V \\
+\midrule
+ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€å…¥åŠ› & -0.5 $\sim$ +7~V \\
+\bottomrule
 \end{tabular}
-{\footnotesize
-\begin{tablenotes}
-\item[(1] ƒGƒ“ƒR[ƒ_‚È‚Ç‚Ì“d—¬‚ğœ‚­AUSB’ÊMB
-\end{tablenotes}
+\end{minipage}
+\begin{minipage}[t]{0.54\hsize}
+\caption{{\bf TF-2MD3-R6} é›»æ°—çš„ç‰¹æ€§}
+\label{tb:el_char6}
+{\centering\begin{tabular}{rl}
+\toprule
+ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æº & 4.5 $\sim$ 5.5~V \\
+ãƒ¢ãƒ¼ã‚¿ãƒ‰ãƒ©ã‚¤ãƒ–é›»æº & +10 $\sim$ 50~V \\
+\midrule
+ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€å…¥åŠ›ãƒ—ãƒ«ã‚¢ãƒƒãƒ— & 4.7~k$\Omega$ \\
+ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€å…¥åŠ›LOãƒ¬ãƒ™ãƒ«é–¾å€¤ & 0.6~V \\
+ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€å…¥åŠ›HIãƒ¬ãƒ™ãƒ«é–¾å€¤ & 2.2~V \\
+\midrule
+ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æµ & typ 140~mA {\footnotesize(1} \\
+ãƒ‰ãƒ©ã‚¤ãƒ–åŸºæ¿ã‚¹ã‚¿ãƒ³ãƒã‚¤é›»æµ & typ 20~mA \\
+\bottomrule
+\end{tabular}
 }
-\end{center}
-\end{threeparttable}
-\end{center}
+{\newline\smallskip\footnotesize{(1} ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ãªã©ã®é›»æµã‚’é™¤ãã€USBé€šä¿¡æ™‚ã€‚}
+\end{minipage}
 \end{table}
 
-%\begin{figure}[H]
-%\begin{center}
-%\includegraphics[width=80mm]{large_cur.eps}
-%\caption{‘å“d—¬—p ’[q‘äæ‚è•t‚¯ƒIƒvƒVƒ‡ƒ“Šî”Â(—\’è)}
-%\label{fig:large_cur}
-%\end{center}
-%\end{figure}
-%
-ƒRƒ“ƒgƒ[ƒ‰Šî”Â‚ÌƒGƒ“ƒR[ƒ_ƒRƒlƒNƒ^ ƒsƒ“”z’u‚ğ}\ref{fig:encoder-if}‚É¦‚µ‚Ü‚·B+5Vƒsƒ“‚©‚ç‚ÍAƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹“dˆ³‚ª‹Ÿ‹‹‚³‚ê‚Ü‚·BŠe“ü—Íƒsƒ“‚Í1k$\Omega$‚Åƒvƒ‹ƒAƒbƒv‚³‚ê‚Ä‚¢‚Ü‚·B\par
-\begin{figure}[H]
-\begin{center}
-\includegraphics[width=60mm]{encoder-if.eps}
-\caption{ƒGƒ“ƒR[ƒ_ƒRƒlƒNƒ^‚Ìƒsƒ“”z’u}
-\label{fig:encoder-if}
-\end{center}
-\end{figure}
 
-ƒIƒvƒVƒ‡ƒ“‚Æ‚µ‚ÄAƒGƒ“ƒR[ƒ_Eƒ‚[ƒ^‚ÌƒRƒlƒNƒ^•ÏŠ·Šî”Â(}\ref{fig:connector_adapter})‚à’ñ‹Ÿ‚µ‚Ä‚¨‚èAMaxon MRƒGƒ“ƒR[ƒ_AMaxon ECƒVƒŠ[ƒYƒuƒ‰ƒVƒŒƒXDCƒ‚[ƒ^AHEWLETT PACKARD HEDSƒVƒŠ[ƒY‚ÌƒGƒ“ƒR[ƒ_ƒRƒlƒNƒ^‚ªÚ‘±‚Å‚«‚Ü‚·B\par
-\begin{figure}[H]
-\begin{center}
-\includegraphics[width=80mm]{connector-adapter.eps}
-\caption{ƒGƒ“ƒR[ƒ_Eƒ‚[ƒ^ƒRƒlƒNƒ^•ÏŠ·Šî”Â}
-\label{fig:connector_adapter}
-\end{center}
-\end{figure}
-
-
-\newpage
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{ŠOŒ`‚Ææ‚è•t‚¯ŒŠ}
-\label{sec:“d‹C“I“Á«}
+\subsection{å¤–å½¢ã¨å–ã‚Šä»˜ã‘ç©´}
+\label{sec:å¤–å½¢ã¨å–ã‚Šä»˜ã‘ç©´}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌŠOŒ`}‚Ææ‚è•t‚¯ŒŠ‚Ì”z’u‚ğ}\ref{fig:shape}‚É¦‚µ‚Ü‚·B
-ƒhƒ‰ƒCƒo‚Ì— –Ê‚ÉAŠî”ÂƒXƒy[ƒT(10mm‚)‚ªæ‚è•t‚¯‚ç‚ê‚Ä‚¨‚èAM3.0‚ÌƒlƒW‚ÅŒÅ’è‚Å‚«‚Ü‚·B
+{\bf TF-2MD3-R6}ã®å¤–å½¢å›³ã¨å–ã‚Šä»˜ã‘ç©´ã®é…ç½®ã‚’\figurename~\ref{fig:shape} ã«ç¤ºã—ã¾ã™ã€‚
+åŸºæ¿ã¯2æšæ§‹æˆã§ã€ä¸Šéƒ¨ã‚’ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿ã€ä¸‹éƒ¨ã‚’ãƒ‰ãƒ©ã‚¤ãƒ–åŸºæ¿ã¨å‘¼ã³ã¾ã™ã€‚
+ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿ã¨ãƒ‰ãƒ©ã‚¤ãƒ–åŸºæ¿ã¯åŸºæ¿ã‚¹ãƒšãƒ¼ã‚µã§å–ã‚Šä»˜ã‘ã¦ã‚ã‚Šã¾ã™ã€‚
+ãƒ‰ãƒ©ã‚¤ãƒ–åŸºæ¿ã®è£é¢ã«ã¯åŸºæ¿ã‚¹ãƒšãƒ¼ã‚µ(10mmé«˜)ãŒå–ã‚Šä»˜ã‘ã‚‰ã‚Œã¦ãŠã‚Šã€M3.0ã®ãƒã‚¸ã§å›ºå®šã§ãã¾ã™ã€‚
 
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=130mm]{shape.eps}
-\caption{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌŠOŒ`}}
+\centering\includegraphics[width=130mm]{shape.eps}
+\caption{{\bf TF-2MD3-R6}ã®å¤–å½¢å›³}
 \label{fig:shape}
-\end{center}
 \end{figure}
 
 
@@ -529,28 +563,100 @@ T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÌŠOŒ`}‚Ææ‚è•t‚¯ŒŠ‚Ì”z’u‚ğ}\ref{fig:shape}‚É¦‚µ‚Ü‚·B
 \newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{YP-Spur‚ğ—p‚¢‚½ƒƒ{ƒbƒg§Œä}
+\section{{\bf YP-Spur} ã‚’ç”¨ã„ãŸãƒ­ãƒœãƒƒãƒˆåˆ¶å¾¡}
 \label{sec:YP-Spur}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÍAˆÚ“®ƒƒ{ƒbƒg‘–s§Œäƒ\ƒtƒgƒEƒFƒAƒvƒ‰ƒbƒgƒtƒH[ƒ€``YP-Spur''‚Ì’ÊMd—l‚É‘Î‰‚µ‚Ä‚¢‚Ü‚·B
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÆYP-Spur‚ğ‘g‚İ‡‚í‚¹‚Ä—p‚¢‚é‚±‚Æ‚ÅA—eˆÕ‚ÉˆÚ“®ƒƒ{ƒbƒg‚Ì‘–s§ŒäŒn‚ğ\’z‚Å‚«‚Ü‚·B
+{\bf TF-2MD3-R6}ã¯ã€ç§»å‹•ãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ  ``{\bf YP-Spur} '' ã®é€šä¿¡ä»•æ§˜ã«å¯¾å¿œã—ã¦ã„ã¾ã™ã€‚
+{\bf TF-2MD3-R6}ã¨{\bf YP-Spur} ã‚’çµ„ã¿åˆã‚ã›ã¦ç”¨ã„ã‚‹ã“ã¨ã§ã€å®¹æ˜“ã«ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®èµ°è¡Œåˆ¶å¾¡ç³»ã‚’æ§‹ç¯‰ã§ãã¾ã™ã€‚
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{“®ìŠÂ‹«}
+\subsection{å‹•ä½œç’°å¢ƒ}
 
-YP-Spur‚ÍAUnixŒİŠ·‚ÌƒVƒXƒeƒ€(LinuxAMac OS X‚È‚Ç)A‚¨‚æ‚ÑWindows‚Å“®ì‚µ‚Ü‚·B
-ˆÈ‰º‚Ìè‡‚ÍALinux‚ğ‘z’è‚µ‚½‚à‚Ì‚Å‚·B
-Mac OS X‚Å‚ÍAƒAƒ^ƒbƒ`‚³‚ê‚éƒfƒoƒCƒX‚ÌƒpƒX‚È‚Ç‚ªˆÙ‚È‚è‚Ü‚·B
-ƒo[ƒWƒ‡ƒ“ŠÇ—ƒc[ƒ‹gitA‚¨‚æ‚Ñgcc+glibc‚Ü‚½‚ÍA‚»‚ê‚ç‚É‘Š“–‚·‚éŠJ”­ŠÂ‹«‚ªƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚Ä‚¢‚é•K—v‚ª‚ ‚è‚Ü‚·B\par
+{\bf YP-Spur} ã¯ã€Unixäº’æ›ã®ã‚·ã‚¹ãƒ†ãƒ (Linuxã€Mac OS Xãªã©)ã€ãŠã‚ˆã³Windowsã§å‹•ä½œã—ã¾ã™ã€‚
+ä»¥ä¸‹ã®æ‰‹é †ã¯ã€Linuxã‚’æƒ³å®šã—ãŸã‚‚ã®ã§ã™ã€‚
+Mac OS Xã§ã¯ã€ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã‚‹ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‘ã‚¹ãªã©ãŒç•°ãªã‚Šã¾ã™ã€‚
+ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†ãƒ„ãƒ¼ãƒ«gitã€ãŠã‚ˆã³gcc+glibcã¾ãŸã¯ã€ãã‚Œã‚‰ã«ç›¸å½“ã™ã‚‹é–‹ç™ºç’°å¢ƒãŒã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚\par
 
-WindowsŠÂ‹«‚Å‚ÌƒCƒ“ƒXƒg[ƒ‹‚ÍAMinGWŠÂ‹«‚Ås‚¢‚Ü‚·BŠî–{“I‚ÉWindowsŠÂ‹«‚Å‚Ì“®ìŠm”F‚Ís‚í‚ê‚Ä‚¢‚Ü‚¹‚ñB\par
+% ------------------------ subsubsection ------------------------------
+\subsubsection{Ubuntu~Linux ã«ãŠã‘ã‚‹é–‹ç™ºç’°å¢ƒæ§‹ç¯‰ã®ä¾‹}
 
+ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã§ã€ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ç’°å¢ƒã¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†ãƒ„ãƒ¼ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™ã€‚
+\begin{lstlisting}{}
+$ sudo apt-get update
+$ sudo apt-get install build-essential libreadline-dev
+$ sudo apt-get install git git-svn
+\end{lstlisting}
+
+% ------------------------ subsubsection ------------------------------
+\subsubsection{Fedora~Linux ã«ãŠã‘ã‚‹é–‹ç™ºç’°å¢ƒæ§‹ç¯‰ã®ä¾‹}
+
+ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã§ã€ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ç’°å¢ƒã¨ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†ãƒ„ãƒ¼ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™ã€‚
+\begin{lstlisting}{}
+$ sudo yum groupinstall "Development Tools"
+$ sudo yum install readline-devel
+$ sudo yum install git git-svn
+\end{lstlisting}
+
+\newpage
+% ------------------------ subsubsection ------------------------------
+\subsubsection{Windows ã«ãŠã‘ã‚‹é–‹ç™ºç’°å¢ƒæ§‹ç¯‰ã®ä¾‹}
+
+
+ä»¥ä¸‹ã®æ‰‹é †ã§ã€ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†ãƒ„ãƒ¼ãƒ«ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™ã€‚
+\begin{enumerate}
+	\item ä»¥ä¸‹ã®URLã‹ã‚‰ã€ ``Download for Windows'' ãƒªãƒ³ã‚¯ã‚’é–‹ãã€``Git'' ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ©ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒ»å®Ÿè¡Œã—ã¾ã™ã€‚\\
+		\urllink{http://git-scm.com/}
+	\item ç”»é¢ã®æŒ‡ç¤ºã«å¾“ã„ã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è¨­å®šã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’å®Œäº†ã—ã¦ä¸‹ã•ã„ã€‚
+\end{enumerate}
+\par
+
+Windows ç’°å¢ƒã§ã¯ MinGW ã‚’åˆ©ç”¨ã™ã‚‹ã“ã¨ã§ã€Linux ã®å ´åˆã¨åŒæ§˜ã®ã‚³ãƒãƒ³ãƒ‰ä½“ç³»ã§ {\bf YP-Spur} ã‚’ä½¿ç”¨ã§ãã¾ã™ã€‚
+ä»¥ä¸‹ã®æ‰‹é †ã§ã€MinGW ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ãƒ»ã‚»ãƒƒãƒˆã‚¢ãƒƒãƒ—ã—ã¾ã™ã€‚
+\begin{enumerate}
+	\item ä»¥ä¸‹ã®URLã‹ã‚‰ã€ ``mingw-get-inst-******.exe'' ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã€å®Ÿè¡Œã—ã¾ã™ã€‚\\
+		\urllink{http://sourceforge.net/projects/mingw/files/Installer/mingw-get/}\\
+	\item ç”»é¢ã®æŒ‡ç¤ºã«å¾“ã£ã¦ã€ ``Select Components'' ç”»é¢ã¾ã§é€²ã¿ã€ ``C++ Compiler, MSYS Basic System, MinGW Developer ToolKit'' ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€ ``Next $>$'' ã‚’é¸æŠã—ã¾ã™ã€‚
+		\begin{figure}[H]
+			\centering\includegraphics[width=76mm]{mingw.select.eps}
+			\caption{MinGWã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«}
+			\label{fig:mingw.select}
+		\end{figure}
+	\item ç”»é¢ã®æŒ‡ç¤ºã«å¾“ã£ã¦ã€ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚’å®Œäº†ã—ã¦ä¸‹ã•ã„ã€‚
+	\item ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã® ``MinGW'' ä¸­ã®ã€ ``MinGW Shell'' ã‚’å®Ÿè¡Œã—ã€ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å…¥åŠ›ã—ã¾ã™ã€‚
+		\begin{lstlisting}{}
+		$ mingw-get install update
+		$ mingw-get install mingw32-pexports
+		$ mingw-get install msys-mintty
+		\end{lstlisting}
+	\item ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã® ``MinGW'' ä¸­ã®ã€ ``MinGW Shell'' ã‚’å³ã‚¯ãƒªãƒƒã‚¯ã—ã€ ``ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£'' ã‚’é–‹ãã¾ã™ã€‚
+		\begin{figure}[H]
+			\centering\includegraphics[width=90mm]{mingw.shortcut.eps}
+			\caption{MinGW Shellã®è¨­å®š1}
+			\label{fig:mingw.shortcut}
+		\end{figure}
+	\item ``ãƒªãƒ³ã‚¯å…ˆ'' æ¬„ã®æœ«å°¾ã«ã€ ``-\-mintty'' ã¨å…¥åŠ›ã—ã¦ ``OK'' ã‚’é¸æŠã—ã¾ã™ã€‚
+		\begin{figure}[H]
+			\centering\includegraphics[width=90mm]{mingw.shortcut_mintty.eps}
+			\caption{MinGW Shellã®è¨­å®š2}
+			\label{fig:mingw.shortcut_mintty}
+		\end{figure}
+\end{enumerate}
+ä»¥é™ã€ã‚³ãƒãƒ³ãƒ‰ã®å®Ÿè¡Œã¯ã€ã‚¹ã‚¿ãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ã® ``MinGW'' ä¸­ã®ã€ ``MinGW Shell'' ã®ä¸­ã§è¡Œã„ã¾ã™ã€‚
+\par
+\bigskip
+
+{\bf TF-2MD3-R6}ã®ã€Windows ç”¨ã®ãƒ‡ãƒã‚¤ã‚¹ãƒ‰ãƒ©ã‚¤ãƒã¯ã€ä»¥ä¸‹ã® URL ã§é…å¸ƒã—ã¦ã„ã¾ã™ã€‚\\
+\urllink{http://t-frog.com/products/motor_driver/}\\
+PCã«{\bf TF-2MD3-R6} ã‚’æ¥ç¶šã™ã‚‹å‰ã«ã€ãƒ‰ãƒ©ã‚¤ãƒã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ä¸‹ã•ã„ã€‚
+\par
+
+\newpage
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{YP-Spur‚ÌƒCƒ“ƒXƒg[ƒ‹}
+\subsection{{\bf YP-Spur} ã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«}
 
-YP-Spur‚¨‚æ‚ÑAƒŠƒ|ƒWƒgƒŠ‚É“o˜^‚³‚ê‚Ä‚¢‚éƒƒ{ƒbƒg‚Ìƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚ÍAˆÈ‰º‚Ìè‡‚ÅƒCƒ“ƒXƒg[ƒ‹‚Å‚«‚Ü‚·B\par
+{\bf YP-Spur} ãŠã‚ˆã³ã€ãƒªãƒã‚¸ãƒˆãƒªã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ãƒ­ãƒœãƒƒãƒˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã¯ã€ä»¥ä¸‹ã®æ‰‹é †ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã§ãã¾ã™ã€‚\par
 \begin{lstlisting}{}
 $ git clone http://www.roboken.esys.tsukuba.ac.jp/platform/repos/yp-spur.git
 $ cd yp-spur
@@ -568,18 +674,18 @@ $ cd ..
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{YP-Spur‚Ì“®ìŠm”F}
+\subsection{{\bf YP-Spur} ã®å‹•ä½œç¢ºèª}
 
-“®ìŠm”F‚É‚ÍAƒƒ{ƒbƒg‚Ìƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚ª•K—v‚Æ‚È‚è‚Ü‚·B
-V‹K‚Éì¬‚µ‚½ƒƒ{ƒbƒg‚Ìƒpƒ‰ƒ[ƒ^‚ÍA\ref{sec:ƒpƒ‰ƒ[ƒ^ì¬}Í‚É]‚Á‚Äì¬‚µ‚Ä‰º‚³‚¢B\par
+å‹•ä½œç¢ºèªã«ã¯ã€ãƒ­ãƒœãƒƒãƒˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãŒå¿…è¦ã¨ãªã‚Šã¾ã™ã€‚
+æ–°è¦ã«ä½œæˆã—ãŸãƒ­ãƒœãƒƒãƒˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¯ã€\ref{sec:ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ}ç« ã«å¾“ã£ã¦ä½œæˆã—ã¦ä¸‹ã•ã„ã€‚\par
 
-YP-Spur‚ğ—p‚¢‚½ƒƒ{ƒbƒg‚Ì‘–s§Œä‚ÍAƒ‰ƒbƒvƒgƒbƒvPCã‚Å‘–s§Œä‚ğs‚¤``ypspur-coordinator''ƒvƒƒZƒX‚ÆAƒ†[ƒUƒvƒƒOƒ‰ƒ€‚ÌƒvƒƒZƒX‚ğ“®ì‚³‚¹‚é‚±‚Æ‚Ås‚¢‚Ü‚·B
-—á‚¦‚ÎA1.0x0.1ƒ[ƒgƒ‹‚ÌlŠpŒ`‚ğ•`‚­‚æ‚¤‚É‘–s‚·‚éƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€‚ğÀs‚·‚é‚É‚ÍAƒ^[ƒ~ƒiƒ‹‚ğ2‚ÂŠJ‚«A‚»‚ê‚¼‚ê‚ÅˆÈ‰º‚ÌƒRƒ}ƒ“ƒh‚ğÀs‚µ‚Ü‚·B
+{\bf YP-Spur} ã‚’ç”¨ã„ãŸãƒ­ãƒœãƒƒãƒˆã®èµ°è¡Œåˆ¶å¾¡ã¯ã€ãƒ©ãƒƒãƒ—ãƒˆãƒƒãƒ—PCä¸Šã§èµ°è¡Œåˆ¶å¾¡ã‚’è¡Œã† ``ypspur-coordinator'' ãƒ—ãƒ­ã‚»ã‚¹ã¨ã€ãƒ¦ãƒ¼ã‚¶ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®ãƒ—ãƒ­ã‚»ã‚¹ã‚’å‹•ä½œã•ã›ã‚‹ã“ã¨ã§è¡Œã„ã¾ã™ã€‚
+1.0 x 0.1 ãƒ¡ãƒ¼ãƒˆãƒ«ã®å››è§’å½¢ã‚’æãã‚ˆã†ã«èµ°è¡Œã™ã‚‹ã€{\bf YP-Spur} ã®ã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å®Ÿè¡Œã™ã‚‹ã«ã¯ã€ã‚¿ãƒ¼ãƒŸãƒŠãƒ«ã‚’2ã¤é–‹ãã€ãã‚Œãã‚Œã§ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 
-\warnbox{YP-SpurƒTƒ“ƒvƒ‹ƒvƒƒOƒ‰ƒ€‚Ì‹N“®‚É‚Í}{
+\warnbox{YP-Spurã‚µãƒ³ãƒ—ãƒ«ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®èµ·å‹•æ™‚ã«ã¯}{
 	\iconitem{warn.eps}{
-		\item ƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚ª³‚µ‚¢‚±‚Æ‚ğŠm”F‚·‚é
-		\item ƒƒ{ƒbƒg‚Ì³–Ê1.5ƒ[ƒgƒ‹A¶‰E1ƒ[ƒgƒ‹’ö“x‚Ì‹óŠÔ‚ğŠm•Û‚µ‚ÄÀs‚·‚é
+		\item ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ãŒæ­£ã—ã„ã“ã¨ã‚’ç¢ºèªã™ã‚‹
+		\item ãƒ­ãƒœãƒƒãƒˆã®æ­£é¢1.5ãƒ¡ãƒ¼ãƒˆãƒ«ã€å·¦å³1ãƒ¡ãƒ¼ãƒˆãƒ«ç¨‹åº¦ã®ç©ºé–“ã‚’ç¢ºä¿ã—ã¦å®Ÿè¡Œã™ã‚‹
 	}
 }
 
@@ -590,56 +696,56 @@ YP-Spur‚ğ—p‚¢‚½ƒƒ{ƒbƒg‚Ì‘–s§Œä‚ÍAƒ‰ƒbƒvƒgƒbƒvPCã‚Å‘–s§Œä‚ğs‚¤``ypspur-co
  $ cd yp-spur/samples/
  $ ./run-test
 \end{lstlisting}
-PARAMETER\_FILE.param‚ÍAƒƒ{ƒbƒg‚Ìƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ìƒtƒ‹ƒpƒXA‚à‚µ‚­‚Í/usr/local/share/yp-robot-paramsˆÈ‰º‚ÉƒCƒ“ƒXƒg[ƒ‹‚³‚ê‚½ƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ìƒtƒ@ƒCƒ‹–¼‚ğw’è‚µ‚Ü‚·BDEVICE\_PATH‚ÍA/dev/ttyACM0‚Ì‚æ‚¤‚ÉLinuxã‚ÉƒAƒ^ƒbƒ`‚³‚ê‚éƒfƒoƒCƒX‚Ìƒtƒ‹ƒpƒX‚ğw’è‚µ‚Ü‚·B\par
+ã‚³ãƒãƒ³ãƒ‰ä¸­ã® PARAMETER\_FILE.param ã«ã¯ã€ãƒ­ãƒœãƒƒãƒˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ãƒ‘ã‚¹ã€ã‚‚ã—ãã¯ {/usr/local/share/yp-robot-params} ä»¥ä¸‹ã«ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã•ã‚Œã¦ã„ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«åã‚’æŒ‡å®šã—ã¾ã™ã€‚
+{DEVICE\_PATH} ã¯ã€{/dev/ttyACM0} ã®ã‚ˆã†ã« Linux ä¸Šã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã‚‹ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’æŒ‡å®šã—ã¾ã™ã€‚
+Windowsç’°å¢ƒã§ã¯ã€ {DEVICE\_PATH} ã¯ã€\mbox{COM1} ã®ã‚ˆã†ãªãƒ‡ãƒã‚¤ã‚¹åã‚’æŒ‡å®šã—ã¾ã™ã€‚
 
 
 \newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{YP-Spurƒƒ{ƒbƒgƒpƒ‰ƒ[ƒ^}
-\label{sec:ƒpƒ‰ƒ[ƒ^ì¬}
+\section{{\bf YP-Spur} ãƒ­ãƒœãƒƒãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿}
+\label{sec:ãƒ­ãƒœãƒƒãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÍADCƒ‚[ƒ^Eƒuƒ‰ƒVƒŒƒXƒ‚[ƒ^‚É‘Î‰‚µ‚Ä‚¨‚èAƒ‚[ƒ^‚Ìí—Ş‚È‚Ç‚Ìî•ñ‚ğYP-Spur‚Ìƒƒ{ƒbƒgƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Åw’è‚·‚é•K—v‚ª‚ ‚è‚Ü‚·B
-Ú×‚Èƒpƒ‰ƒ[ƒ^Œˆ’è•û–@E’²®•û–@‚ÍˆÚ“®ƒƒ{ƒbƒg‘–s§Œäƒvƒ‰ƒbƒgƒtƒH[ƒ€Wiki\footnote{Robot Platform Project Wiki \\ {\scriptsize\url{http://www.roboken.esys.tsukuba.ac.jp/platform/wiki/}}}‚ğQÆ‚µ‚Ä‰º‚³‚¢B\par
+{\bf TF-2MD3-R6}ã¯ã€DCãƒ¢ãƒ¼ã‚¿ãƒ»ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ã«å¯¾å¿œã—ã¦ãŠã‚Šã€ãƒ¢ãƒ¼ã‚¿ã®ç¨®é¡ãªã©ã®æƒ…å ±ã‚’{\bf YP-Spur} ã®ãƒ­ãƒœãƒƒãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã§æŒ‡å®šã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
+è©³ç´°ãªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æ±ºå®šæ–¹æ³•ãƒ»èª¿æ•´æ–¹æ³•ã¯ç§»å‹•ãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ Wiki\footnote{Robot Platform Project Wiki \\ \hspace{2em}{\scriptsize\url{http://www.roboken.esys.tsukuba.ac.jp/platform/wiki/}}}ã‚’å‚ç…§ã—ã¦ä¸‹ã•ã„ã€‚\par
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{ƒuƒ‰ƒVƒŒƒXƒ‚[ƒ^—p‚Ìƒƒ{ƒbƒgƒpƒ‰ƒ[ƒ^ì¬}
-\label{sec:ƒpƒ‰ƒ[ƒ^ì¬}
+\subsection{ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ç”¨ã®ãƒ­ãƒœãƒƒãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ}
+\label{sec:ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ}
 
-ƒ‚[ƒ^í•Ê‚Ìw’è‚Í MOTOR\_PHASE €‚Ås‚¢ADCƒ‚[ƒ^‚Ìê‡‚Í0‚ğA3‘Šƒuƒ‰ƒVƒŒƒXƒ‚[ƒ^‚Ìê‡‚Í3‚ğw’è‚µ‚Ü‚·B
-ƒuƒ‰ƒVƒŒƒXƒ‚[ƒ^‚ğg—p‚·‚éê‡‚ÍA“à•”’ïRE‹t‹N“d—ÍŒW”Eƒgƒ‹ƒNŒW”‚ÍADCƒ‚[ƒ^‚ÉŠ·Z‚µ‚½’l‚ğw’è‚µ‚Ü‚·B
+ãƒ¢ãƒ¼ã‚¿ç¨®åˆ¥ã®æŒ‡å®šã¯ MOTOR\_PHASE é …ã§è¡Œã„ã€DCãƒ¢ãƒ¼ã‚¿ã®å ´åˆã¯0ã‚’ã€3ç›¸ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ã®å ´åˆã¯3ã‚’æŒ‡å®šã—ã¾ã™ã€‚
+ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ã‚’ä½¿ç”¨ã™ã‚‹å ´åˆã¯ã€å†…éƒ¨æŠµæŠ—ãƒ»é€†èµ·é›»åŠ›ä¿‚æ•°ãƒ»ãƒˆãƒ«ã‚¯ä¿‚æ•°ã¯ã€DCãƒ¢ãƒ¼ã‚¿ã«æ›ç®—ã—ãŸå€¤ã‚’æŒ‡å®šã—ã¾ã™ã€‚
 \begin{itemize}
-\item {\bf MOTOR\_R: ƒ‚[ƒ^“à•”’ïR[$\Omega$]} \par ƒ‚[ƒ^‚Ì’[qŠÔ’ïR$R$‚©‚çA$\frac{3}{4} \cdot R$‚Å—^‚¦‚é
-\item {\bf MOTOR\_VC: ‹t‹N“d—ÍŒW”[rpm/V]} \par ’èŠi“dˆ³$V$‚Å‚Ìƒ‚[ƒ^–³•‰‰×Å‘å‰ñ“]”$r_{max}$‚©‚çA$r_{max}/V$‚Å—^‚¦‚é
-\item {\bf MOTOR\_TC: ƒgƒ‹ƒNŒW”[Nm/A]} \par ‹t‹N“d—ÍŒW”$K_{E}=r_{max}/V$‚©‚ç’PˆÊ‚ğ•ÏŠ·‚µA$\frac{60}{2\pi K_{E}}$‚Å—^‚¦‚é\footnote{ƒ‚[ƒ^‚ÌƒGƒlƒ‹ƒM[‘¹¸‚ª–³‹‚Å‚«‚éê‡Aƒ‚[ƒ^‚É’“ü‚µ‚½“d—Í$P = E \cdot I = K_{E} \cdot \omega \cdot I$‚ÆAƒ‚[ƒ^‚ª”­‚·‚é“®—Í$P = \tau \cdot \omega = K_{\tau} \cdot I \cdot \omega$‚ª’Ş‚è‡‚¤‚½‚ßA$K_{E} = K_{\tau}$‚ª¬‚è—§‚Â(’PˆÊŒn‚É’ˆÓ)}
+\item {\bf MOTOR\_R: ãƒ¢ãƒ¼ã‚¿å†…éƒ¨æŠµæŠ—[$\Omega$]} \par ãƒ¢ãƒ¼ã‚¿ã®ç«¯å­é–“æŠµæŠ—$R$ã‹ã‚‰ã€$\frac{3}{4} \cdot R$ã§ä¸ãˆã‚‹
+\item {\bf MOTOR\_VC: é€†èµ·é›»åŠ›ä¿‚æ•°[rpm/V]} \par å®šæ ¼é›»åœ§$V$ã§ã®ãƒ¢ãƒ¼ã‚¿ç„¡è² è·æœ€å¤§å›è»¢æ•°$r_{max}$ã‹ã‚‰ã€$r_{max}/V$ã§ä¸ãˆã‚‹
+\item {\bf MOTOR\_TC: ãƒˆãƒ«ã‚¯ä¿‚æ•°[Nm/A]} \par é€†èµ·é›»åŠ›ä¿‚æ•°$K_{E}=r_{max}/V$ã‹ã‚‰å˜ä½ã‚’å¤‰æ›ã—ã€$\frac{60}{2\pi K_{E}}$ã§ä¸ãˆã‚‹\footnote{ãƒ¢ãƒ¼ã‚¿ã®ã‚¨ãƒãƒ«ã‚®ãƒ¼æå¤±ãŒç„¡è¦–ã§ãã‚‹å ´åˆã€ãƒ¢ãƒ¼ã‚¿ã«æ³¨å…¥ã—ãŸé›»åŠ›$P = E \cdot I = K_{E} \cdot \omega \cdot I$ã¨ã€ãƒ¢ãƒ¼ã‚¿ãŒç™ºã™ã‚‹å‹•åŠ›$P = \tau \cdot \omega = K_{\tau} \cdot I \cdot \omega$ãŒé‡£ã‚Šåˆã†ãŸã‚ã€$K_{E} = K_{\tau}$ãŒæˆã‚Šç«‹ã¤(å˜ä½ç³»ã«æ³¨æ„)}
 \end{itemize}\par
 
-‚Ü‚½Aƒuƒ‰ƒVƒŒƒXƒ‚[ƒ^‚ªAn‹É(ƒ‚[ƒ^²‚ğ1‰ñ“]‚·‚é‚Æ‹t‹N“d—Í”gŒ`‚âƒz[ƒ‹‘fq”gŒ`‚ªnüŠúŒ»‚ê‚é)ê‡‚ÍAƒMƒA”ä(GEAR €)‚ğn”{‚µAƒGƒ“ƒR[ƒ_•ª‰ğ”\(COUNT\_REV €)‚ğ1/n‚Æ‚·‚é•K—v‚ª‚ ‚è‚Ü‚·Bƒ‚[ƒ^²‚ÌŠµ«ƒ‚[ƒƒ“ƒg‚ğw’è‚·‚é MOTOR\_M\_INERTIA € ‚ÍƒMƒA”ä‚ªn”{‚¾‚Á‚½ê‡‚ÉŠ·Z‚µ‚Äw’è‚·‚é•K—v‚ª‚ ‚é‚Ì‚ÅAƒ‚[ƒ^²‚ÌŠµ«ƒ‚[ƒƒ“ƒg$M$‚É‘Î‚µ‚ÄA$M/n^{2}$‚ğ—^‚¦‚Ü‚·B\par
+ã¾ãŸã€ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ãŒã€næ¥µ(ãƒ¢ãƒ¼ã‚¿è»¸ã‚’1å›è»¢ã™ã‚‹ã¨é€†èµ·é›»åŠ›æ³¢å½¢ã‚„ãƒ›ãƒ¼ãƒ«ç´ å­æ³¢å½¢ãŒnå‘¨æœŸç¾ã‚Œã‚‹)å ´åˆã¯ã€ã‚®ã‚¢æ¯”(GEAR é …)ã‚’nå€ã—ã€ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€åˆ†è§£èƒ½(COUNT\_REV é …)ã‚’1/nã¨ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚ãƒ¢ãƒ¼ã‚¿è»¸ã®æ…£æ€§ãƒ¢ãƒ¼ãƒ¡ãƒ³ãƒˆã‚’æŒ‡å®šã™ã‚‹ MOTOR\_M\_INERTIA é … ã¯ã‚®ã‚¢æ¯”ãŒnå€ã ã£ãŸå ´åˆã«æ›ç®—ã—ã¦æŒ‡å®šã™ã‚‹å¿…è¦ãŒã‚ã‚‹ã®ã§ã€ãƒ¢ãƒ¼ã‚¿è»¸ã®æ…£æ€§ãƒ¢ãƒ¼ãƒ¡ãƒ³ãƒˆ$M$ã«å¯¾ã—ã¦ã€$M/n^{2}$ã‚’ä¸ãˆã¾ã™ã€‚\par
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÆYP-Spur‚ğ—p‚¢‚ÄAƒpƒ‰ƒ[ƒ^‚ğ“KØ‚Éİ’è‚·‚ê‚ÎAƒtƒB[ƒhƒtƒHƒ[ƒh§Œä‚É‚æ‚èƒƒ{ƒbƒg‘–s§Œä‚Ì“Á«‚ğŒüã‚Å‚«‚Ü‚·B\par
+{\bf TF-2MD3-R6}ã¨{\bf YP-Spur} ã‚’ç”¨ã„ã¦ã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’é©åˆ‡ã«è¨­å®šã™ã‚Œã°ã€ãƒ•ã‚£ãƒ¼ãƒ‰ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰åˆ¶å¾¡ã«ã‚ˆã‚Šãƒ­ãƒœãƒƒãƒˆèµ°è¡Œåˆ¶å¾¡ã®ç‰¹æ€§ã‚’å‘ä¸Šã§ãã¾ã™ã€‚\par
 
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{ƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹ì¬—á}
-\label{sec:ƒpƒ‰ƒ[ƒ^ì¬—á}
+\subsection{ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆä¾‹}
+\label{sec:ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆä¾‹}
 
-Å¬\¬‚ÌˆÚ“®ƒƒ{ƒbƒg‚ÍAT-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ì‘¼‚ÉAƒ‚[ƒ^Eƒ^ƒCƒ„E“dŒ¹Eƒ‰ƒbƒvƒgƒbƒvPC‚ª‚ ‚ê‚Î\’z‚Å‚«‚Ü‚·B
-}\ref{fig:simple_robot}‚ÉAT-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ì“®ìƒeƒXƒg—p‚É\’z‚µ‚½ŠÈˆÕ‚ÈˆÚ“®ƒƒ{ƒbƒg‚ğ¦‚µ‚Ü‚·BƒIƒŠƒGƒ“ƒ^ƒ‹ƒ‚[ƒ^‚Ìƒuƒ‰ƒVƒŒƒXDCƒ‚[ƒ^(BX230A-15FR‚Éƒpƒ‹ƒXƒGƒ“ƒR[ƒ_‚ğæ‚è•t‚¯‚½ƒo[ƒWƒ‡ƒ“)‚ğ“‹Ú‚µAƒ_ƒCƒŒƒNƒgƒhƒ‰ƒCƒu‚Åƒ^ƒCƒ„‚ğ‹ì“®‚·‚é\¬‚Æ‚È‚Á‚Ä‚¢‚Ü‚·B\par
-‚±‚Ì‚Æ‚«‚ÌAƒpƒ‰ƒ[ƒ^ƒtƒ@ƒCƒ‹‚Ìå—v‚È•”•ª‚ğˆÈ‰º‚É¦‚µ‚Ü‚·B‚±‚Ìƒ‚[ƒ^‚Í3‘Š5‹É‚È‚Ì‚ÅAƒMƒA”ä‚Í5”{‚Æ‚È‚Á‚Ä‚¢‚Ü‚·B\par
+æœ€å°æ§‹æˆã®ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã¯ã€{\bf TF-2MD3-R6}ã®ä»–ã«ã€ãƒ¢ãƒ¼ã‚¿ãƒ»ã‚¿ã‚¤ãƒ¤ãƒ»é›»æºãƒ»ãƒ©ãƒƒãƒ—ãƒˆãƒƒãƒ—PCãŒã‚ã‚Œã°æ§‹ç¯‰ã§ãã¾ã™ã€‚
+\figurename~\ref{fig:simple_robot} ã«ã€{\bf TF-2MD3-R6}ã®å‹•ä½œãƒ†ã‚¹ãƒˆç”¨ã«æ§‹ç¯‰ã—ãŸç°¡æ˜“ãªç§»å‹•ãƒ­ãƒœãƒƒãƒˆã‚’ç¤ºã—ã¾ã™ã€‚ã‚ªãƒªã‚¨ãƒ³ã‚¿ãƒ«ãƒ¢ãƒ¼ã‚¿ã®ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿(BX230A-15FRã«ãƒ‘ãƒ«ã‚¹ã‚¨ãƒ³ã‚³ãƒ¼ãƒ€ã‚’å–ã‚Šä»˜ã‘ãŸãƒãƒ¼ã‚¸ãƒ§ãƒ³)ã‚’æ­è¼‰ã—ã€ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆãƒ‰ãƒ©ã‚¤ãƒ–ã§ã‚¿ã‚¤ãƒ¤ã‚’é§†å‹•ã™ã‚‹æ§‹æˆã¨ãªã£ã¦ã„ã¾ã™ã€‚\par
+ã“ã®ã¨ãã®ã€ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¸»è¦ãªéƒ¨åˆ†ã‚’ä»¥ä¸‹ã«ç¤ºã—ã¾ã™ã€‚ã“ã®ãƒ¢ãƒ¼ã‚¿ã¯3ç›¸5æ¥µãªã®ã§ã€ã‚®ã‚¢æ¯”ã¯5å€ã¨ãªã£ã¦ã„ã¾ã™ã€‚\par
 \begin{figure}[H]
-\begin{center}
-\includegraphics[width=65mm]{simple_robot.eps}
-\caption{ƒIƒŠƒGƒ“ƒ^ƒ‹ƒ‚[ƒ^‚Ìƒuƒ‰ƒVƒŒƒXDCƒ‚[ƒ^‚ğ—p‚¢‚½ˆÚ“®ƒƒ{ƒbƒg‚Ì—á}
+\centering\includegraphics[width=65mm]{simple_robot.eps}
+\caption{ã‚ªãƒªã‚¨ãƒ³ã‚¿ãƒ«ãƒ¢ãƒ¼ã‚¿ã®ãƒ–ãƒ©ã‚·ãƒ¬ã‚¹ãƒ¢ãƒ¼ã‚¿ã‚’ç”¨ã„ãŸç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®ä¾‹}
 \label{fig:simple_robot}
-\end{center}
 \end{figure}
 
 
 \begin{lstlisting}{}
-     MOTOR_PHASE    3.00000000 #
-         PWM_MAX 1200.00000000 #
+     MOTOR_PHASE    4.00000000 #
+ TORQUE_FINENESS    0.00000100 #
        COUNT_REV  400.00000000 #[cnt/rev]
             VOLT   24.00000000 #[V]
            CYCLE    0.00100000 #[s]
@@ -672,167 +778,231 @@ T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ÆYP-Spur‚ğ—p‚¢‚ÄAƒpƒ‰ƒ[ƒ^‚ğ“KØ‚Éİ’è‚·‚ê‚ÎAƒtƒB[ƒhƒtƒ
   TIRE_M_INERTIA    0.00300000 #[kgm^2]
 \end{lstlisting}
 
-‚±‚Ìƒn[ƒhƒEƒFƒA‚¨‚æ‚Ñƒpƒ‰ƒ[ƒ^‚ğ—p‚¢‚ÄAYP-Spur‚Å‘–s§Œä‚ğs‚¢A“®ì‚ğŠm”F‚µ‚½Œ‹‰ÊAƒWƒ‡ƒCƒXƒeƒBƒbƒN‚Å‘€ì‚µ‚È‚ª‚çA0.1m/s‚©‚ç5m/s’ö“x‚Ì‘¬“xˆæ‚ÅAˆÀ’è‚É‘–s‰Â”\‚È‚±‚Æ‚ªŠm‚©‚ß‚ç‚ê‚Ü‚µ‚½B‚Ü‚½Aƒs[ƒN‚Ì“dŒ¹“d—¬20A’ö“x‚Ì“®ì—Ìˆæ‚Å‚àA–â‘è‚È‚­‹ì“®E§Œä‚ªs‚¦‚é‚±‚Æ‚ğŠm”F‚µ‚Ä‚¢‚Ü‚·B\par
-
 
 \newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ìƒtƒ@[ƒ€ƒEƒFƒAXV•û–@}
-\label{sec:ƒtƒ@[ƒ€ƒEƒFƒAXV•û–@}
+\section{{\bf TF-2MD3-R6}ã®ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›´æ–°æ–¹æ³•}
+\label{sec:ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›´æ–°æ–¹æ³•}
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ìƒtƒ@[ƒ€ƒEƒFƒAXV‚ÍAUSBƒCƒ“ƒ^ƒtƒF[ƒX‚Ås‚¢‚Ü‚·B
-‚Í‚¶‚ß‚ÉAˆÈ‰º‚Ìè‡‚É]‚Á‚ÄAFLASH ROM‚ğÁ‹‚µ‚Ü‚·B
+{\bf TF-2MD3-R6}ã®ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›´æ–°ã¯ã€USBã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã§è¡Œã„ã¾ã™ã€‚
 
-\warnbox{ƒtƒ@[ƒ€ƒEƒFƒA‚ÌXV}{
+\warnbox{ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã®æ›´æ–°æ™‚}{
 	\iconitem{donot.eps}{
-		\item ì‹Æ’†‚ÍAƒ‚[ƒ^‹ì“®“dŒ¹‚ğ‹Ÿ‹‹‚µ‚È‚¢
-		\item ì‹Æ‚ğ’†’f‚µ‚È‚¢
+		\item ä½œæ¥­ä¸­ã¯ã€ãƒ¢ãƒ¼ã‚¿é§†å‹•é›»æºã‚’ä¾›çµ¦ã—ãªã„
+		\item ä½œæ¥­ã‚’ä¸­æ–­ã—ãªã„
 	}
 }
 
-\begin{enumerate}
-	\leftskip=10pt
-	\item T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒoŠî”Âã‚ÌƒXƒ‰ƒCƒhƒXƒCƒbƒ```SW1''‚ğA1ƒsƒ“•\¦‘¤‚ÉƒXƒ‰ƒCƒh
-	\setlength\intextsep{-10pt}
-	\setlength\textfloatsep{-10pt}
-	\begin{figure}[H]
-		\begin{center}
-		\includegraphics[width=140mm]{firmware.erace.eps}
-		\caption{T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒoFLASH ROM‚ÌÁ‹}
-		\label{fig:firmware.erace}
-		\end{center}
-	\end{figure}
-	\item ƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹(5V)‚ğ“Š“ü(1•bˆÈ“à‚ÉÁ‹‚ªŠ®—¹)
-	\item ƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹‚ğØ’f
-	\item ƒXƒ‰ƒCƒhƒXƒCƒbƒ```SW1''‚ğA‰Šúó‘Ô(3ƒsƒ“•\¦‘¤)‚ÉƒXƒ‰ƒCƒh
-\end{enumerate}
-
-Šî”Â‚Ìƒo[ƒWƒ‡ƒ“‚Æˆê’v‚·‚éƒRƒ“ƒpƒCƒ‹Ï‚İ‚Ìƒtƒ@[ƒ€ƒEƒFƒA‚ğˆÈ‰º‚ÌURL‚©‚çƒ_ƒEƒ“ƒ[ƒh‚µ‚Ü‚·B
-ƒ\[ƒXƒR[ƒh‚ğƒ_ƒEƒ“ƒ[ƒh‚µ‚ÄƒRƒ“ƒpƒCƒ‹‚·‚é‚±‚Æ‚Å‚à¶¬‚Å‚«‚Ü‚·B
-\begin{itemize}
-\item [] \url{http://www.roboken.esys.tsukuba.ac.jp/platform/}
-\end{itemize}
+åŸºæ¿ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¨ä¸€è‡´ã™ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ¸ˆã¿ã®ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã‚’ã€ä»¥ä¸‹ã®URLã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¾ã™ã€‚
+ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã¦ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã™ã‚‹ã“ã¨ã§ã‚‚ç”Ÿæˆã§ãã¾ã™ã€‚\\
+\urllink{http://t-frog.com/products/motor_driver/}
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{LinuxŠÂ‹«‚Ìê‡}
-\label{sec:Linuxƒtƒ@[ƒ€ƒEƒFƒA}
+\subsection{Linuxç’°å¢ƒã®å ´åˆ}
+\label{sec:Linuxãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢}
 
-ˆÈ‰º‚ÌURL‚©‚çA``BSD SAM-BA''‚ğƒ_ƒEƒ“ƒ[ƒh‚µAƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·B
 
-\begin{itemize}
-\item [] \url{http://sourceforge.net/projects/bsd-samba/}
-\end{itemize}
+ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã§ã€ ``samba Flash Utility for AT91SAM7 microcontrollers'' ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™ã€‚
+\begin{lstlisting}{}
+$ git svn clone --trunk=trunk --prefix=samba http://samba.googlecode.com/svn/ samba
+$ cd samba
+$ ./configure
+$ make
+$ sudo make install
+\end{lstlisting}
+\par
 
-T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ğUSBƒCƒ“ƒ^ƒtƒF[ƒX‚ÅƒRƒ“ƒsƒ…[ƒ^‚ÉÚ‘±AƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹(5V)‚ğ“Š“ü‚µA
-ˆÈ‰º‚ÌƒRƒ}ƒ“ƒh‚ğÀs‚µ‚Ü‚·B
+ã¯ã˜ã‚ã«ã€ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¦ã€{FLASH~ROM} ã‚’æ¶ˆå»ã—ã¾ã™ã€‚ 
+{DEVICE\_PATH} ã«ã¯ã€ {/dev/ttyACM0} ã®ã‚ˆã†ã« Linux ä¸Šã«ã‚¢ã‚¿ãƒƒãƒã•ã‚ŒãŸãƒ‡ãƒã‚¤ã‚¹ã®ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’æŒ‡å®šã—ã¾ã™ã€‚
+\begin{lstlisting}{}
+$ echo '$FLASHERACEA' > DEVICE_PATH
+$ echo '$FLASHERACEB' > DEVICE_PATH
+\end{lstlisting}
+\par
+
+{\bf TF-2MD3-R6} ã‚’USBã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã§ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã«æ¥ç¶šã€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æº(5V)ã‚’æŠ•å…¥ã—ã€
+ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
+{DEVICE\_PATH} ã¯ã€{/dev/ttyACM0} ã®ã‚ˆã†ã« Linux ä¸Šã«ã‚¢ã‚¿ãƒƒãƒã•ã‚Œã‚‹ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’æŒ‡å®šã—ã€
+FIRMWARE.bin ã¯ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ¸ˆã¿ã®ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã®ãƒ‘ã‚¹ã‚’æŒ‡å®šã—ã¾ã™ã€‚
 \begin{lstlisting}{}
 $ samba -i DEVICE_PATH
 > flash 0x00100000 FIRMWARE.bin
 > nvm 4
 \end{lstlisting}
-DEVICE\_PATH‚ÍA/dev/ttyACM0‚Ì‚æ‚¤‚ÉLinuxã‚ÉƒAƒ^ƒbƒ`‚³‚ê‚éƒfƒoƒCƒX‚Ìƒtƒ‹ƒpƒX‚ğw’è‚µA
-FIRMWARE.bin‚ÍƒRƒ“ƒpƒCƒ‹Ï‚İ‚Ìƒtƒ@[ƒ€ƒEƒFƒA‚ÌƒpƒX‚ğw’è‚µ‚Ü‚·B
+ä½œæ¥­ãŒå®Œäº†ã—ãŸã‚‰ã€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æºã‚’åˆ‡æ–­ã—ã€å†åº¦ã€æŠ•å…¥ã—ã¾ã™ã€‚
 
-ƒRƒ}ƒ“ƒh‚ªŠ®—¹‚µ‚½‚çAƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹‚ğØ’f‚µAÄ“xA“Š“ü‚µ‚Ü‚·B
-
-\vspace{1em}
-\warnbox{ƒtƒ@[ƒ€ƒEƒFƒAXV¬Œ÷‚ÌŠm”F}{
+\bigskip
+\warnbox{ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›´æ–°æˆåŠŸã®ç¢ºèª}{
 	\iconitem{warn.eps}{
-		\item “dŒ¹“Š“ü‚ÉA—Î‚ÌLED‚ª’ZŠÔ“_“”‚µ‚½ŒãAÁ“”‚·‚é‚±‚Æ‚ğŠm”F‚·‚é
-	}
-}
-
-% ---------------------------------------------------------------------
-% --------------------------- subsection ------------------------------
-\subsection{WindowsŠÂ‹«‚Ìê‡}
-\label{sec:Windowsƒtƒ@[ƒ€ƒEƒFƒA}
-
- ˆÈ‰º‚ÌURL‚©‚çA``SAM-BA for Windows''‚ğƒ_ƒEƒ“ƒ[ƒh‚µAƒCƒ“ƒXƒg[ƒ‹‚µ‚Ü‚·B
-
-\begin{itemize}
-\item [] \url{http://www.atmel.com/tools/ATMELSAM-BAIN-SYSTEMPROGRAMMER.aspx}
-\end{itemize}
-
- T-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚ğUSBƒCƒ“ƒ^ƒtƒF[ƒX‚ÅƒRƒ“ƒsƒ…[ƒ^‚ÉÚ‘±AƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹(5V)‚ğ“Š“ü‚µAˆÈ‰º‚Ìè‡‚É]‚Á‚Äƒtƒ@[ƒ€ƒEƒFƒA‚ğ‘‚«‚İ‚Ü‚·B
-‚È‚¨A‰‰ñÚ‘±‚É‚ÍAƒfƒoƒCƒXƒhƒ‰ƒCƒo‚ÌƒCƒ“ƒXƒg[ƒ‹ƒEƒBƒU[ƒh‚ªŠJ‚«‚Ü‚·‚Ì‚ÅA‰æ–Ê‚Ìw¦‚É]‚Á‚ÄƒfƒoƒCƒXƒhƒ‰ƒCƒo‚ğƒCƒ“ƒXƒg[ƒ‹‚µ‚Ä‰º‚³‚¢B
- 
-\begin{enumerate}
-	\leftskip=10pt
-	\item ƒCƒ“ƒXƒg[ƒ‹‚µ‚½``SAM-BA for Windows''‚ğÀs
-	\item ``Select the connection''—“‚ÅAT-frogƒ‚[ƒ^ƒhƒ‰ƒCƒo‚Ìƒ|[ƒg‚ğ‘I‘ğ
-	\item ``Select your board''—“‚ÅAŠî”Â‚Ìƒo[ƒWƒ‡ƒ“‚É‘Î‰‚·‚éŒ^”Ô‚ğ‘I‘ğ
-		\begin{center}
-			\begin{tabular}{rl}
-				\hline
-				{\bf rev.4(ƒvƒŒ»•i‰»”Å)} & at91sam7se512-ek \\
-				{\bf rev.5(»•i”Å)} &  at91sam7se256-ek \\
-				\hline
-			\end{tabular}
-		\end{center}
-	\item ``Connect''‚ğ‘I‘ğ
-		\setlength\intextsep{-10pt}
-		\setlength\textfloatsep{-10pt}
-		\begin{figure}[H]
-			\begin{center}
-			\includegraphics[width=75mm]{sam-ba.connect.eps}
-			\caption{``SAM-BA for Windows''Ú‘±‰æ–Ê}
-			\label{fig:sam-ba.connect}
-			\end{center}
-		\end{figure}
-	\item ``External RAM initialization failed.''‚ÌŒx‚ªŒ»‚ê‚é‚Ì‚ÅA``‚Í‚¢(Y)''‚ğ‘I‘ğ
-	\item ``Download / Upload File''‚Ì``Send File Name''—“‚ÅAƒRƒ“ƒpƒCƒ‹Ï‚İ‚Ìƒtƒ@[ƒ€ƒEƒFƒA‚ğŠJ‚­
-	\item ``Send File''ƒ{ƒ^ƒ“‚ğ‘I‘ğ
-		\setlength\intextsep{-10pt}
-		\setlength\textfloatsep{-10pt}
-		\begin{figure}[H]
-			\begin{center}
-			\includegraphics[width=120mm]{sam-ba.write.eps}
-			\caption{``SAM-BA for Windows''ƒtƒ@[ƒ€ƒEƒFƒA‘‚«‚İ‰æ–Ê}
-			\label{fig:sam-ba.write}
-			\end{center}
-		\end{figure}
-	\item ``Lock region(s)''ƒEƒCƒ“ƒhƒE‚ªŒ»‚ê‚é‚Ì‚Å``‚¢‚¢‚¦(N)''‚ğ‘I‘ğ
-	\item ``Scripts''—“‚Å``Boot from Flash (GPNVM2)''‚ğ‘I‘ğ‚µ‚Ä``Execute''
-\end{enumerate}
-
-ì‹Æ‚ªŠ®—¹‚µ‚½‚çAƒRƒ“ƒgƒ[ƒ‰Šî”Â“dŒ¹‚ğØ’f‚µAÄ“xA“Š“ü‚µ‚Ü‚·B
-
-\vspace{1em}
-\warnbox{ƒtƒ@[ƒ€ƒEƒFƒAXV¬Œ÷‚ÌŠm”F}{
-	\iconitem{warn.eps}{
-		\item “dŒ¹“Š“ü‚ÉA—Î‚ÌLED‚ª’ZŠÔ“_“”‚µ‚½ŒãAÁ“”‚·‚é‚±‚Æ‚ğŠm”F‚·‚é
+		\item é›»æºæŠ•å…¥æ™‚ã«ã€LED1ãŒçŸ­æ™‚é–“ç‚¹ç¯ã—ãŸå¾Œæ¶ˆç¯ã€LED2ãŒè–„ãç‚¹ç¯ã™ã‚‹ã“ã¨ã‚’ç¢ºèªã™ã‚‹
 	}
 }
 
 
 \newpage
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{Windowsç’°å¢ƒã®å ´åˆ}
+\label{sec:Windowsãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢}
+
+``SAM-BA for Windows'' ã‚’ä¸‹è¨˜ã®URLã‹ã‚‰ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã—ã€ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™ã€‚\\
+\urllink{http://www.atmel.com/tools/ATMELSAM-BAIN-SYSTEMPROGRAMMER.aspx}
+\par
+
+
+ã¯ã˜ã‚ã«ã€{Tera~Term} {\small(\url{http://sourceforge.jp/projects/ttssh2/})}  ãªã©ã®ã‚¿ãƒ¼ãƒŸãƒŠãƒ«ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã§ã€{\bf TF-2MD3-R6} ã®COMãƒãƒ¼ãƒˆã‚’é–‹ãã€ä»¥ä¸‹ã®ã‚³ãƒãƒ³ãƒ‰ã‚’å…¥åŠ›ã—ã¦FLASH ROMã‚’æ¶ˆå»ã—ã¾ã™ã€‚ 
+\begin{lstlisting}{}
+ $FLASHERACEA
+ $FLASHERACEB
+\end{lstlisting}
+\par
+
+
+{\bf TF-2MD3-R6}ã‚’USBã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹ã§ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã«æ¥ç¶šã€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æº(5V)ã‚’æŠ•å…¥ã—ã¾ã™ã€‚
+ãªãŠã€åˆå›æ¥ç¶šæ™‚ã«ã¯ã€ãƒ‡ãƒã‚¤ã‚¹ãƒ‰ãƒ©ã‚¤ãƒã®ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã‚¦ã‚£ã‚¶ãƒ¼ãƒ‰ãŒé–‹ãã¾ã™ã®ã§ã€ç”»é¢ã®æŒ‡ç¤ºã«å¾“ã£ã¦ãƒ‡ãƒã‚¤ã‚¹ãƒ‰ãƒ©ã‚¤ãƒã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¦ä¸‹ã•ã„ã€‚
+Windows~7ã®å ´åˆã¯ã€ä»¥ä¸‹ã®æ‰‹é †ã§ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã§ãã¾ã™ã€‚
+\begin{enumerate}
+	\item ã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³ã® ``ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ‘ãƒãƒ«'' ã‹ã‚‰ã€ ``ã‚·ã‚¹ãƒ†ãƒ '' ã‚’é–‹ãã€ ``ãƒ‡ãƒã‚¤ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=122mm]{windriver-install.3.system.eps}
+			\caption{ãƒ‡ãƒã‚¤ã‚¹ãƒãƒãƒ¼ã‚¸ãƒ£ã‚’èµ·å‹•}
+			\label{fig:windriver.system}
+		\end{figure}
+	\item ``ã»ã‹ã®ãƒ‡ãƒã‚¤ã‚¹'' ã‚’å±•é–‹ã—ã€ ``ä¸æ˜ãªãƒ‡ãƒã‚¤ã‚¹'' ã‚’å³ã‚¯ãƒªãƒƒã‚¯ã€ ``ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=64mm]{windriver-install.4.device_man.eps}
+			\caption{ä¸æ˜ãªãƒ‡ãƒã‚¤ã‚¹ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã‚’é–‹ã}
+			\label{fig:windriver.device_man}
+		\end{figure}
+	\item ``ãƒ‰ãƒ©ã‚¤ãƒãƒ¼'' ã‚¿ãƒ–ã® ``ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã®æ›´æ–°(P)'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=72mm]{windriver-install.5.device_prop.eps}
+			\caption{ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã®æ›´æ–°}
+			\label{fig:windriver.device_prop}
+		\end{figure}
+	\item ``ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã‚’å‚ç…§ã—ã¦ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ¤œç´¢ã—ã¾ã™(R)'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=94mm]{windriver-install.6.driversearch.eps}
+			\caption{ã‚³ãƒ³ãƒ”ãƒ¥ãƒ¼ã‚¿ã‚’å‚ç…§ã—ã¦ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ¤œç´¢}
+			\label{fig:windriver.driversearch}
+		\end{figure}
+	\item ``å‚ç…§'' ãƒœã‚¿ãƒ³ã‹ã‚‰ã€ ``SAM-BA for Windows'' ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä¸‹ã® ``drv'' ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’é¸æŠ (æ¨™æº–è¨­å®šã§ã¯ C:{\textbackslash}Program~Files~(x86){\textbackslash}Atmel{\textbackslash}sam-ba\_2.12{\textbackslash}drv ) ã—ã€ ``æ¬¡ã¸(N)'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=94mm]{windriver-install.7.driverfile.eps}
+			\caption{ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’å‚ç…§}
+			\label{fig:windriver.driverfile}
+		\end{figure}
+	\item ã‚»ã‚­ãƒ¥ãƒªãƒ†ã‚£è­¦å‘Šç”»é¢ãŒç¾ã‚Œã‚‹ã®ã§ã€ ``ã“ã®ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ã¾ã™(I)'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=76mm]{windriver-install.8.security.eps}
+			\caption{ãƒ‰ãƒ©ã‚¤ãƒãƒ¼ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’å‚ç…§}
+			\label{fig:windriver.security}
+		\end{figure}
+\end{enumerate}
+\par
+
+ä»¥ä¸‹ã®æ‰‹é †ã«å¾“ã£ã¦ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã‚’æ›¸ãè¾¼ã¿ã¾ã™ã€‚
+\begin{enumerate}
+	\item ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ã—ãŸ ``SAM-BA for Windows'' ã‚’å®Ÿè¡Œ
+	\item ``Select the connection'' æ¬„ã§ã€{\bf TF-2MD3-R6}ã®ãƒãƒ¼ãƒˆã‚’é¸æŠ
+	\item ``Select your board'' æ¬„ã§ã€åŸºæ¿ã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«å¯¾å¿œã™ã‚‹å‹ç•ªã‚’é¸æŠ
+		\begin{center}
+		\begin{tabular}{rl}
+			\hline
+			{\bf ãƒ—ãƒ¬è£½å“åŒ–ç‰ˆ} & at91sam7se512-ek \\
+			{\bf TF-2MD3-R6}   & at91sam7se256-ek \\
+			\hline
+		\end{tabular}
+		\end{center}
+	\item ``Connect'' ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=80mm]{sam-ba.connect.eps}
+			\caption{ ``SAM-BA for Windows'' æ¥ç¶šç”»é¢}
+			\label{fig:sam-ba.connect}
+		\end{figure}
+	\item ``External RAM initialization failed.'' ã®è­¦å‘ŠãŒç¾ã‚Œã‚‹ã®ã§ã€ ``ã¯ã„(Y)'' ã‚’é¸æŠ
+	\item ``Download / Upload File'' ã® ``Send File Name'' æ¬„ã§ã€ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«æ¸ˆã¿ã®ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã‚’é–‹ã
+	\item ``Send File'' ãƒœã‚¿ãƒ³ã‚’é¸æŠ
+		\begin{figure}[H]
+			\centering\includegraphics[width=148mm]{sam-ba.write.eps}
+			\caption{ ``SAM-BA for Windows'' ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›¸ãè¾¼ã¿}
+			\label{fig:sam-ba.write}
+		\end{figure}
+	\item ``Lock region(s)'' ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãŒç¾ã‚Œã‚‹ã®ã§ ``ã„ã„ãˆ(N)'' ã‚’é¸æŠ
+	\item ``Scripts'' æ¬„ã§ ``Boot from Flash (GPNVM2)'' ã‚’é¸æŠã—ã¦ ``Execute''
+		\begin{figure}[H]
+			\centering\includegraphics[width=148mm]{sam-ba.boot.eps}
+			\caption{Flashã‹ã‚‰ã®èµ·å‹•è¨­å®š}
+			\label{fig:sam-ba.boot}
+		\end{figure}
+\end{enumerate}
+
+
+ä½œæ¥­ãŒå®Œäº†ã—ãŸã‚‰ã€ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æºã‚’åˆ‡æ–­ã—ã€å†åº¦ã€æŠ•å…¥ã—ã¾ã™ã€‚
+\par
+
+\bigskip
+\warnbox{ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢æ›´æ–°æˆåŠŸã®ç¢ºèª}{
+	\iconitem{warn.eps}{
+		\item é›»æºæŠ•å…¥æ™‚ã«ã€LED1ãŒçŸ­æ™‚é–“ç‚¹ç¯ã—ãŸå¾Œæ¶ˆç¯ã€LED2ãŒè–„ãç‚¹ç¯ã™ã‚‹ã“ã¨ã‚’ç¢ºèªã™ã‚‹
+	}
+}
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ã™ã‚‹å ´åˆ}
+\label{sec:ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢æ¶ˆå»ã‚¹ã‚¤ãƒƒãƒ}
+
+
+ä¸Šè¨˜ã®æ–¹æ³•ã§ãƒ•ã‚¡ãƒ¼ãƒ ã‚¦ã‚§ã‚¢ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ã™ã‚‹å ´åˆã¯ã€ä»¥ä¸‹ã®æ‰‹é †ã§ã€FLASH ROM ã‚’å¼·åˆ¶çš„ã«æ¶ˆå»ã™ã‚‹ã“ã¨ã§æ›¸ãè¾¼ã¿ãŒå¯èƒ½ã«ãªã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚
+
+\begin{enumerate}
+	\item {\bf TF-2MD3-R6}åŸºæ¿ä¸Šã®ã‚¹ãƒ©ã‚¤ãƒ‰ã‚¹ã‚¤ãƒƒãƒ ``SW1'' ã‚’ã€1ãƒ”ãƒ³è¡¨ç¤ºå´ã«ã‚¹ãƒ©ã‚¤ãƒ‰
+	\item ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æº(5V)ã‚’æŠ•å…¥(1ç§’ä»¥å†…ã«æ¶ˆå»ãŒå®Œäº†)
+	\item ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿é›»æºã‚’åˆ‡æ–­
+	\item ã‚¹ãƒ©ã‚¤ãƒ‰ã‚¹ã‚¤ãƒƒãƒ ``SW1'' ã‚’ã€åˆæœŸçŠ¶æ…‹(3ãƒ”ãƒ³è¡¨ç¤ºå´)ã«ã‚¹ãƒ©ã‚¤ãƒ‰
+\end{enumerate}
+
+
+ãªãŠã€ã‚¹ãƒ©ã‚¤ãƒ‰ã‚¹ã‚¤ãƒƒãƒ ``SW1'' ã¯ã€åŸºæ¿ã®ç‰ˆã”ã¨ã«ä»¥ä¸‹ã®å ´æ‰€ã«å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã™ã€‚
+\begin{description}
+	\item [{\bf TF-2MD3-R6}] ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿ã®è£é¢ä¸­å¤® \\
+		(ãƒã‚¸æ­¢ã‚ã•ã‚Œã¦ã„ã‚‹ãƒ‰ãƒ©ã‚¤ãƒ–åŸºæ¿ã¨ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿ã‚’ã€å–ã‚Šå¤–ã™å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚)
+	\item [{\bf TF-2MD3 ãƒ—ãƒ¬è£½å“åŒ–ç‰ˆ}] ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©åŸºæ¿ã®è¡¨é¢ä¸­å¤®
+\end{description}
+
+
+
+\newpage
 % ******************************************************************
 % **************************** section *****************************
-\section{–â‚¢‡‚í‚¹æ}
-\label{sec:–â‚¢‡‚í‚¹æ}
+\section{å•ã„åˆã‚ã›å…ˆ}
+\label{sec:å•ã„åˆã‚ã›å…ˆ}
 
 \begin{itembox}[l]
-	{‚²w“ü•û–@‚È‚Ç‚É‚Â‚¢‚Ä}
+	{ã”è³¼å…¥æ–¹æ³•ãªã©ã«ã¤ã„ã¦}
 	{
-		\hspace{2em}\parbox[H]{\textwidth}{\vspace{-0.5em}
-			{\bf\hspace{-1em} ƒcƒW“dqŠ”®‰ïĞ}\\
-			§300-0013 ˆïéŒ§“y‰Ys_—§’¬3739\\
-			info2@tsuji-denshi.co.jp\\
+		\hspace{1em}{\bf ãƒ„ã‚¸é›»å­æ ªå¼ä¼šç¤¾}\par
+		\medskip\hspace{2em}
+		\parbox[H]{0.8\textwidth}{
+			ã€’300-0013 èŒ¨åŸçœŒåœŸæµ¦å¸‚ç¥ç«‹ç”º3739\\
+			info2[at]tsuji-denshi.co.jp\\
 			029-832-3031
 		}
 	}
 \end{itembox}
 
 \begin{itembox}[l]
-	{ƒn[ƒhƒEƒFƒAEƒ\ƒtƒgƒEƒFƒA‚Ìƒgƒ‰ƒuƒ‹‚É‚Â‚¢‚Ä}
+	{ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ãƒ»ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒˆãƒ©ãƒ–ãƒ«ã«ã¤ã„ã¦}
 	{
-		\hspace{2em}\parbox[H]{\textwidth}{\vspace{-0.5em}
-			{\bf\hspace{-1em} “n•Ó“Öu}\\
-			§305-8573 ˆïéŒ§‚Â‚­‚Îs“V‰¤‘ä1-1-1\\
-			’}”g‘åŠw ƒVƒXƒeƒ€î•ñHŠwŒ¤‹†‰È ’m”\ƒƒ{ƒbƒgŒ¤‹†º(2013”N“xŒ»İ)\\
-			atusi\_w@roboken.esys.tsukuba.ac.jp\\
+		\hspace{1em}{\bf æ¸¡è¾ºæ•¦å¿—}\par
+		\medskip\hspace{2em}
+		\parbox[H]{0.8\textwidth}{
+			ã€’305-8573 èŒ¨åŸçœŒã¤ãã°å¸‚å¤©ç‹å°1-1-1\\
+			ç­‘æ³¢å¤§å­¦ ã‚·ã‚¹ãƒ†ãƒ æƒ…å ±å·¥å­¦ç ”ç©¶ç§‘ çŸ¥èƒ½ãƒ­ãƒœãƒƒãƒˆç ”ç©¶å®¤(2013å¹´åº¦ç¾åœ¨)\\
+			atsushi.w[at]ieee.org\\
 			029-853-5155
 		}
 	}
@@ -845,12 +1015,12 @@ FIRMWARE.bin‚ÍƒRƒ“ƒpƒCƒ‹Ï‚İ‚Ìƒtƒ@[ƒ€ƒEƒFƒA‚ÌƒpƒX‚ğw’è‚µ‚Ü‚·B
 \small
 \begin{thebibliography}{99}
 \thispagestyle{fancy}
-\fancyhead[RO,RE]{Ql•¶Œ£}
+\fancyhead[RO,RE]{å‚è€ƒæ–‡çŒ®}
 
 \bibitem{the:dcm-ff-cur-cnt}
-”Ñ“cdŠì, –û“cMˆê,
-\newblock DCƒ‚[ƒ^‚Ìƒ\ƒtƒgƒEƒFƒAƒT[ƒ{Œn‚É‚¨‚¯‚éƒtƒB[ƒhƒtƒHƒ[ƒh“d—¬§Œä.
-\newblock “dŠw˜_D Vol.109-D, No.4, pp.289-296, 1989.
+é£¯ç”°é‡å–œ, æ²¹ç”°ä¿¡ä¸€,
+\newblock DCãƒ¢ãƒ¼ã‚¿ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚µãƒ¼ãƒœç³»ã«ãŠã‘ã‚‹ãƒ•ã‚£ãƒ¼ãƒ‰ãƒ•ã‚©ãƒ¯ãƒ¼ãƒ‰é›»æµåˆ¶å¾¡.
+\newblock é›»å­¦è«–D Vol.109-D, No.4, pp.289-296, 1989.
 
 \bibitem{the:pws_ff_cnt}
 S. Iida, S. Yuta,
@@ -858,9 +1028,9 @@ S. Iida, S. Yuta,
 \newblock in Proc. of Annual Conference on the IEEE Industrial Electronics Society, pp. 2264-2269, 1991
 
 \bibitem{the:vehicle_control}
-’Ø“àFi,
-\newblock Ô—ÖˆÚ“®‘Ì‚Ì§Œä, 
-\newblock in Proc. of “ú–{ƒƒ{ƒbƒgŠw‰ïåÃ ‘æ43‰ñuK‰ï ƒƒ{ƒbƒgHŠw“ü–åƒVƒŠ[ƒYƒˆÚ“®‹Zp•Ò„wˆÚ“®ƒƒ{ƒbƒg‚Ì‚â‚³‚µ‚¢‰ğàx, pp. 58-68, 1995
+åªå†…å­å¸,
+\newblock è»Šè¼ªç§»å‹•ä½“ã®åˆ¶å¾¡, 
+\newblock in Proc. of æ—¥æœ¬ãƒ­ãƒœãƒƒãƒˆå­¦ä¼šä¸»å‚¬ ç¬¬43å›è¬›ç¿’ä¼š ãƒ­ãƒœãƒƒãƒˆå·¥å­¦å…¥é–€ã‚·ãƒªãƒ¼ã‚ºï¼œç§»å‹•æŠ€è¡“ç·¨ï¼ã€ç§»å‹•ãƒ­ãƒœãƒƒãƒˆã®ã‚„ã•ã—ã„è§£èª¬ã€, pp. 58-68, 1995
 
 \end{thebibliography}
 \normalsize
