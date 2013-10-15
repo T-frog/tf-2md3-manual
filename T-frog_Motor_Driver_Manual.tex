@@ -91,6 +91,8 @@
     {\large \@date \par}%       % Set date in \large size.
     \vskip 2em%
     \titleadd
+    \vskip 0.5em%
+    {\copyrighttext\par}%
   \end{center}\par
   \@thanks\vfil\null
   \end{titlepage}%
@@ -170,9 +172,10 @@
 \hyphenpenalty=10000\relax
 \sloppy
 
-\newcommand{\rev}{rev.2 - August 17th, 2013}
+\newcommand{\rev}{rev.3 - October 15th, 2013}
 \newcommand{\authorname}{渡辺 敦志 (WATANABE Atsushi)}
 \newcommand{\papertitle}{二軸ブラシレスモータドライバ TF-2MD3-R6 User's Manual}
+
 
 \usepackage{atbegshi}
 \AtBeginShipoutFirst{\special{pdf:tounicode 90ms-RKSJ-UCS2}}
@@ -197,6 +200,11 @@
 }
 \date{\rev}
 \newcommand{\titleadd}{{\includegraphics[width=130mm]{driver_board_r6.eps}}}
+\newcommand{\copyrighttext}{\small 
+This document is licensed under the Creative Commons Attribution-Share Alike 3.0 Unported License. 
+To see a copy of this license, visit http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.
+All derivative works are to be attributed to Atsushi Watanabe of t-frog.com.
+}
 
 \renewcommand{\thesection}{\arabic{section}.}
 \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
@@ -273,12 +281,14 @@
 {\small\bf 版} & {\small\bf 改訂日} & {\small\bf 改訂内容}\\
 \hline
 \hline
-rev.1 & March 9th, 2013 & 作成 \\
-rev.2 & August 17th, 2013 & 量産版モータドライバ TF-2MD3-R6 の情報を追加 \\
-      &                 & 型番の決定に伴う文章タイトル変更 \\
-      &                 & プレ製品化版のスペック修正 \\
-      &                 & ファームウェア書き込み方法修正 \\
-      &                 & モータピン配置の誤り修正 \\
+rev.1   & March 9th, 2013    & 作成 \\
+rev.2   & August 17th, 2013  & 量産版モータドライバ TF-2MD3-R6 の情報を追加 \\
+        &                    & 型番の決定に伴う文章タイトル変更 \\
+        &                    & プレ製品化版のスペック修正 \\
+        &                    & ファームウェア書き込み方法修正 \\
+        &                    & モータピン配置の誤り修正 \\
+rev.3   & October 17th, 2013 & 免責事項を追加 \\
+        &                    & DCモータピン配置の誤り修正 \\
 \hline
 \end{tabular}
 \end{center}
@@ -303,11 +313,11 @@ rev.2 & August 17th, 2013 & 量産版モータドライバ TF-2MD3-R6 の情報�
 
 \subsection{{\bf TF-2MD3-R6}を用いた移動ロボット制御}
 二軸ブラシレスモータドライバ {\bf TF-2MD3-R6}は、ラップトップPCを使って走行制御などを行う移動ロボットシステムの走行制御のために開発された、モータ駆動・制御モジュールです。
-\figurename~\ref{fig:example_robot} に例を示すような、独立二輪躁舵型(差動駆動型)等の移動ロボットの制御が可能です。
+\figurename~\ref{fig:example_robot} に例を示すような、差動駆動型(独立二輪躁舵型)等の移動ロボットの制御が可能です。
 移動ロボット走行制御ソフトウェアプラットフォーム ``{\bf YP-Spur} '' と組み合わせて使用することで、容易に移動ロボットシステムを構築できます。\par
 \begin{figure}[H]
 \centering\includegraphics[width=90mm]{icart-mini.eps}
-\caption{独立二輪躁舵型(差動駆動型)移動ロボットの例}
+\caption{差動駆動型(独立二輪躁舵型)移動ロボットの例}
 \label{fig:example_robot}
 \end{figure}
 
@@ -478,6 +488,30 @@ PWM分解能			&	1200 (20~kHz時)					\\
 }
 
 
+
+\newpage
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{免責事項}
+\label{sec:免責}
+
+T-frogプロジェクトは、T-frogプロジェクトの製品及びサービスを任意に修正、改善、改良、およびその他の変更をし、製品の製造およびサービスの提供を中止する権利を留保します。
+製品を発注される前には、関連する最新の情報を取得して頂き、その情報が現在有効かつ完全なものであることをご確認下さい。
+\par
+
+T-frogプロジェクトは、T-frogプロジェクトの製品を使用したお客様の製品設計および、アプリケーションに関する支援について、責任を負いません。
+T-frogプロジェクトの製品を使用した、お客様の製品およびアプリケーションについての責任はお客様にあります。
+T-frogプロジェクトの製品を使用した、お客様の製品およびアプリケーションの安全対策は、必ずお客様にてお取り下さい。
+\par
+
+T-frogプロジェクトの製品は、移動ロボット研究用途に使用することを想定して、設計、および製造されています。
+T-frogプロジェクトは、T-frogプロジェクトの製品が安全でないことが致命的となる用途 (例えば、生命維持装置のように、T-frogプロジェクトの製品に不具合があった場合に死傷などの重篤な事故が発生するもの) に使用されることを認めません。
+また、T-frogプロジェクトの製品は、自動車用アプリケーション、軍事的用途、もしくは航空宇宙アプリケーションで使用されるようには設計されておらず、使用されることを意図していません。
+お客様は、T-frogプロジェクトの製品を、自動車の環境、軍事的環境、または航空宇宙環境で使用することは、お客様の危険負担においてなされること、および、お客様の責任をもって、それらの用途に必要な全ての法的要求事項および規制上の要求事項を満足させなければならないことを認め、かつ同意します。
+\par
+
+
+
 \newpage
 % ******************************************************************
 % **************************** section *****************************
@@ -498,6 +532,9 @@ PWM分解能			&	1200 (20~kHz時)					\\
 \caption{{\bf TF-2MD3-R6}のコネクタ・ピン配置}
 \label{fig:connector6}
 \end{figure}
+
+ブラシレスモータのU端子に対して、V端子、W端子にそれぞれ120度、240度遅れた波形の3相交流を印加したときの回転方向、またはDCモータの＋端子に正電圧を印加したときの回転方向において、エンコーダのA相立ち上がりから90度遅れて、B相が立ち上がるように接続して下さい。
+\par
 
 
 % ---------------------------------------------------------------------
