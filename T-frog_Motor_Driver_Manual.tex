@@ -286,8 +286,9 @@ rev.2   & August 17th, 2013  & 量産版モータドライバ TF-2MD3-R6 の情�
         &                    & プレ製品化版のスペック修正 \\
         &                    & ファームウェア書き込み方法修正 \\
         &                    & モータピン配置の誤り修正 \\
-rev.3   & January 10th, 2013 & 免責事項を追加 \\
+rev.3   & January 14th, 2013 & 免責事項を追加 \\
         &                    & DCモータピン配置の誤り修正 \\
+        &                    & エラー表示LEDのパターン、YP-Spurのエラー出力の解説を追加 \\
 \hline
 \end{tabular}
 \end{center}
@@ -1010,6 +1011,97 @@ Windows~7の場合は、以下の手順でインストールできます。
 	\item [{\bf TF-2MD3 プレ製品化版}] コントローラ基板の表面中央
 \end{description}
 
+
+\newpage
+% ******************************************************************
+% **************************** section *****************************
+\section{トラブルシューティング}
+\label{sec:トラブルシューティング}
+
+モータドライバが正しく動作しない場合の、問題の確認方法をご説明します。
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{エラー表示LED}
+
+モータドライバが動作を続けられない状態におちいった際、モータへの電力供給が停止され、基板上の{\bf LED1}が、エラー内容毎に、\tablename~\ref{tb:error_led}に示すパターンで点滅します。
+各エラーは以下の状況で発生します。
+
+\begin{description}
+\itemsep=0.7em
+\item [駆動電圧低下]\mbox{}\\
+	モータ駆動用電源電圧が 8~V 以下になり回路が動作できなくなった場合に発生します。電源電圧が0.5秒間異常連続して復旧すると、自動的に動作を再開します。
+
+\item [ホール素子1異常]\mbox{}\\
+	ホール素子1の入力に、通常起こりえない信号パターンが与えられたときに発生します。例えば、ケーブルの配線が誤っている場合、断線、接触不良、短絡がある場合に発生します。
+
+\item [ホール素子2異常]\mbox{}\\
+	ホール素子1の場合と同様です。
+
+\item [通信なし]\mbox{}\\
+	速度制御などの指令値が、一定時間与えられなかった場合に発生します。コンピュータで動作している ypspur-coordinator が異常終了したり、CPU使用率が 100~\percent になり、通信ができない状態になっている可能性があります。
+
+\end{description}
+
+\newcommand{\ledon}{\hspace{-0.5em}\fcolorbox{black}{green}{\textcolor{green}{\small 点}}\hspace{-0.5em}}
+\newcommand{\ledoff}{\hspace{-0.5em}\fcolorbox{black}{white}{\textcolor{white}{\small 消}}\hspace{-0.5em}}
+\begin{table}[H]
+\caption{エラー表示LED 点滅パターン}
+\label{tb:error_led}
+\smallskip
+\centering\begin{tabular}{rcccccccccc}
+\toprule
+					& \multicolumn{10}{c}{1周期あたり 2.0秒  
+						(点灯:\fcolorbox{black}{green}{\textcolor{green}{\small 点}}、
+						 消灯:\fcolorbox{black}{white}{\textcolor{white}{\small 消}})} \\
+\midrule\\[-5pt]
+駆動電圧低下
+		& \ledon & \ledon & \ledoff& \ledoff& \ledon & \ledon & \ledoff& \ledoff & \ledoff& \ledoff \\[12pt]
+ホール素子1異常
+		& \ledon & \ledoff& \ledon & \ledon & \ledon & \ledon & \ledon & \ledon  & \ledoff& \ledoff \\[12pt]
+ホール素子2異常
+		& \ledon & \ledoff& \ledon & \ledoff& \ledon & \ledon & \ledon & \ledon  & \ledoff& \ledoff \\[12pt]
+通信なし
+		& \ledon & \ledoff& \ledon & \ledoff& \ledon & \ledoff& \ledon & \ledoff & \ledoff& \ledoff \\[12pt]
+\bottomrule
+\end{tabular}
+\end{table}
+\newpage
+
+
+% ---------------------------------------------------------------------
+% --------------------------- subsection ------------------------------
+\subsection{ypspur-coordinatorのエラー出力}
+
+コンピュータで動作する ypspur-coordinator と、TF-2MD3 基板との通信中に発生する代表的なエラーの意味は以下の通りです。
+
+\begin{description}
+\itemsep=0.7em
+\item [Error: Can't open serial port.]\mbox{}\\
+	ypspur-coordinator が TF-2MD3 のUSBポートを開けない場合に発生します。TF-2MD3 のファームウェアが正しく書き込まれていない、もしくは ypspur-coordinator 起動時のポート指定が誤っている可能性があります。
+
+\item [Error: Device doesn't have available YP protocol version.]\mbox{}\\
+	通信開始時に TF-2MD3 が応答しない、もしくは異常な応答を返した場合に発生します。TF-2MD3 のファームウェアと ypspur-coordinator のバージョンに互換性がない、もしくはファームウェアが正しく書き込まれていない可能性があります。
+
+\item [Error: Your parameter file format is too old.]\mbox{}\\
+	TF-2MD3 のファームウェアが古い場合に発生します。
+
+\item [Error: Your parameter file format is unsupported!]\mbox{}\\
+	YP-Spur のバージョンが古い場合に発生します。
+
+\item [Error: Cannot find parameter file.]\mbox{}\\
+	ypspur-coordinator がロボットのパラメータファイルを読み込めない場合に発生します。ファイル名の指定が誤っている、もしくはパラメータファイルが読み込み禁止になっている可能性があります。
+
+\item [Error: **** undifined!]\mbox{}\\
+	ロボットのパラメータファイル中で、必須のパラメータ(****部分)が定義されていない場合に発生します。
+
+\item [Error: Select in serial\_recieve failed. / Error: Read in serial\_recieve failed.]\mbox{}\\
+	ypspur-coordinator が TF-2MD3 のUSBポートからデータを取得できない場合に発生します。TF-2MD3 の動作異常、もしくはUSBの通信が切断された可能性があります。
+
+\item [Error: Select timed out. / Error: Read timed out.]\mbox{}\\
+	ypspur-coordinator が TF-2MD3 のUSBポートからデータを取得できない場合に発生します。TF-2MD3 の動作異常、もしくはUSBの通信が切断された可能性があります。
+
+\end{description}
 
 
 \newpage
