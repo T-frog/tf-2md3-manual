@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-PATH:=/c/unix/tex/bin/:$(PATH)
+PATH:=/d/w32tex/bin:$(PATH)
 
 TARGET=T-frog_Motor_Driver_Manual
 OBJDIR=./obj
