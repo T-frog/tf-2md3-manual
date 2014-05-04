@@ -172,7 +172,7 @@
 \hyphenpenalty=10000\relax
 \sloppy
 
-\newcommand{\rev}{rev.3 - January 10th, 2013}
+\newcommand{\rev}{rev.3 - January 14th, 2014}
 \newcommand{\authorname}{渡辺 敦志 (WATANABE Atsushi)}
 \newcommand{\papertitle}{二軸ブラシレスモータドライバ TF-2MD3-R6 User's Manual}
 
@@ -202,7 +202,7 @@
 \date{\rev}
 \newcommand{\titleadd}{{\includegraphics[width=130mm]{driver_board_r6.eps}}}
 \newcommand{\copyrighttext}{\small 
-この文章はクリエイティブ・コモンズ・ライセンス 表示 - 継承 3.0 非移植 の下に提供されています。このライセンスのコピーを見るためには、{\scriptsize \url{http://creativecommons.org/licenses/by-sa/3.0/}} をご覧になるか、以下へお手紙をお送り下さい： Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA. \\[-1em]
+この文章はクリエイティブ・コモンズ・ライセンス 表示 - 継承 3.0 非移植 の下に提供されています。このライセンスのコピーを見るためには、{\scriptsize \url{http://creativecommons.org/licenses/by-sa/3.0/}} をご覧になるか、以下へお手紙をお送り下さい： Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA. \\%[]
 \hfill{\includegraphics[width=21mm]{by-sa.eps}}
 }
 
@@ -289,6 +289,7 @@ rev.2   & August 17th, 2013  & 量産版モータドライバ TF-2MD3-R6 の情�
         &                    & モータピン配置の誤り修正 \\
 rev.3   & January 14th, 2014 & 免責事項を追加 \\
         &                    & DCモータピン配置の誤り修正 \\
+        &                    & モータパラメータ例 (MOTOR\_PHASE項) の誤り修正 \\
         &                    & エラー表示LEDのパターン、YP-Spurのエラー出力の解説を追加 \\
 \hline
 \end{tabular}
@@ -783,7 +784,7 @@ Windows環境では、 {DEVICE\_PATH} は、\mbox{COM1} のようなデバイス
 
 
 \begin{lstlisting}{}
-     MOTOR_PHASE    4.00000000 #
+     MOTOR_PHASE    3.00000000 #
  TORQUE_FINENESS    0.00000100 #
        COUNT_REV  400.00000000 #[cnt/rev]
             VOLT   24.00000000 #[V]
