@@ -32,7 +32,7 @@ clean:
 	rm -f *~
 
 $(DVI): $(TEX) fig/*.eps
-	$(LATEX) $<
+	-$(LATEX) $<
 	if grep -q "Label(s) may have changed." $(OBJDIR)/$(TARGET).log; then $(LATEX) $<; fi
 	if grep -q "Label(s) may have changed." $(OBJDIR)/$(TARGET).log; then $(LATEX) $<; fi
 	cp $(OBJDIR)/$(DVI) ./$(DVI)

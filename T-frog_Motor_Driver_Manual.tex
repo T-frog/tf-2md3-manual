@@ -1,4 +1,4 @@
-\documentclass[11pt,a4j,openany]{jbook}
+\documentclass[11pt,a4j,openany,fleqn]{jbook}
 
 \usepackage{times}
 \usepackage{multirow}
@@ -109,6 +109,12 @@
   \global\let\date\relax
   \global\let\and\relax
   }%
+%\renewcommand{\thefigure}{%
+%\thesection\arabic{figure}}
+%\@addtoreset{figure}{section}
+%\renewcommand{\thetable}{%
+%\thesection\arabic{table}}
+%\@addtoreset{table}{section}
 \makeatother
 
 \newcommand{\percent}{\%}
@@ -197,7 +203,7 @@
 \title{\papertitle}
 \author{
 \authorname
-\thanks{筑波大学 システム情報工学研究科 知能ロボット研究室\\\hspace{10mm}atsushi.w[at]ieee.org}
+\thanks{atsushi.w[at]ieee.org}
 }
 \date{\rev}
 \newcommand{\titleadd}{{\includegraphics[width=130mm]{driver_board_r6.eps}}}
@@ -255,9 +261,11 @@
 }
 
 \newcommand \urllink [1]{
+	\vspace{5pt}
 	\ovalbox{
 		\small\url{#1}
 	}
+	\vspace{5pt}
 }
 
 
@@ -280,17 +288,31 @@
 \begin{tabular}{llp{28em}}
 {\small\bf 版} & {\small\bf 改訂日} & {\small\bf 改訂内容}\\
 \hline
-\hline
-rev.1   & March 9th, 2013    & 作成 \\
-rev.2   & August 17th, 2013  & 量産版モータドライバ TF-2MD3-R6 の情報を追加 \\
-        &                    & 型番の決定に伴う文章タイトル変更 \\
-        &                    & プレ製品化版のスペック修正 \\
-        &                    & ファームウェア書き込み方法修正 \\
-        &                    & モータピン配置の誤り修正 \\
-rev.3   & January 14th, 2014 & 免責事項を追加 \\
-        &                    & DCモータピン配置の誤り修正 \\
-        &                    & モータパラメータ例 (MOTOR\_PHASE項) の誤り修正 \\
-        &                    & エラー表示LEDのパターン、YP-Spurのエラー出力の解説を追加 \\
+\hline\vspace{0.2em}
+rev.1   & March 9, 2013      & 
+\begin{itemize}\vspace{-2em}
+\item 作成
+\end{itemize} \\*[-1em]
+rev.2   & August 17, 2013    & 
+\begin{itemize}\vspace{-2em}
+\item 量産版モータドライバ TF-2MD3-R6 の情報を追加
+\item 型番の決定に伴う文章タイトル変更
+\item プレ製品化版のスペック修正
+\item ファームウェア書き込み方法修正
+\item モータピン配置の誤り修正
+\end{itemize} \\*[-1em]
+rev.3   & January 14, 2014   & 
+\begin{itemize}\vspace{-2em}
+\item 免責事項を追加
+\item DCモータピン配置の誤り修正
+\item モータパラメータ例 (MOTOR\_PHASE項) の誤り修正
+\item エラー表示LEDのパターン、YP-Spurのエラー出力の解説を追加
+\end{itemize} \\*[-1em]
+rev.4   & June 1, 2014       & 
+\begin{itemize}\vspace{-2em}
+\item YP-Spurのインストール手順を修正
+\item ファームウェア更新方法を修正
+\end{itemize} \\*[-1em]
 \hline
 \end{tabular}
 \end{center}
@@ -608,116 +630,48 @@ T-frogプロジェクトは、T-frogプロジェクトの製品が安全でな�
 
 {\bf TF-2MD3-R6}は、移動ロボット走行制御ソフトウェアプラットフォーム ``{\bf YP-Spur} '' の通信仕様に対応しています。
 {\bf TF-2MD3-R6}と{\bf YP-Spur} を組み合わせて用いることで、容易に移動ロボットの走行制御系を構築できます。
+\par
+
+{\bf YP-Spur} は、Unix互換のシステム(Linux、Mac OS Xなど)、およびWindowsで動作します。
+Mac OS Xでは、アタッチされるデバイスのパスなどが異なります。
+Unix互換のシステムで用いる場合、バージョン管理ツールgit、およびgcc+glibcまたは、それらに相当する開発環境がインストールされている必要があります。\par
+
+動作確認には、ロボットのパラメータファイルが必要となります。
+T-frogプロジェクトのオープンソースロボットハードウェア ``i-Cart mini'' のパラメータファイルは、\url{http://t-frog.com/products/icart_mini/} からダウンロードできます。
+新規に作成したロボットのパラメータは、\ref{sec:パラメータ作成}章を参考に作成して下さい。\par
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
-\subsection{動作環境}
-
-{\bf YP-Spur} は、Unix互換のシステム(Linux、Mac OS Xなど)、およびWindowsで動作します。
-以下の手順は、Linuxを想定したものです。
-Mac OS Xでは、アタッチされるデバイスのパスなどが異なります。
-バージョン管理ツールgit、およびgcc+glibcまたは、それらに相当する開発環境がインストールされている必要があります。\par
-
-% ------------------------ subsubsection ------------------------------
-\subsubsection{Ubuntu~Linux における開発環境構築の例}
+\subsection{開発環境の構築と動作テスト: Linux}
 
 以下のコマンドで、コンパイル環境とバージョン管理ツールをインストールします。
+
+{\bf Ubuntuの場合}
 \begin{lstlisting}{}
 $ sudo apt-get update
 $ sudo apt-get install build-essential libreadline-dev
 $ sudo apt-get install git git-svn
 \end{lstlisting}
 
-% ------------------------ subsubsection ------------------------------
-\subsubsection{Fedora~Linux における開発環境構築の例}
-
-以下のコマンドで、コンパイル環境とバージョン管理ツールをインストールします。
+{\bf Fedoraの場合}
 \begin{lstlisting}{}
 $ sudo yum groupinstall "Development Tools"
 $ sudo yum install readline-devel
 $ sudo yum install git git-svn
 \end{lstlisting}
 
-\newpage
-% ------------------------ subsubsection ------------------------------
-\subsubsection{Windows における開発環境構築の例}
 
-
-以下の手順で、バージョン管理ツールをインストールします。
-\begin{enumerate}
-	\item 以下のURLから、 ``Download for Windows'' リンクを開き、``Git'' のインストーラをダウンロード・実行します。\\
-		\urllink{http://git-scm.com/}
-	\item 画面の指示に従い、デフォルトの設定でインストールを完了して下さい。
-\end{enumerate}
-\par
-
-Windows 環境では MinGW を利用することで、Linux の場合と同様のコマンド体系で {\bf YP-Spur} を使用できます。
-以下の手順で、MinGW をインストール・セットアップします。
-\begin{enumerate}
-	\item 以下のURLから、 ``mingw-get-inst-******.exe'' をダウンロード、実行します。\\
-		\urllink{http://sourceforge.net/projects/mingw/files/Installer/mingw-get/}\\
-	\item 画面の指示に従って、 ``Select Components'' 画面まで進み、 ``C++ Compiler, MSYS Basic System, MinGW Developer ToolKit'' をチェックし、 ``Next $>$'' を選択します。
-		\begin{figure}[H]
-			\centering\includegraphics[width=76mm]{mingw.select.eps}
-			\caption{MinGWのインストール}
-			\label{fig:mingw.select}
-		\end{figure}
-	\item 画面の指示に従って、インストールを完了して下さい。
-	\item スタートメニューの ``MinGW'' 中の、 ``MinGW Shell'' を実行し、以下のコマンドを入力します。
-		\begin{lstlisting}{}
-$ mingw-get install update
-$ mingw-get install mingw32-pexports
-$ mingw-get install msys-mintty
-		\end{lstlisting}
-	\item スタートメニューの ``MinGW'' 中の、 ``MinGW Shell'' を右クリックし、 ``プロパティ'' を開きます。
-		\begin{figure}[H]
-			\centering\includegraphics[width=90mm]{mingw.shortcut.eps}
-			\caption{MinGW Shellの設定1}
-			\label{fig:mingw.shortcut}
-		\end{figure}
-	\item ``リンク先'' 欄の末尾に、 ``-\-mintty'' と入力して ``OK'' を選択します。
-		\begin{figure}[H]
-			\centering\includegraphics[width=90mm]{mingw.shortcut_mintty.eps}
-			\caption{MinGW Shellの設定2}
-			\label{fig:mingw.shortcut_mintty}
-		\end{figure}
-\end{enumerate}
-以降、コマンドの実行は、スタートメニューの ``MinGW'' 中の、 ``MinGW Shell'' の中で行います。
-\par
-\bigskip
-
-{\bf TF-2MD3-R6}の、Windows 用のデバイスドライバは、以下の URL で配布しています。\\
-\urllink{http://t-frog.com/products/motor_driver/}\\
-PCに{\bf TF-2MD3-R6} を接続する前に、ドライバをインストールして下さい。
-\par
-
-\newpage
-% ---------------------------------------------------------------------
-% --------------------------- subsection ------------------------------
-\subsection{{\bf YP-Spur} のインストール}
-
-{\bf YP-Spur} および、リポジトリに登録されているロボットのパラメータファイルは、以下の手順でインストールできます。\par
+{\bf YP-Spur} を、以下のコマンドでインストールします。\par
 \begin{lstlisting}{}
-$ git clone http://www.roboken.esys.tsukuba.ac.jp/platform/repos/yp-spur.git
+$ git clone https://openspur.org/repos/yp-spur.git/
 $ cd yp-spur
 $ ./configure
 $ make
 $ sudo make install
 $ sudo ldconfig
 $ cd ..
-$ git clone http://www.roboken.esys.tsukuba.ac.jp/platform/repos/yp-robot-params.git
-$ cd yp-robot-params
-$ ./configure
-$ sudo make install
-$ cd ..
 \end{lstlisting}
 
-% ---------------------------------------------------------------------
-% --------------------------- subsection ------------------------------
-\subsection{{\bf YP-Spur} の動作確認}
-
-動作確認には、ロボットのパラメータファイルが必要となります。
-新規に作成したロボットのパラメータは、\ref{sec:パラメータ作成}章に従って作成して下さい。\par
 
 {\bf YP-Spur} を用いたロボットの走行制御は、ラップトップPC上で走行制御を行う ``ypspur-coordinator'' プロセスと、ユーザプログラムのプロセスを動作させることで行います。
 1.0 x 0.1 メートルの四角形を描くように走行する、{\bf YP-Spur} のサンプルプログラムを実行するには、ターミナルを2つ開き、それぞれで以下のコマンドを実行します。
@@ -729,17 +683,52 @@ $ cd ..
 	}
 }
 
+{\bf 1つ目のターミナルで実行}
 \begin{lstlisting}{}
 $ ypspur-coordinator -p PARAMETER_FILE.param -d DEVICE_PATH
 \end{lstlisting}
+
+{\bf 2つ目のターミナルで実行}
 \begin{lstlisting}{}
 $ cd yp-spur/samples/
 $ ./run-test
 \end{lstlisting}
-コマンド中の PARAMETER\_FILE.param には、ロボットのパラメータファイルへのパス、もしくは {/usr/local/share/yp-robot-params} 以下にインストールされているパラメータファイルのファイル名を指定します。
-{DEVICE\_PATH} は、{/dev/ttyACM0} のように Linux 上にアタッチされるデバイスのフルパスを指定します。
-Windows環境では、 {DEVICE\_PATH} は、\mbox{COM1} のようなデバイス名を指定します。
 
+コマンド中の PARAMETER\_FILE.param には、ロボットのパラメータファイルへのパスを指定します。
+{DEVICE\_PATH} は、{/dev/ttyACM0} のように Linux 上にアタッチされるデバイスのフルパスを指定します。
+
+\newpage
+% ------------------------ subsubsection ------------------------------
+\subsection{開発環境の構築と動作テスト: Windows}
+
+下記URLから、{\bf TF-2MD3-R6}の Windows 用のデバイスドライバをダウンロード、解凍し、``setup.bat''を右クリック、``管理者として実行''して下さい。
+PCに{\bf TF-2MD3-R6} を接続する前に予め、ドライバをインストールして下さい。
+(Windows 8 以降では、署名無しのドライバインストールを許可する設定が必要です。)\\
+\urllink{http://t-frog.com/products/motor_driver/}
+\par
+
+{\bf YP-Spur} を、下記のURLからダウンロードし、展開します。
+MinGW、Cygwin環境で使用する場合は、展開したファイルをMinGW、Cygwin環境のルートディレクトリなどにコピーし、Linuxの場合を参考に動作テストを行って下さい。
+lib ディレクトリ下のライブラリ、DLLファイル、および include ディレクトリ下のヘッダファイルを使用することで、Microsoft Visual C++ を用いた開発が可能です。\\
+\urllink{https://openspur.org/ypspur_downloads.php}
+\par
+
+{\bf YP-Spur} を用いたロボットの走行制御は、ラップトップPC上で走行制御を行う ``ypspur-coordinator'' プロセスと、ユーザプログラムのプロセスを動作させることで行います。
+1.0 x 0.1 メートルの四角形を描くように走行する、{\bf YP-Spur} のサンプルプログラムを実行するには、以下の手順を行って下さい。
+\begin{enumerate}
+\item 展開したファイルの bin ディレクトリ中の ypspur-gui.exe を実行する
+\item Browse ボタンで、ロボットのパラメータファイルを開く
+\item Port 欄で、モータドライバのデバイス名を選択する
+\item Start/Stop ボタンを選択し、エラー表示が発生していないことを確認する
+\item 上記URLから別途、run-test.exe をダウンロードし、実行する
+\end{enumerate}
+
+\warnbox{YP-Spurサンプルプログラムの起動時には}{
+	\iconitem{warn.eps}{
+		\item パラメータファイルが正しいことを確認する
+		\item ロボットの正面1.5メートル、左右1メートル程度の空間を確保して実行する
+	}
+}
 
 \newpage
 % ******************************************************************
@@ -778,7 +767,7 @@ Windows環境では、 {DEVICE\_PATH} は、\mbox{COM1} のようなデバイス
 このときの、パラメータファイルの主要な部分を以下に示します。このモータは3相5極なので、ギア比は5倍となっています。\par
 \begin{figure}[H]
 \centering\includegraphics[width=65mm]{simple_robot.eps}
-\caption{オリエンタルモータのブラシレスモータを用いた移動ロボットの例}
+\caption{ブラシレスモータを用いたダイレクトドライブ移動ロボットの例}
 \label{fig:simple_robot}
 \end{figure}
 
@@ -844,36 +833,49 @@ Windows環境では、 {DEVICE\_PATH} は、\mbox{COM1} のようなデバイス
 \label{sec:Linuxファームウェア}
 
 
-以下のコマンドで、 ``samba Flash Utility for AT91SAM7 microcontrollers'' をインストールします。
+以下のコマンドで、 ``samba Flash Utility for AT91SAM7 microcontrollers''、および書き込みスクリプトをインストールします。
 \begin{lstlisting}{}
 $ git svn clone --trunk=trunk --prefix=samba http://samba.googlecode.com/svn/ samba
 $ cd samba
 $ ./configure
 $ make
 $ sudo make install
+$ cd ../
+$ git clone http://t-frog.com/repos/git/tf2md3_flash.git
+$ cd tf2md3_flash
+$ sudo make install
 \end{lstlisting}
 \par
 
-はじめに、以下のコマンドを実行して、{FLASH~ROM} を消去します。 
-{DEVICE\_PATH} には、 {/dev/ttyACM0} のように Linux 上にアタッチされたデバイスのフルパスを指定します。
-\begin{lstlisting}{}
-$ echo '$FLASHERACEA' > DEVICE_PATH
-$ echo '$FLASHERACEB' > DEVICE_PATH
-\end{lstlisting}
-\par
-
-{\bf TF-2MD3-R6} をUSBインタフェースでコンピュータに接続、コントローラ基板電源(5V)を投入し、
+%はじめに、以下のコマンドを実行して、{FLASH~ROM} を消去します。 
+%{DEVICE\_PATH} には、 {/dev/ttyACM0} のように Linux 上にアタッチされたデバイスのフルパスを指定します。
+%\begin{lstlisting}{}
+%$ echo '$FLASHERACEA' > DEVICE_PATH
+%$ echo '$FLASHERACEB' > DEVICE_PATH
+%\end{lstlisting}
+%\par
+%
+%{\bf TF-2MD3-R6} をUSBインタフェースでコンピュータに接続、コントローラ基板電源(5V)を投入し、
 以下のコマンドを実行します。
 {DEVICE\_PATH} は、{/dev/ttyACM0} のように Linux 上にアタッチされるデバイスのフルパスを指定し、
 FIRMWARE.bin はコンパイル済みのファームウェアのパスを指定します。
+%\begin{lstlisting}{}
+%$ samba -i DEVICE_PATH
+%> flash 0x00100000 FIRMWARE.bin
+%> nvm 4
+%\end{lstlisting}
 \begin{lstlisting}{}
-$ samba -i DEVICE_PATH
-> flash 0x00100000 FIRMWARE.bin
-> nvm 4
+$ tf2md3_flash DEVICE_PATH FIRMWARE.bin
 \end{lstlisting}
 作業が完了したら、コントローラ基板電源を切断し、再度、投入します。
 
 \bigskip
+\warnbox{ハードウェアスイッチで消去した場合、書き込みを中断した場合の書き込み}{
+	\iconitem{warn.eps}{
+		\item ハードウェアスイッチでファームウェアを消去した場合、書き込みを途中で中断して再度書き込む場合は、以下のコマンドを使用して下さい\\
+{\tt \$ tf2md3\_flash DEVICE\_PATH FIRMWARE.bin --erased}
+	}
+}
 \warnbox{ファームウェア更新成功の確認}{
 	\iconitem{warn.eps}{
 		\item 電源投入時に、LED1が短時間点灯した後消灯、LED2が薄く点灯することを確認する
@@ -892,15 +894,28 @@ $ samba -i DEVICE_PATH
 \par
 
 
-はじめに、{Tera~Term} {\small(\url{http://sourceforge.jp/projects/ttssh2/})}  などのターミナルソフトウェアで、{\bf TF-2MD3-R6} のCOMポートを開き、以下のコマンドを入力してFLASH ROMを消去します。 
+{\bf TF-2MD3-R6}をUSBインタフェースでコンピュータに接続、コントローラ基板電源(5V)を接続します。
+はじめに、{Tera~Term} {\small(\url{http://sourceforge.jp/projects/ttssh2/})}  などのターミナルソフトウェアで、{\bf TF-2MD3-R6} のCOMポートを開き、受信改行コードの設定を``LF''に、送信改行コードの設定を``LF''または``CR+LF''に変更します。
+以下のコマンドを入力してFLASH ROMを消去します。(先頭の``\$''も入力して下さい。)
 \begin{lstlisting}{}
 $FLASHERACEA
 $FLASHERACEB
 \end{lstlisting}
+入力中は文字列は表示されませんが、入力後に下記の表示が現れます。
+\begin{lstlisting}{}
+$FLASHERACEA
+00P
+
+$FLASHERACEB
+00P
+
+\end{lstlisting}
 \par
 
 
-{\bf TF-2MD3-R6}をUSBインタフェースでコンピュータに接続、コントローラ基板電源(5V)を投入します。
+表示が異なる場合は、ターミナルソフトウェアを終了してから、コントローラ基板電源を切断、再度接続し、上記の手順をやり直して下さい。
+
+
 なお、初回接続時には、デバイスドライバのインストールウィザードが開きますので、画面の指示に従ってデバイスドライバをインストールして下さい。
 Windows~7の場合は、以下の手順でインストールできます。
 \begin{enumerate}
@@ -941,6 +956,7 @@ Windows~7の場合は、以下の手順でインストールできます。
 			\label{fig:windriver.security}
 		\end{figure}
 \end{enumerate}
+(Windows 8 以降では、署名無しのドライバインストールを許可する設定が必要です。)
 \par
 
 以下の手順に従ってファームウェアを書き込みます。
