@@ -178,7 +178,7 @@
 \hyphenpenalty=10000\relax
 \sloppy
 
-\newcommand{\rev}{rev.5 - December 29, 2014}
+\newcommand{\rev}{rev.6 - December 6, 2016}
 \newcommand{\authorname}{渡辺 敦志 (WATANABE Atsushi)}
 \newcommand{\papertitle}{二軸ブラシレスモータドライバ TF-2MD3-R6 User's Manual}
 
@@ -322,6 +322,10 @@ rev.5   & December 29, 2014   &
 \item Windowsでの開発環境の構築方法を、コンパイル済みライブラリを利用するように変更
 \item 外形寸法の誤りを修正
 \end{itemize} \\*[-1em]
+rev.6   & December 6, 2016   & 
+\begin{itemize}\vspace{-2em}
+\item ダウンロードURLを更新
+\end{itemize} \\*[-1em]
 \hline
 \end{tabular}
 \end{center}
@@ -380,7 +384,7 @@ rev.5   & December 29, 2014   &
 {\bf TF-2MD3-R6}の外観を\figurename~\ref{fig:driver_board_r6} に、主な仕様を\tablename~\ref{tb:tfrog_motor_driver} に示します。
 本モータドライバは1台につき、ブラシレスモータまたはDCモータを2台駆動・制御できます。
 通信インタフェースはUSBのCDC-ACMクラスに対応しており、Linux、Mac OS X、Windows環境で使用可能(Windows環境ではドライバが必要)です。
-通信プロトコルは筑波大学 知能ロボット研究室で開発している移動ロボット走行制御ソフトウェアプラットフォーム {\bf YP-Spur} \footnote{Robot Platform Project \\ \hspace{2em}{\scriptsize\url{http://www.roboken.esys.tsukuba.ac.jp/platform/}}}と互換性があります。\par
+通信プロトコルは筑波大学 知能ロボット研究室で開発している移動ロボット走行制御ソフトウェアプラットフォーム {\bf YP-Spur} \footnote{Robot Platform Project \\ \hspace{2em}{\scriptsize\url{http://www.roboken.iit.tsukuba.ac.jp/platform/}}}と互換性があります。\par
 
 \begin{figure}[H]
 \centering\includegraphics[width=120mm]{driver_board_r6.eps}
@@ -835,7 +839,7 @@ lib ディレクトリ下のライブラリ、DLLファイル、および includ
 \label{sec:ロボットパラメータ}
 
 {\bf TF-2MD3-R6}は、DCモータ・ブラシレスモータに対応しており、モータの種類などの情報を{\bf YP-Spur} のロボットパラメータファイルで指定する必要があります。
-詳細なパラメータ決定方法・調整方法は移動ロボット走行制御プラットフォームWiki\footnote{Robot Platform Project Wiki \\ \hspace{2em}{\scriptsize\url{http://www.roboken.esys.tsukuba.ac.jp/platform/wiki/}}}を参照して下さい。\par
+詳細なパラメータ決定方法・調整方法はYP-SpurリポジトリのWiki\footnote{YP-Spurリポジトリ Wiki \\ \hspace{2em}{\scriptsize\url{https://github.com/openspur/yp-spur/wiki/}}}を参照して下さい。\par
 
 % ---------------------------------------------------------------------
 % --------------------------- subsection ------------------------------
@@ -933,13 +937,13 @@ lib ディレクトリ下のライブラリ、DLLファイル、および includ
 
 以下のコマンドで、 ``samba Flash Utility for AT91SAM7 microcontrollers''、および書き込みスクリプトをインストールします。
 \begin{lstlisting}{}
-$ git svn clone --trunk=trunk --prefix=samba http://samba.googlecode.com/svn/ samba
+$ git clone https://github.com/at-wat/samba.git
 $ cd samba
 $ ./configure
 $ make
 $ sudo make install
 $ cd ../
-$ git clone http://t-frog.com/repos/git/tf2md3_flash.git
+$ git clone https://github.com/T-frog/tf2md3_flash.git
 $ cd tf2md3_flash
 $ sudo make install
 \end{lstlisting}
@@ -987,7 +991,7 @@ $ tf2md3_flash DEVICE_PATH FIRMWARE.bin
 \subsection{Windows環境の場合}
 \label{sec:Windowsファームウェア}
 
-``SAM-BA for Windows'' を下記のURLからダウンロードし、インストールします。\\
+``SAM-BA 2.** for Windows'' を下記のURLからダウンロードし、インストールします。)(3.*.*シリーズは本製品に対応していません。)\\
 \urllink{http://www.atmel.com/tools/ATMELSAM-BAIN-SYSTEMPROGRAMMER.aspx}
 \par
 
