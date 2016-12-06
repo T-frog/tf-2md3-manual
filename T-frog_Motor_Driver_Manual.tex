@@ -178,7 +178,7 @@
 \hyphenpenalty=10000\relax
 \sloppy
 
-\newcommand{\rev}{rev.5 - October 13, 2014}
+\newcommand{\rev}{rev.5 - December 29, 2014}
 \newcommand{\authorname}{渡辺 敦志 (WATANABE Atsushi)}
 \newcommand{\papertitle}{二軸ブラシレスモータドライバ TF-2MD3-R6 User's Manual}
 
@@ -313,7 +313,7 @@ rev.4   & June 1, 2014       &
 \item YP-Spurのインストール手順を修正
 \item ファームウェア更新方法を修正
 \end{itemize} \\*[-1em]
-rev.5   & October 13, 2014   & 
+rev.5   & December 29, 2014   & 
 \begin{itemize}\vspace{-2em}
 \item Analog Input ポートの番号を修正
 \item ファームウェア更新方法を修正
@@ -624,27 +624,28 @@ T-frogプロジェクトは、T-frogプロジェクトの製品が安全でな�
 \subsection{電源の供給}
 \label{sec:電源の供給}
 
-本モータドライバは誘導性の負荷を大電力で駆動しますので、電源供給回路の構成が不十分な場合、電源切断時の誘導電流によりモータドライバが破損します。
+誘導性の負荷(モータ)を駆動中に電源が遮断され、電源端子が開放されると、誘導電流によりモータドライバが破損する場合があります。
 これを防ぐため、モータ駆動電源のケーブルはできるだけ短くし、可能な限りモータドライバから近い位置(5cm以内を推奨)に低ESRのキャパシタを挿入して下さい。
 \par
-駆動中に電源が遮断された際に、回路の保護に必要なキャパシタ容量$C_{power}$は以下を参考に算出して下さい。
+駆動中に電源が遮断された際に、回路の保護に必要なキャパシタ容量$C_{p}$は以下を参考に算出して下さい。
 \par
 
 \begin{itemize}
-\setlength{\leftskip}{15pt}
-\item [$R_{m}$] モータ端子間抵抗 [$\Omega$]
+\setlength{\leftskip}{30pt}
+%\item [$R_{m}$] モータ端子間抵抗 [$\Omega$]
 \item [$L_{m}$] モータ端子間インダクタンス [H]
 \item [$E_{p}$] 電源電圧 [V]
+\item [$I_{max}$] 瞬間最大電流 [A]
 \end{itemize}
 
 %モータに流れうる最大の電流(最大回転数の状態で逆方向に最大電圧で駆動した際の電流　$2E_{p}/R_{m}$)によって、モータのインダクタンスに蓄えられるエネルギー$P_{l}$は、次式で求められます。
-モータに流れうる瞬間最大電流$I_{max}$によって、モータのインダクタンスに蓄えられるエネルギー$P_{l}$は、次式で求められます。
+%モータに流れうる瞬間最大電流$I_{max}$によって、モータのインダクタンスに蓄えられるエネルギー$P_{l}$は、次式で求められます。
+%\begin{eqnarray*}
+%P_{l} = \frac{1}{2} L_{m} I_{max}^{2}
+%\end{eqnarray*}
+\figurename~\ref{fig:circuit_cap}に示す回路構成において、モータドライバの保護に必要なキャパシタ容量は次式で算出できます。
 \begin{eqnarray*}
-P_{l} = \frac{1}{2} L_{m} I_{max}^{2}
-\end{eqnarray*}
-このとき、\figurename~\ref{fig:circuit_cap}に示す回路構成において、モータドライバの保護に必要なキャパシタ容量は次式で算出できます。
-\begin{eqnarray*}
-C_{power} > 2 \frac{2 P_{l}}{60^2 - E_{p}^{2}}
+C_{p} > 2 \frac{L_{m} I_{max}^{2}}{60^2 - E_{p}^{2}}
 \end{eqnarray*}
 
 \begin{figure}[H]
@@ -653,11 +654,11 @@ C_{power} > 2 \frac{2 P_{l}}{60^2 - E_{p}^{2}}
 \label{fig:circuit_cap}
 \end{figure}
 
-例えば、インダクタンス$1.5$[mH]、抵抗$0.8$[$\Omega$]のモータを、電源電圧$24$[V]で使用する場合(ブラシレスモータ TF-M30-24-3500-G15L/R 相当)、モータドライバが破損しないために、以下のキャパシタ容量が必要になります。
-(モータに流れうる瞬間最大電流$I_{max}$を、モータがロックした状態で制御系が暴走して最大電圧で駆動した際の電流 $I_{max}=E_{p}/R_{m}=24/0.8=30.0$とした場合\footnote{なお、TF-M30-24-3500-G15L/Rに$30$[A]の電流が流れた場合、モータは減磁、破損します。})
+例えば、インダクタンス$L_{m}=1.5$~[mH]、抵抗$R_{m}=0.8$~[$\Omega$]のモータを、電源電圧$E_{p}=24$~[V]で使用する場合(ブラシレスモータ TF-M30-24-3500-G15L/R 相当)、以下のキャパシタ容量が必要になります。
+(瞬間最大電流$I_{max}$を、パラメータ誤りなどで制御系が暴走してロックした状態のモータに最大出力を与えた際の電流 $I_{max}=E_{p}/R_{m}=24/0.8=30.0$とした場合\footnote{なお、TF-M30-24-3500-G15L/Rに$30$[A]の電流が流れた場合、モータは減磁、破損します。})
 \begin{eqnarray*}
-P_{l} &=& \frac{1}{2} 0.0015 \cdot 30^{2} = 0.675 \text{[J]}\\
-C_{power} &>& 2 \frac{2 \cdot 0.675}{60^{2} - 24^{2}} = 0.00089 \text{[F]} = 890 \text{[uF]}
+%P_{l} &=& \frac{1}{2} 0.0015 \cdot 30^{2} = 0.675 \text{[J]}\\
+C_{p} &>& 2 \frac{0.0015 \cdot 30^{2}}{60^{2} - 24^{2}} = 0.00089 \text{[F]} = 890 \text{[uF]}
 \end{eqnarray*}
 ただし、キャパシタ容量のばらつきや、温度による容量変化、電源電圧の変動などを加味して、十分な安全率をとる必要があります。
 
@@ -668,7 +669,7 @@ ZNR素子や専用IC等の、過電圧保護回路を組み込むことで必要
 \ovalbox{
 \begin{minipage}[l]{0.95\textwidth}
 \vspace{0.8em}
-{\bf\large 参考資料: $C_{power}$の導出}\\
+{\bf\large 参考資料: $C_{p}$の導出}\\
 \parbox{\textwidth}{
 \vspace{0.5em}
 \parindent=1em
@@ -679,20 +680,20 @@ ZNR素子や専用IC等の、過電圧保護回路を組み込むことで必要
 モータドライバ動作中はキャパシタは電源電圧$E_{p}$で充電されている。
 この状態で電源が切断されると、モータ2台のインダクタンスに蓄えられているエネルギー$2P_{l}$がキャパシタに回生される。その際の、キャパシタの総エネルギー$P_{c}$は次式で表される。
 \begin{eqnarray*}
- P_{c} = \frac{1}{2} C_{power} \cdot E_{p}^{2} + 2P_{l}
+ P_{c} = \frac{1}{2} C_{p} \cdot E_{p}^{2} + 2P_{l}
 \end{eqnarray*}
-このときのキャパシタ電圧$E_{c}$と容量$C_{power}$の関係は次式で表される。
+このときのキャパシタ電圧$E_{c}$と容量$C_{p}$の関係は次式で表される。
 \begin{eqnarray*}
- P_{c} &=& \frac{1}{2} C_{power} \cdot E_{c}^{2}\\
- \frac{1}{2} C_{power} \cdot E_{p}^{2} + 2P_{l} &=& \frac{1}{2} C_{power} \cdot E_{c}^{2}
+ P_{c} &=& \frac{1}{2} C_{p} \cdot E_{c}^{2}\\
+ \frac{1}{2} C_{p} \cdot E_{p}^{2} + 2P_{l} &=& \frac{1}{2} C_{p} \cdot E_{c}^{2}
 \end{eqnarray*}
 \par
 
 モータドライバが破損しないためには、キャパシタの電圧が、モータドライバの絶対最大定格電圧$E_{max}$以下であればよい。
-したがって、モータドライバがモータの誘導電流によって破壊されない最小のキャパシタ容量$C_{power}$は次式で求まる。
+したがって、モータドライバがモータの誘導電流によって破壊されない最小のキャパシタ容量$C_{p}$は次式で求まる。
 \begin{eqnarray*}
- \frac{1}{2} C_{power} \cdot E_{p}^{2} + 2P_{l} &=& \frac{1}{2} C_{power} \cdot E_{max}^{2}\\
- C_{power} &=& 2\frac{2P_{l}}{E_{max}^{2} - E_{p}^{2}}
+ \frac{1}{2} C_{p} \cdot E_{p}^{2} + 2P_{l} &=& \frac{1}{2} C_{p} \cdot E_{max}^{2}\\
+ C_{p} &=& 2\frac{2P_{l}}{E_{max}^{2} - E_{p}^{2}}
 \end{eqnarray*}
 }
 \end{minipage}
