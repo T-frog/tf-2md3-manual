@@ -324,7 +324,7 @@ rev.5   & December 29, 2014   &
 \end{itemize} \\*[-1em]
 rev.6   & December 6, 2016   & 
 \begin{itemize}\vspace{-2em}
-\item ダウンロードURLを更新
+\item ダウンロードURLを更新、YP-SpurのReleaseブランチ使用のコマンド追加
 \item ブラシレスモータの「極数」表記を「磁極ペア数」に修正
 \end{itemize} \\*[-1em]
 \hline
@@ -766,8 +766,9 @@ $ sudo yum install git git-svn
 
 {\bf YP-Spur} を、以下のコマンドでインストールします。\par
 \begin{lstlisting}{}
-$ git clone https://openspur.org/repos/yp-spur.git/
+$ git clone https://github.com/openspur/yp-spur.git
 $ cd yp-spur
+$ git checkout -b release origin/release
 $ ./configure
 $ make
 $ sudo make install
